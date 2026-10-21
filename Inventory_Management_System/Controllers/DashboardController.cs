@@ -1,5 +1,8 @@
-﻿namespace Inventory_Management_System.Controllers
+using Microsoft.AspNetCore.Authorization;
+
+namespace Inventory_Management_System.Controllers
 {
+    [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager},{AppRoles.ProcurementSpecialist},{AppRoles.Auditor}")]
     public class DashboardController : Controller
     {
         private readonly ApplicationDbContext _context;

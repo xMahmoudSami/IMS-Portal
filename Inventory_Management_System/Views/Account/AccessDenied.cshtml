@@ -1,0 +1,143 @@
+@using Inventory_Management_System.Models
+@{
+    ViewData["Title"] = Loc["AccessDenied"];
+    var currentCulture = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToLowerInvariant();
+    var isRtl = currentCulture.Equals("ar", StringComparison.OrdinalIgnoreCase);
+
+    string FormatRole(string r)
+    {
+        if (string.IsNullOrWhiteSpace(r)) return r;
+
+        var key = "Role_" + r;
+        var localized = Loc[key];
+        if (!localized.IsResourceNotFound && !string.IsNullOrWhiteSpace(localized.Value) && localized.Value != key)
+        {
+            return localized.Value;
+        }
+
+        return currentCulture switch
+        {
+            "ar" => r switch
+            {
+                AppRoles.SuperAdmin => "المشرف العام",
+                AppRoles.WarehouseManager => "مدير المستودع",
+                AppRoles.Cashier => "أمين الصندوق",
+                AppRoles.ProcurementSpecialist => "مسؤول المشتريات",
+                AppRoles.Auditor => "مدقق مالي",
+                _ => r
+            },
+            "fr" => r switch
+            {
+                AppRoles.SuperAdmin => "Administrateur",
+                AppRoles.WarehouseManager => "Gestionnaire d'entrepôt",
+                AppRoles.Cashier => "Caissier",
+                AppRoles.ProcurementSpecialist => "Responsable des achats",
+                AppRoles.Auditor => "Auditeur",
+                _ => r
+            },
+            "es" => r switch
+            {
+                AppRoles.SuperAdmin => "Administrador",
+                AppRoles.WarehouseManager => "Gerente de almacén",
+                AppRoles.Cashier => "Cajero",
+                AppRoles.ProcurementSpecialist => "Especialista en compras",
+                AppRoles.Auditor => "Auditor",
+                _ => r
+            },
+            "de" => r switch
+            {
+                AppRoles.SuperAdmin => "Administrator",
+                AppRoles.WarehouseManager => "Lagermanager",
+                AppRoles.Cashier => "Kassierer",
+                AppRoles.ProcurementSpecialist => "Beschaffungsspezialist",
+                AppRoles.Auditor => "Prüfer",
+                _ => r
+            },
+            "it" => r switch
+            {
+                AppRoles.SuperAdmin => "Amministratore",
+                AppRoles.WarehouseManager => "Responsabile del magazzino",
+                AppRoles.Cashier => "Cassiere",
+                AppRoles.ProcurementSpecialist => "Addetto agli acquisti",
+                AppRoles.Auditor => "Revisore dei conti",
+                _ => r
+            },
+            _ => r switch
+            {
+                AppRoles.SuperAdmin => "Administrator",
+                AppRoles.WarehouseManager => "Warehouse Manager",
+                AppRoles.Cashier => "Cashier",
+                AppRoles.ProcurementSpecialist => "Procurement Specialist",
+                AppRoles.Auditor => "Auditor",
+                _ => r
+            }
+        };
+    }
+
+    var rawRole = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Role)?.Value
+        ?? (User.IsInRole(AppRoles.SuperAdmin) ? AppRoles.SuperAdmin :
+            User.IsInRole(AppRoles.WarehouseManager) ? AppRoles.WarehouseManager :
+            User.IsInRole(AppRoles.Cashier) ? AppRoles.Cashier :
+            User.IsInRole(AppRoles.ProcurementSpecialist) ? AppRoles.ProcurementSpecialist :
+            User.IsInRole(AppRoles.Auditor) ? AppRoles.Auditor : "");
+
+    var displayRole = string.IsNullOrWhiteSpace(rawRole) ? "No Role" : FormatRole(rawRole);
+}
+
+<div class="row justify-content-center py-5">
+    <div class="col-xl-6 col-lg-8 col-md-10">
+        <div class="card shadow-lg border-0 text-center p-5" style="background: var(--bg-surface); border-radius: var(--radius-xl); border: 1px solid var(--border-default) !important;">
+            
+            <div class="mb-4">
+                <div class="mx-auto d-flex align-items-center justify-content-center"
+                     style="width: 90px; height: 90px; border-radius: 50%; background: rgba(239, 68, 68, 0.12); color: var(--danger); box-shadow: var(--danger-glow);">
+                    <i class="fas fa-shield-virus fa-3x"></i>
+                </div>
+            </div>
+
+            <h1 class="display-4 font-weight-bold mb-2" style="color: var(--danger); font-size: 2.2rem;">
+                403 - @Loc["AccessDenied"]
+            </h1>
+
+            <p class="lead mb-4" style="color: var(--text-muted); font-size: 1.05rem;">
+                @Loc["Lbl_AccessDeniedDesc"]
+            </p>
+
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <div class="p-3 mb-4 mx-auto w-100 @(isRtl ? "text-right" : "text-left")" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); max-width: 420px;">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="small text-muted">@Loc["Username"]:</span>
+                        <strong style="color: var(--text-heading);"><span dir="ltr" style="unicode-bidi: isolate;">@User.Identity.Name</span></strong>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span class="small text-muted">@Loc["Lbl_AssignedRole"]:</span>
+                        <span class="badge badge-warning font-weight-bold px-2 py-1">
+                            @displayRole
+                        </span>
+                    </div>
+                </div>
+            }
+
+            <div class="d-flex justify-content-center flex-wrap" style="gap: 1rem;">
+                @if (User.IsInRole(AppRoles.Cashier))
+                {
+                    <a asp-controller="Sales" asp-action="Create" class="btn btn-primary px-4 py-2" style="border-radius: var(--radius-md); font-weight: 600;">
+                        <i class="fas fa-cash-register mr-2"></i> @Loc["Nav_Sales"] (POS)
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Dashboard" asp-action="Analytics" class="btn btn-primary px-4 py-2" style="border-radius: var(--radius-md); font-weight: 600;">
+                        <i class="fas fa-tachometer-alt mr-2"></i> @Loc["Nav_Dashboard"]
+                    </a>
+                }
+
+                <a href="javascript:history.back()" class="btn btn-secondary px-4 py-2" style="border-radius: var(--radius-md); font-weight: 600;">
+                    <i class="fas @(isRtl ? "fa-arrow-right ml-2" : "fa-arrow-left mr-2")"></i> @Loc["Lbl_GoBack"]
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

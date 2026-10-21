@@ -1,12 +1,17 @@
+using Inventory_Management_System.Models.Webhooks.Events;
+using Inventory_Management_System.Services.Webhooks;
+
 namespace Inventory_Management_System.Services
 {
     public class ProductService : IProductService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebhookDispatcher _webhookDispatcher;
 
-        public ProductService(ApplicationDbContext context)
+        public ProductService(ApplicationDbContext context, IWebhookDispatcher webhookDispatcher)
         {
             _context = context;
+            _webhookDispatcher = webhookDispatcher;
         }
 
         public async Task<PagedResult<ProductListItemViewModel>> GetProductsAsync(ProductFilterViewModel filter)
@@ -234,6 +239,24 @@ namespace Inventory_Management_System.Services
             try
             {
                 await _context.SaveChangesAsync();
+
+                if (product.StockQuantity <= product.LowStockThreshold)
+                {
+                    var cat = await _context.Categories.FindAsync(product.CategoryID);
+                    await _webhookDispatcher.DispatchAsync("inventory.low_stock_alert", new LowStockAlertEvent
+                    {
+                        ProductId = product.ProductID,
+                        Sku = product.SKU,
+                        ProductName = product.ProductName,
+                        CurrentStock = product.StockQuantity,
+                        LowStockThreshold = product.LowStockThreshold,
+                        UnitPrice = product.UnitPrice,
+                        CategoryName = cat?.CategoryName,
+                        TriggerSource = "Catalog Stock Adjustment",
+                        TriggeredAt = DateTime.UtcNow
+                    });
+                }
+
                 return OperationResult.Ok("Product updated successfully.");
             }
             catch (DbUpdateException)

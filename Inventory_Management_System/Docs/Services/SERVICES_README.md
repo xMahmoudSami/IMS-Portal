@@ -184,3 +184,75 @@ The system prompt strictly restrains the model to the injected database context:
   If Groq Cloud is temporarily unreachable or the API quota is exhausted, `AIService` falls back to internal rule-based C# analysis (generating deterministic inventory metrics directly from database LINQ queries) so warehouse staff are never left without answers.
 - **Client-Side Sanitization:**
   Output is delivered in GitHub-Flavored Markdown, rendered via `marked.js`, and scrubbed via `DOMPurify` before DOM insertion to guarantee zero cross-site scripting vulnerabilities.
+
+---
+
+## 4. Enterprise Identity & Credential Recovery Services
+
+### 4.1. `ITokenService` & `TokenService` (`Services/TokenService.cs`)
+Responsible for issuing cryptographically signed JSON Web Tokens (JWT) for headless API consumers, mobile terminals, and decoupled clients.
+
+- **Primary Contract Operations:**
+  ```csharp
+  Task<string> GenerateJwtTokenAsync(ApplicationUser user);
+  ```
+- **Implementation Mechanics:**
+  - Extracts user claims: `NameIdentifier` (User ID), `Name` (Username), `Email`, `FullName`, and all assigned `ClaimTypes.Role` entries.
+  - Signs payload with `HmacSha256` using the enterprise secret key defined in `appsettings.json` (`Jwt:Key`).
+  - Sets configurable token lifetime (`Jwt:ExpireMinutes`, default 480 minutes / 8 hours) with strict `Issuer` and `Audience` validation.
+
+---
+
+### 4.2. `IMasterRecoveryKeyService` & `MasterRecoveryKeyService` (`Services/Recovery/`)
+Provides a zero-SMTP, local-first credential recovery pipeline using high-entropy Master Recovery Keys and emergency one-time passwords (OTP).
+
+- **Primary Contract Operations:**
+  ```csharp
+  string GenerateRecoveryKey();
+  string GenerateOtpCode();
+  Task<string> RegenerateAndStoreKeyAsync(ApplicationUser user);
+  bool VerifyRecoveryKey(ApplicationUser user, string plainRecoveryKey);
+  Task<string> GenerateAndStoreOtpAsync(ApplicationUser user, int validityMinutes = 15);
+  bool VerifyOtp(ApplicationUser user, string otpCode);
+  Task InvalidateOtpAsync(ApplicationUser user);
+  ```
+- **Implementation Mechanics:**
+  - **128-Bit Entropy Key Generation:** Uses `RandomNumberGenerator` to draw from an unambiguous character set (excluding confusing characters like `0`, `O`, `1`, `I`), formatted as `IMS-XXXX-XXXX-XXXX-XXXX`.
+  - **Normalization Strategy:** Strips formatting hyphens, prefixes, and whitespace, converting to uppercase before hashing or verification, allowing operators to input keys with or without formatting.
+  - **Salted PBKDF2 Hashing:** Uses ASP.NET Core Identity's `IPasswordHasher<ApplicationUser>` to store one-way cryptographic hashes. The raw key is never stored in the database.
+  - **Strict One-Time Presentation Policy:** The plain-text key is returned only upon initial generation or rotation.
+  - **Emergency OTP Generation:** Generates a secure 6-digit numeric OTP with configurable expiration (15 minutes), dispatched via webhook to administrative Telegram channels.
+  - **Single-Use Key Rotation:** Successfully resetting a password with the recovery key or OTP immediately triggers key rotation, generating and displaying a new Master Recovery Key.
+
+---
+
+### 4.3. `IdentitySeeder` (`Services/IdentitySeeder.cs`)
+Automates database seeding on startup via `Program.cs`:
+- Ensures all 5 enterprise roles (`SuperAdmin`, `WarehouseManager`, `Cashier`, `ProcurementSpecialist`, `Auditor`) exist in `AspNetRoles`.
+- Configures role claims and granular permission policies.
+- Provisions default accounts with secure password hashes and hashed Master Recovery Keys (`IMS-ADMIN-RECOVERY-KEY-2026`).
+
+---
+
+## 5. Event-Driven Webhook Dispatcher & Cryptographic Signer (`Services/Webhooks/`)
+
+Provides asynchronous, fault-tolerant event broadcasting to external automation engines like n8n:
+
+### 5.1. `IWebhookSigner` & `WebhookSigner` (`Services/Webhooks/WebhookSigner.cs`)
+Generates and verifies cryptographic signatures for outgoing webhook payloads:
+- **HMAC-SHA256 Signing:** Computes `HMAC-SHA256` using the configured webhook secret over UTF-8 payload bytes, formatted as `sha256=<hex_digest>`.
+- **Timing Attack Mitigation:** Implements `CryptographicOperations.FixedTimeEquals` for constant-time comparison during signature verification.
+
+### 5.2. `IWebhookDispatcher` & `WebhookDispatcher` (`Services/Webhooks/WebhookDispatcher.cs`)
+Non-blocking event dispatch service utilizing `IHttpClientFactory` (`"WebhookClient"`):
+
+- **Primary Contract Operations:**
+  ```csharp
+  Task DispatchAsync<T>(string eventType, T data, CancellationToken cancellationToken = default);
+  ```
+- **Behavioral Guarantees:**
+  - **Graceful Fault Tolerance:** Checks `WebhookSettings:Enabled` and `PayloadUrl`. If disabled or unconfigured, logs an informational trace and exits safely without throwing exceptions.
+  - **Standardized Payload Envelope:** Envelopes data into `WebhookPayload<T>` containing `EventId` (GUID), `EventType`, `Timestamp`, and `Data`.
+  - **Automatic Signature Attachment:** Invokes `IWebhookSigner` and attaches the resulting signature to the `X-Hub-Signature-256` HTTP header.
+  - **Transaction Protection:** Catches all network timeouts, DNS failures, or HTTP error responses. Failures are logged with full event context without disrupting user transactions or rolling back database commits.
+

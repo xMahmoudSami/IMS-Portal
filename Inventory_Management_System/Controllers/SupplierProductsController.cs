@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
+
 namespace Inventory_Management_System.Controllers
 {
+    [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager},{AppRoles.ProcurementSpecialist}")]
     public class SupplierProductsController : Controller
     {
         private readonly ISupplierProductService _supplierProductService;

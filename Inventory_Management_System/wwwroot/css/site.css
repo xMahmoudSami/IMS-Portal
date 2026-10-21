@@ -670,6 +670,27 @@ a:hover {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
+html[data-theme="light"] .theme-icon-sun {
+  display: inline-block !important;
+}
+
+html[data-theme="light"] .theme-icon-moon {
+  display: none !important;
+}
+
+html[data-theme="light"] .theme-icon-container {
+  background: rgba(245, 158, 11, 0.18) !important;
+  color: #f59e0b !important;
+}
+
+html[data-theme="light"] .theme-switch-track {
+  background: var(--primary) !important;
+}
+
+html[data-theme="light"] .theme-switch-thumb {
+  transform: translateX(16px) !important;
+}
+
 #sidebarToggle {
   background-color: var(--bg-surface-elevated) !important;
   color: var(--text-muted);
@@ -1811,6 +1832,19 @@ footer.sticky-footer {
   box-shadow: var(--info-glow) !important;
 }
 
+.btn-outline-warning {
+  background: transparent !important;
+  border: 1px solid var(--warning) !important;
+  color: #fbbf24 !important;
+}
+
+.btn-outline-warning:hover {
+  background: var(--warning-gradient) !important;
+  border-color: var(--warning) !important;
+  color: #000000 !important;
+  box-shadow: var(--warning-glow) !important;
+}
+
 .btn-outline-secondary {
   background: transparent !important;
   border: 1px solid var(--border-default) !important;
@@ -1886,16 +1920,22 @@ label,
   display: block;
 }
 
-label .text-danger {
+label .text-danger,
+.form-label .text-danger,
+label > .text-danger,
+.form-label > .text-danger {
   color: #f87171 !important;
+  display: inline !important;
+  vertical-align: baseline;
   margin-left: 2px;
+  margin-right: 2px;
 }
 
 .form-control,
-input[type="text"],
-input[type="number"],
-input[type="email"],
-input[type="password"],
+input[type="text"]:not(.form-control-auth),
+input[type="number"]:not(.form-control-auth),
+input[type="email"]:not(.form-control-auth),
+input[type="password"]:not(.form-control-auth),
 textarea {
   background-color: var(--bg-input) !important;
   border: 1px solid var(--border-default) !important;
@@ -1906,6 +1946,69 @@ textarea {
   height: auto;
   line-height: 1.5;
   transition: var(--transition-base);
+}
+
+/* Authentication Inputs with Leading Icons */
+.input-group-auth {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.input-group-auth .input-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 1.15rem;
+  color: var(--text-subtle);
+  font-size: 1rem;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.input-group-auth .form-control-auth,
+input.form-control-auth,
+input[type="text"].form-control-auth,
+input[type="password"].form-control-auth,
+input[type="email"].form-control-auth {
+  height: 50px !important;
+  padding-left: 3.1rem !important;
+  padding-right: 1.15rem !important;
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--text-heading) !important;
+  font-size: 0.95rem !important;
+  transition: var(--transition-base) !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.input-group-auth:has(.password-toggle-btn) .form-control-auth,
+.input-group-auth .form-control-auth.has-toggle,
+input.form-control-auth.has-toggle {
+  padding-right: 3rem !important;
+}
+
+[dir="rtl"] .input-group-auth .input-icon {
+  left: auto;
+  right: 1.15rem;
+}
+
+[dir="rtl"] .input-group-auth .form-control-auth,
+[dir="rtl"] input.form-control-auth,
+[dir="rtl"] input[type="text"].form-control-auth,
+[dir="rtl"] input[type="password"].form-control-auth,
+[dir="rtl"] input[type="email"].form-control-auth {
+  padding-left: 1.15rem !important;
+  padding-right: 3.1rem !important;
+}
+
+[dir="rtl"] .input-group-auth:has(.password-toggle-btn) .form-control-auth,
+[dir="rtl"] .input-group-auth .form-control-auth.has-toggle,
+[dir="rtl"] input.form-control-auth.has-toggle {
+  padding-left: 3rem !important;
+  padding-right: 3.1rem !important;
 }
 
 .form-control::placeholder,
@@ -2313,7 +2416,7 @@ dl.row dd:last-of-type {
   box-shadow: var(--shadow-lg) !important;
   padding: 0.5rem !important;
   backdrop-filter: blur(16px);
-  animation: fadeIn 0.2s ease-out, slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fadeIn 0.15s ease-out;
 }
 
 .dropdown-item {
@@ -5152,4 +5255,30 @@ html[data-theme="light"] .app-dialog-btn-cancel:hover {
 html[dir="rtl"] .app-dialog-footer {
   flex-direction: row-reverse;
 }
+
+/* --------------------------------------------------------------------------
+   INLINE & UNOBTRUSIVE FORM VALIDATION
+   -------------------------------------------------------------------------- */
+input.input-validation-error,
+select.input-validation-error,
+textarea.input-validation-error,
+.form-control.is-invalid {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 0.2rem rgba(239, 68, 68, 0.25) !important;
+}
+
+.field-validation-error,
+span.field-validation-error,
+.text-danger.small {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #f87171 !important;
+}
+
+.field-validation-valid {
+  display: none;
+}
+
 

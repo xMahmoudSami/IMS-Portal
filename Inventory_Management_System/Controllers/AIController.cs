@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
+
 namespace Inventory_Management_System.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class AIController : ControllerBase

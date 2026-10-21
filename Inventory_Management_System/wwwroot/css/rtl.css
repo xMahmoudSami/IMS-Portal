@@ -64,15 +64,17 @@ html[dir="rtl"] .sidebar-brand-text {
 }
 
 /* Sidebar chevron direction for collapsible menus */
+html[dir="rtl"] .sidebar .nav-item .nav-link .sidebar-chevron,
 html[dir="rtl"] .sidebar .sidebar-chevron {
     margin-right: auto !important;
     margin-left: 0 !important;
-    transform: rotate(180deg);
+    transform: rotate(180deg) !important;
     transition: transform 0.3s ease;
 }
 
-html[dir="rtl"] .sidebar .nav-link:not(.collapsed) .sidebar-chevron {
-    transform: rotate(90deg);
+html[dir="rtl"] .sidebar .nav-link:not(.collapsed) .sidebar-chevron,
+html[dir="rtl"] .sidebar .nav-link[aria-expanded="true"] .sidebar-chevron {
+    transform: rotate(90deg) !important;
 }
 
 /* Sidebar collapse sub-items indentation */
@@ -281,10 +283,26 @@ html[dir="rtl"] .input-group > .input-group-append > .btn {
 }
 
 /* Validation messages */
-html[dir="rtl"] .text-danger,
-html[dir="rtl"] .field-validation-error {
+html[dir="rtl"] .field-validation-error,
+html[dir="rtl"] span.field-validation-error,
+html[dir="rtl"] .text-danger.field-validation-error,
+html[dir="rtl"] .text-danger.small,
+html[dir="rtl"] div.text-danger,
+html[dir="rtl"] p.text-danger {
     text-align: right;
     display: block;
+}
+
+/* Ensure required asterisks and inline alerts inside labels remain strictly inline */
+html[dir="rtl"] label .text-danger,
+html[dir="rtl"] .form-label .text-danger,
+html[dir="rtl"] label > .text-danger,
+html[dir="rtl"] .form-label > .text-danger,
+html[dir="rtl"] span.text-danger:not(.field-validation-error):not(.small) {
+    display: inline !important;
+    vertical-align: baseline;
+    margin-right: 0.25rem;
+    margin-left: 0.25rem;
 }
 
 /* ===================================================================

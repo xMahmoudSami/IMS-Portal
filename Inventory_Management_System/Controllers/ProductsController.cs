@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
+
 namespace Inventory_Management_System.Controllers
 {
+    [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager},{AppRoles.Cashier},{AppRoles.ProcurementSpecialist},{AppRoles.Auditor}")]
     public class ProductsController : Controller
     {
         private readonly IProductService _productService;
@@ -35,6 +38,7 @@ namespace Inventory_Management_System.Controllers
 
         // GET: /Products/Create
         [HttpGet]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager}")]
         public async Task<IActionResult> Create(int? categoryId)
         {
             var model = new ProductFormViewModel
@@ -48,6 +52,7 @@ namespace Inventory_Management_System.Controllers
         // POST: /Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager}")]
         public async Task<IActionResult> Create(ProductFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -70,6 +75,7 @@ namespace Inventory_Management_System.Controllers
 
         // GET: /Products/Edit/{id}
         [HttpGet]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager}")]
         public async Task<IActionResult> Edit(int id)
         {
             if (id <= 0) return NotFound();
@@ -84,6 +90,7 @@ namespace Inventory_Management_System.Controllers
         // POST: /Products/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager}")]
         public async Task<IActionResult> Edit(int id, ProductFormViewModel model)
         {
             if (id != model.ProductID)
@@ -111,6 +118,7 @@ namespace Inventory_Management_System.Controllers
 
         // GET: /Products/Delete/{id}
         [HttpGet]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager}")]
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return NotFound();
@@ -124,6 +132,7 @@ namespace Inventory_Management_System.Controllers
         // POST: /Products/Delete/{id}
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager}")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (id <= 0) return BadRequest();
@@ -141,6 +150,7 @@ namespace Inventory_Management_System.Controllers
 
         // Remote validation: /Products/CheckSkuUnique
         [HttpGet]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager}")]
         public async Task<IActionResult> CheckSkuUnique(string sku, int? productId)
         {
             var isUnique = await _productService.IsSkuUniqueAsync(sku, productId);

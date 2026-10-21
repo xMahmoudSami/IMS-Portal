@@ -53,14 +53,133 @@
         return !string.Equals(currentAction, "Create", StringComparison.OrdinalIgnoreCase);
     }
 
+    // ── User Role & RBAC Permissions ─────────────────────────────────────
+    bool isSuperAdmin = User.IsInRole(AppRoles.SuperAdmin);
+    bool isWarehouseManager = User.IsInRole(AppRoles.WarehouseManager);
+    bool isCashier = User.IsInRole(AppRoles.Cashier);
+    bool isProcurement = User.IsInRole(AppRoles.ProcurementSpecialist);
+    bool isAuditor = User.IsInRole(AppRoles.Auditor);
+
+    var userRole = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Role)?.Value
+        ?? (isSuperAdmin ? AppRoles.SuperAdmin :
+            isWarehouseManager ? AppRoles.WarehouseManager :
+            isCashier ? AppRoles.Cashier :
+            isProcurement ? AppRoles.ProcurementSpecialist :
+            isAuditor ? AppRoles.Auditor : "User");
+
+    var roleBadgeClass = userRole switch
+    {
+        AppRoles.SuperAdmin => "badge-danger",
+        AppRoles.WarehouseManager => "badge-primary",
+        AppRoles.Cashier => "badge-success",
+        AppRoles.ProcurementSpecialist => "badge-info",
+        AppRoles.Auditor => "badge-warning",
+        _ => "badge-secondary"
+    };
+
+    string FormatRole(string r)
+    {
+        var key = "Role_" + r;
+        var localized = Loc[key];
+        if (!localized.IsResourceNotFound && !string.IsNullOrWhiteSpace(localized.Value) && localized.Value != key)
+        {
+            return localized.Value;
+        }
+
+        return currentCulture switch
+        {
+            "ar" => r switch
+            {
+                AppRoles.SuperAdmin => "المشرف العام",
+                AppRoles.WarehouseManager => "مدير المستودع",
+                AppRoles.Cashier => "أمين الصندوق",
+                AppRoles.ProcurementSpecialist => "مسؤول المشتريات",
+                AppRoles.Auditor => "مدقق مالي",
+                _ => r
+            },
+            "fr" => r switch
+            {
+                AppRoles.SuperAdmin => "Administrateur",
+                AppRoles.WarehouseManager => "Gestionnaire d'entrepôt",
+                AppRoles.Cashier => "Caissier",
+                AppRoles.ProcurementSpecialist => "Responsable des achats",
+                AppRoles.Auditor => "Auditeur",
+                _ => r
+            },
+            "es" => r switch
+            {
+                AppRoles.SuperAdmin => "Administrador",
+                AppRoles.WarehouseManager => "Gerente de almacén",
+                AppRoles.Cashier => "Cajero",
+                AppRoles.ProcurementSpecialist => "Especialista en compras",
+                AppRoles.Auditor => "Auditor",
+                _ => r
+            },
+            "de" => r switch
+            {
+                AppRoles.SuperAdmin => "Administrator",
+                AppRoles.WarehouseManager => "Lagermanager",
+                AppRoles.Cashier => "Kassierer",
+                AppRoles.ProcurementSpecialist => "Beschaffungsspezialist",
+                AppRoles.Auditor => "Prüfer",
+                _ => r
+            },
+            "it" => r switch
+            {
+                AppRoles.SuperAdmin => "Amministratore",
+                AppRoles.WarehouseManager => "Responsabile del magazzino",
+                AppRoles.Cashier => "Cassiere",
+                AppRoles.ProcurementSpecialist => "Addetto agli acquisti",
+                AppRoles.Auditor => "Revisore dei conti",
+                _ => r
+            },
+            _ => r switch
+            {
+                AppRoles.SuperAdmin => "Administrator",
+                AppRoles.WarehouseManager => "Warehouse Manager",
+                AppRoles.Cashier => "Cashier",
+                AppRoles.ProcurementSpecialist => "Procurement Specialist",
+                AppRoles.Auditor => "Auditor",
+                _ => r
+            }
+        };
+    }
+
+    var displayUserRole = FormatRole(userRole);
+
+    bool canViewDashboard = isSuperAdmin || isWarehouseManager || isProcurement || isAuditor;
+    bool canViewProducts = isSuperAdmin || isWarehouseManager || isCashier || isProcurement || isAuditor;
+    bool canManageProducts = isSuperAdmin || isWarehouseManager;
+    bool canViewCategories = isSuperAdmin || isWarehouseManager || isAuditor;
+    bool canViewSuppliers = isSuperAdmin || isWarehouseManager || isProcurement || isAuditor;
+    bool canViewSupplierProducts = isSuperAdmin || isWarehouseManager || isProcurement;
+    bool canViewPurchases = isSuperAdmin || isWarehouseManager || isProcurement || isAuditor;
+    bool canViewSales = isSuperAdmin || isCashier || isAuditor;
+    bool canViewReports = isSuperAdmin || isAuditor || isWarehouseManager;
+    bool canViewSalesReport = isSuperAdmin || isAuditor;
+    bool canManageUsers = isSuperAdmin;
+
+    // ── Localized Administration Section Heading ─────────────────────
+    var navAdministration = Loc["Nav_Administration"].IsResourceNotFound || Loc["Nav_Administration"].Value == "Nav_Administration"
+        ? (currentCulture switch
+        {
+            "ar" => "إدارة النظام",
+            "fr" => "Administration",
+            "es" => "Administración",
+            "it" => "Amministrazione",
+            "de" => "Verwaltung",
+            _    => "Administration"
+        })
+        : Loc["Nav_Administration"].Value;
+
     // ── Localized Chatbot Strings with culture-aware fallbacks ────────
     var chatTitle = Loc["AIChatbotTitle"].IsResourceNotFound || Loc["AIChatbotTitle"].Value == "AIChatbotTitle"
         ? (currentCulture switch
         {
             "ar" => "المساعد الذكي للمخزون",
             "fr" => "Assistant d'inventaire IA",
-            "es" => "Asistente de inventario IA",
-            "it" => "Assistente inventario IA",
+            "es" => "Asistente de inventor IA",
+            "it" => "Assistente inventor IA",
             "de" => "KI-Inventar-Assistent",
             _ => "AI Inventory Assistant"
         })
@@ -71,8 +190,8 @@
         {
             "ar" => "مرحباً! أنا مساعدك الذكي للمخزون، كيف يمكنني مساعدتك اليوم؟",
             "fr" => "Bonjour! Je suis votre assistant d'inventaire. Comment puis-je vous aider?",
-            "es" => "¡Hola! Soy tu asistente de inventario. ¿Cómo puedo ayudarte?",
-            "it" => "Ciao! Sono il tuo assistente inventario. Come posso aiutarti?",
+            "es" => "¡Hola! Soy tu asistente de inventor. ¿Cómo puedo ayudarte?",
+            "it" => "Ciao! Sono il tuo assistente inventor. Come posso aiutarti?",
             "de" => "Hallo! Ich bin Ihr Inventar-Assistent. Wie kann ich Ihnen helfen?",
             _ => "Hello! I'm your inventory assistant. How can I help you?"
         })
@@ -83,8 +202,8 @@
         {
             "ar" => "اسأل عن مخزونك...",
             "fr" => "Posez une question sur votre inventaire...",
-            "es" => "Pregunte sobre su inventario...",
-            "it" => "Chiedi informazioni sul tuo inventario...",
+            "es" => "Pregunte sobre su inventor...",
+            "it" => "Chiedi informazioni sul tuo inventor...",
             "de" => "Fragen Sie nach Ihrem Inventar...",
             _ => "Ask about your inventory..."
         })
@@ -95,7 +214,7 @@
         {
             "ar" => "مسح سجل المحادثة",
             "fr" => "Effacer l'historique",
-            "es" => "Borrar historial",
+            "es" => "Borrar historical",
             "it" => "Cancella cronologia",
             "de" => "Verlauf löschen",
             _ => "Clear chat history"
@@ -107,7 +226,7 @@
         {
             "ar" => "هل أنت متأكد من مسح جميع رسائل المحادثة؟",
             "fr" => "Êtes-vous sûr de vouloir effacer tout l'historique du chat ?",
-            "es" => "¿Estás seguro de que deseas borrar todo el historial de chat?",
+            "es" => "¿Estás seguro de que deseas borrar todo el historical de chat?",
             "it" => "Sei sicuro di voler cancellare l'intera cronologia della chat?",
             "de" => "Möchten Sie wirklich den gesamten Chat-Verlauf löschen?",
             _ => "Are you sure you want to clear the entire chat history?"
@@ -173,27 +292,32 @@
             _ => "Success!"
         })
         : Loc["Success"].Value;
+    var themeCookie = Context.Request.Cookies["ims_theme"];
+    if (themeCookie != "light" && themeCookie != "dark") { themeCookie = Context.Request.Cookies["theme"]; }
+    if (themeCookie != "light" && themeCookie != "dark") { themeCookie = "dark"; }
 }
 
 <!DOCTYPE html>
-<html lang="@currentCulture" dir="@(isRtl ? "rtl" : "ltr")">
+<html lang="@currentCulture" dir="@(isRtl ? "rtl" : "ltr")" data-theme="@themeCookie">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- Anti-flicker theme detection (must run synchronously before styles render) -->
+    <!-- Anti-flicker theme detection (runs synchronously before styles render) -->
     <script>
             (function () {
                 try {
-                    var savedTheme = localStorage.getItem('ims_theme') || localStorage.getItem('theme') || 'dark';
-                    if (savedTheme === 'light') {
-                        document.documentElement.setAttribute('data-theme', 'light');
-                    } else {
-                        document.documentElement.setAttribute('data-theme', 'dark');
+                    var saved = localStorage.getItem('ims_theme');
+                    if (saved !== 'light' && saved !== 'dark') {
+                        saved = '@themeCookie';
                     }
-                } catch (e) {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                }
+                    if (saved !== 'light' && saved !== 'dark') {
+                        saved = 'dark';
+                    }
+                    document.documentElement.setAttribute('data-theme', saved);
+                    try { localStorage.setItem('ims_theme', saved); } catch (e) { }
+                    document.cookie = 'ims_theme=' + saved + ';path=/;max-age=31536000;SameSite=Lax';
+                } catch (e) { }
             })();
     </script>
     @if (!string.IsNullOrEmpty(ViewData["DocumentTitle"]?.ToString()))
@@ -214,14 +338,14 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
 
     <!-- Custom styles -->
-    <link href="~/css/sb-admin-2.min.css" rel="stylesheet" />
-    <link href="~/css/ai-chat.css" rel="stylesheet" />
-    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/sb-admin-2.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/ai-chat.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
 
     @* RTL overrides — loaded only for Arabic culture *@
     @if (isRtl)
     {
-        <link href="~/css/rtl.css" rel="stylesheet" />
+        <link href="~/css/rtl.css" rel="stylesheet" asp-append-version="true" />
     }
 </head>
 
@@ -245,154 +369,208 @@
 
             <hr class="sidebar-divider my-0" />
 
-            <!-- Dashboard -->
-            <li class="nav-item @(IsActive("Dashboard") ? "active-page" : "")">
-                <a class="nav-link @(IsActive("Dashboard") ? "active-page" : "")"
-                   asp-controller="Dashboard"
-                   asp-action="Analytics">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>@SharedLocalizer["Nav_Dashboard"]</span>
-                </a>
-            </li>
+            @if (canViewDashboard)
+            {
+                <!-- Dashboard -->
+                <li class="nav-item @(IsActive("Dashboard") ? "active-page" : "")">
+                    <a class="nav-link @(IsActive("Dashboard") ? "active-page" : "")"
+                       asp-controller="Dashboard"
+                       asp-action="Analytics">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>@SharedLocalizer["Nav_Dashboard"]</span>
+                    </a>
+                </li>
 
-            <hr class="sidebar-divider" />
+                <hr class="sidebar-divider" />
+            }
 
-            <!-- INVENTORY CORE -->
-            <div class="sidebar-heading">@SharedLocalizer["Nav_InventoryCore"]</div>
+            @if (canViewProducts || canViewCategories || canViewSuppliers || canViewSupplierProducts)
+            {
+                <!-- INVENTORY CORE -->
+                <div class="sidebar-heading">@SharedLocalizer["Nav_InventoryCore"]</div>
 
-            <!-- Products -->
-            <li class="nav-item">
-                <a class="nav-link @(IsActive("Products") ? "" : "collapsed")"
-                   href="#"
-                   data-toggle="collapse"
-                   data-target="#collapseProducts"
-                   aria-expanded="@(IsActive("Products") ? "true" : "false")"
-                   aria-controls="collapseProducts">
-                    <i class="fas fa-fw fa-box"></i>
-                    <span>@SharedLocalizer["Nav_Products"]</span>
-                    <i class="fas fa-angle-right ml-auto sidebar-chevron"></i>
-                </a>
+                @if (canViewProducts)
+                {
+                    <!-- Products -->
+                    <li class="nav-item">
+                        <a class="nav-link @(IsActive("Products") ? "" : "collapsed")"
+                           href="#"
+                           data-toggle="collapse"
+                           data-target="#collapseProducts"
+                           aria-expanded="@(IsActive("Products") ? "true" : "false")"
+                           aria-controls="collapseProducts">
+                            <i class="fas fa-fw fa-box"></i>
+                            <span>@SharedLocalizer["Nav_Products"]</span>
+                            <i class="fas fa-angle-right ml-auto sidebar-chevron"></i>
+                        </a>
 
-                <div id="collapseProducts"
-                     class="collapse @(IsActive("Products") ? "show" : "")"
-                     data-parent="#accordionSidebar">
+                        <div id="collapseProducts"
+                             class="collapse @(IsActive("Products") ? "show" : "")"
+                             data-parent="#accordionSidebar">
 
-                    <a class="nav-link py-2 @(IsProductsListActive() ? "active-page" : "")"
-                       asp-controller="Products"
+                            <a class="nav-link py-2 @(IsProductsListActive() ? "active-page" : "")"
+                               asp-controller="Products"
+                               asp-action="Index">
+                                <span>@SharedLocalizer["Nav_AllProducts"]</span>
+                            </a>
+
+                            @if (canManageProducts)
+                            {
+                                <a class="nav-link py-2 @(IsActive("Products", "Create") ? "active-page" : "")"
+                                   asp-controller="Products"
+                                   asp-action="Create">
+                                    <span>@SharedLocalizer["Nav_AddProduct"]</span>
+                                </a>
+                            }
+                        </div>
+                    </li>
+                }
+
+                @if (canViewCategories)
+                {
+                    <!-- Categories -->
+                    <li class="nav-item @(IsActive("Categories") ? "active-page" : "")">
+                        <a class="nav-link @(IsActive("Categories") ? "active-page" : "")"
+                           asp-controller="Categories"
+                           asp-action="Index">
+                            <i class="fas fa-fw fa-tags"></i>
+                            <span>@SharedLocalizer["Nav_Categories"]</span>
+                        </a>
+                    </li>
+                }
+
+                @if (canViewSuppliers)
+                {
+                    <!-- Suppliers -->
+                    <li class="nav-item @(IsActive("Suppliers") ? "active-page" : "")">
+                        <a class="nav-link @(IsActive("Suppliers") ? "active-page" : "")"
+                           asp-controller="Suppliers"
+                           asp-action="Index">
+                            <i class="fas fa-fw fa-truck"></i>
+                            <span>@SharedLocalizer["Nav_Suppliers"]</span>
+                        </a>
+                    </li>
+                }
+
+                @if (canViewSupplierProducts)
+                {
+                    <!-- Supplier Mappings -->
+                    <li class="nav-item @(IsActive("SupplierProducts") ? "active-page" : "")">
+                        <a class="nav-link @(IsActive("SupplierProducts") ? "active-page" : "")"
+                           asp-controller="SupplierProducts"
+                           asp-action="Index">
+                            <i class="fas fa-fw fa-handshake"></i>
+                            <span>@SharedLocalizer["Nav_SupplierMappings"]</span>
+                        </a>
+                    </li>
+                }
+
+                <hr class="sidebar-divider" />
+            }
+
+            @if (canViewPurchases || canViewSales)
+            {
+                <!-- TRANSACTIONS -->
+                <div class="sidebar-heading">@SharedLocalizer["Nav_Transactions"]</div>
+
+                <li class="nav-item">
+                    <a class="nav-link @(IsActive("Purchases") || IsActive("Sales") ? "" : "collapsed")"
+                       href="#"
+                       data-toggle="collapse"
+                       data-target="#collapseTransactions"
+                       aria-expanded="@(IsActive("Purchases") || IsActive("Sales") ? "true" : "false")"
+                       aria-controls="collapseTransactions">
+                        <i class="fas fa-fw fa-exchange-alt"></i>
+                        <span>@SharedLocalizer["Nav_Transactions"]</span>
+                        <i class="fas fa-angle-right ml-auto sidebar-chevron"></i>
+                    </a>
+
+                    <div id="collapseTransactions"
+                         class="collapse @(IsActive("Purchases") || IsActive("Sales") ? "show" : "")"
+                         data-parent="#accordionSidebar">
+
+                        @if (canViewPurchases)
+                        {
+                            <a class="nav-link py-2 @(IsActive("Purchases") ? "active-page" : "")"
+                               asp-controller="Purchases"
+                               asp-action="Index">
+                                <span>@SharedLocalizer["Nav_Purchases"]</span>
+                            </a>
+                        }
+
+                        @if (canViewSales)
+                        {
+                            <a class="nav-link py-2 @(IsActive("Sales") ? "active-page" : "")"
+                               asp-controller="Sales"
+                               asp-action="Index">
+                                <span>@SharedLocalizer["Nav_Sales"]</span>
+                            </a>
+                        }
+                    </div>
+                </li>
+
+                <hr class="sidebar-divider" />
+            }
+
+            @if (canViewReports)
+            {
+                <!-- MANAGEMENT -->
+                <div class="sidebar-heading">@SharedLocalizer["Nav_Management"]</div>
+
+                <!-- Reports -->
+                <li class="nav-item">
+                    <a class="nav-link @(IsActive("Reports") ? "" : "collapsed")"
+                       href="#"
+                       data-toggle="collapse"
+                       data-target="#collapseReports"
+                       aria-expanded="@(IsActive("Reports") ? "true" : "false")"
+                       aria-controls="collapseReports">
+                        <i class="fas fa-fw fa-chart-line"></i>
+                        <span>@SharedLocalizer["Nav_Reports"]</span>
+                        <i class="fas fa-angle-right ml-auto sidebar-chevron"></i>
+                    </a>
+
+                    <div id="collapseReports"
+                         class="collapse @(IsActive("Reports") ? "show" : "")"
+                         data-parent="#accordionSidebar">
+
+                        <a class="nav-link py-2 @(IsActive("Reports", "StockHealth") || IsActive("Reports", "Index") ? "active-page" : "")"
+                           asp-controller="Reports"
+                           asp-action="StockHealth">
+                            <span>@SharedLocalizer["Nav_StockValuation"]</span>
+                        </a>
+
+                        @if (canViewSalesReport)
+                        {
+                            <a class="nav-link py-2 @(IsActive("Reports", "Sales") ? "active-page" : "")"
+                               asp-controller="Reports"
+                               asp-action="Sales">
+                                <span>@SharedLocalizer["Nav_SalesReport"]</span>
+                            </a>
+                        }
+                    </div>
+                </li>
+
+                <hr class="sidebar-divider" />
+            }
+
+            @if (canManageUsers)
+            {
+                <!-- ADMINISTRATION -->
+                <div class="sidebar-heading">@navAdministration</div>
+
+                <!-- User Management -->
+                <li class="nav-item @(IsActive("Users") ? "active-page" : "")">
+                    <a class="nav-link @(IsActive("Users") ? "active-page" : "")"
+                       asp-controller="Users"
                        asp-action="Index">
-                        <span>@SharedLocalizer["Nav_AllProducts"]</span>
+                        <i class="fas fa-fw fa-users-cog"></i>
+                        <span>@SharedLocalizer["Nav_UserManagement"]</span>
                     </a>
+                </li>
 
-                    <a class="nav-link py-2 @(IsActive("Products", "Create") ? "active-page" : "")"
-                       asp-controller="Products"
-                       asp-action="Create">
-                        <span>@SharedLocalizer["Nav_AddProduct"]</span>
-                    </a>
-                </div>
-            </li>
-
-            <!-- Categories -->
-            <li class="nav-item @(IsActive("Categories") ? "active-page" : "")">
-                <a class="nav-link @(IsActive("Categories") ? "active-page" : "")"
-                   asp-controller="Categories"
-                   asp-action="Index">
-                    <i class="fas fa-fw fa-tags"></i>
-                    <span>@SharedLocalizer["Nav_Categories"]</span>
-                </a>
-            </li>
-
-            <!-- Suppliers -->
-            <li class="nav-item @(IsActive("Suppliers") ? "active-page" : "")">
-                <a class="nav-link @(IsActive("Suppliers") ? "active-page" : "")"
-                   asp-controller="Suppliers"
-                   asp-action="Index">
-                    <i class="fas fa-fw fa-truck"></i>
-                    <span>@SharedLocalizer["Nav_Suppliers"]</span>
-                </a>
-            </li>
-
-            <!-- Supplier Mappings -->
-            <li class="nav-item @(IsActive("SupplierProducts") ? "active-page" : "")">
-                <a class="nav-link @(IsActive("SupplierProducts") ? "active-page" : "")"
-                   asp-controller="SupplierProducts"
-                   asp-action="Index">
-                    <i class="fas fa-fw fa-handshake"></i>
-                    <span>@SharedLocalizer["Nav_SupplierMappings"]</span>
-                </a>
-            </li>
-
-            <hr class="sidebar-divider" />
-
-            <!-- TRANSACTIONS -->
-            <div class="sidebar-heading">@SharedLocalizer["Nav_Transactions"]</div>
-
-            <li class="nav-item">
-                <a class="nav-link @(IsActive("Purchases") || IsActive("Sales") ? "" : "collapsed")"
-                   href="#"
-                   data-toggle="collapse"
-                   data-target="#collapseTransactions"
-                   aria-expanded="@(IsActive("Purchases") || IsActive("Sales") ? "true" : "false")"
-                   aria-controls="collapseTransactions">
-                    <i class="fas fa-fw fa-exchange-alt"></i>
-                    <span>@SharedLocalizer["Nav_Transactions"]</span>
-                    <i class="fas fa-angle-right ml-auto sidebar-chevron"></i>
-                </a>
-
-                <div id="collapseTransactions"
-                     class="collapse @(IsActive("Purchases") || IsActive("Sales") ? "show" : "")"
-                     data-parent="#accordionSidebar">
-
-                    <a class="nav-link py-2 @(IsActive("Purchases") ? "active-page" : "")"
-                       asp-controller="Purchases"
-                       asp-action="Index">
-                        <span>@SharedLocalizer["Nav_Purchases"]</span>
-                    </a>
-
-                    <a class="nav-link py-2 @(IsActive("Sales") ? "active-page" : "")"
-                       asp-controller="Sales"
-                       asp-action="Index">
-                        <span>@SharedLocalizer["Nav_Sales"]</span>
-                    </a>
-                </div>
-            </li>
-
-            <hr class="sidebar-divider" />
-
-            <!-- MANAGEMENT -->
-            <div class="sidebar-heading">@SharedLocalizer["Nav_Management"]</div>
-
-            <!-- Reports -->
-            <li class="nav-item">
-                <a class="nav-link @(IsActive("Reports") ? "" : "collapsed")"
-                   href="#"
-                   data-toggle="collapse"
-                   data-target="#collapseReports"
-                   aria-expanded="@(IsActive("Reports") ? "true" : "false")"
-                   aria-controls="collapseReports">
-                    <i class="fas fa-fw fa-chart-line"></i>
-                    <span>@SharedLocalizer["Nav_Reports"]</span>
-                    <i class="fas fa-angle-right ml-auto sidebar-chevron"></i>
-                </a>
-
-                <div id="collapseReports"
-                     class="collapse @(IsActive("Reports") ? "show" : "")"
-                     data-parent="#accordionSidebar">
-
-                    <a class="nav-link py-2 @(IsActive("Reports", "StockHealth") || IsActive("Reports", "Index") ? "active-page" : "")"
-                       asp-controller="Reports"
-                       asp-action="StockHealth">
-                        <span>@SharedLocalizer["Nav_StockValuation"]</span>
-                    </a>
-
-                    <a class="nav-link py-2 @(IsActive("Reports", "Sales") ? "active-page" : "")"
-                       asp-controller="Reports"
-                       asp-action="Sales">
-                        <span>@SharedLocalizer["Nav_SalesReport"]</span>
-                    </a>
-                </div>
-            </li>
-
-            <hr class="sidebar-divider d-none d-md-block my-2" />
+                <hr class="sidebar-divider" />
+            }
 
             <!-- Sidebar Toggler (Desktop - directly beneath navigation tabs) -->
             <div class="text-center d-none d-md-inline sidebar-toggler-wrapper my-2">
@@ -662,22 +840,79 @@
                         <!-- User Info -->
                         <li class="nav-item dropdown no-arrow">
 
-                            <a class="nav-link dropdown-toggle"
-                               href="#"
-                               id="userDropdown"
-                               role="button"
-                               data-toggle="dropdown"
-                               aria-haspopup="true"
-                               aria-expanded="false">
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <a class="nav-link dropdown-toggle d-flex align-items-center"
+                                   href="#"
+                                   id="userDropdown"
+                                   role="button"
+                                   data-toggle="dropdown"
+                                   aria-haspopup="true"
+                                   aria-expanded="false">
 
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                    @SharedLocalizer["Lbl_SystemAdministrator"]
-                                </span>
+                                    <div class="d-none d-lg-flex flex-column mr-2 text-right">
+                                        <span class="font-weight-bold text-gray-700 small line-height-1">
+                                            @User.Identity.Name
+                                        </span>
+                                        <span class="badge @roleBadgeClass px-2 py-0 mt-1" style="font-size: 0.68rem; align-self: flex-end; border-radius: 999px;">
+                                            @displayUserRole
+                                        </span>
+                                    </div>
 
-                                <img class="img-profile rounded-circle"
-                                     src="~/img/undraw_profile.svg" />
+                                    <div class="avatar-circle bg-primary text-white font-weight-bold d-flex align-items-center justify-content-center rounded-circle"
+                                         style="width: 36px; height: 36px; font-size: 0.85rem; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
+                                        @(string.IsNullOrEmpty(User.Identity.Name) ? "U" : User.Identity.Name.Substring(0, 1).ToUpper())
+                                    </div>
 
-                            </a>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in py-2"
+                                     aria-labelledby="userDropdown" style="min-width: 220px;">
+
+                                    <div class="dropdown-header d-flex align-items-center px-3 py-2">
+                                        <div class="avatar-circle bg-primary text-white font-weight-bold d-flex align-items-center justify-content-center rounded-circle mr-2"
+                                             style="width: 34px; height: 34px; font-size: 0.8rem;">
+                                            @(string.IsNullOrEmpty(User.Identity.Name) ? "U" : User.Identity.Name.Substring(0, 1).ToUpper())
+                                        </div>
+                                        <div class="text-truncate">
+                                            <div class="font-weight-bold text-dark text-truncate">@User.Identity.Name</div>
+                                            <span class="badge @roleBadgeClass" style="font-size: 0.65rem;">@displayUserRole</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="dropdown-divider my-1"></div>
+
+                                    <a class="dropdown-item px-3 py-2" asp-controller="Account" asp-action="Profile">
+                                        <i class="fas fa-user-shield fa-sm fa-fw mr-2 text-primary"></i>
+                                        @SharedLocalizer["Lbl_ProfileSettings"]
+                                    </a>
+
+                                    @if (canManageUsers)
+                                    {
+                                        <a class="dropdown-item px-3 py-2" asp-controller="Users" asp-action="Index">
+                                            <i class="fas fa-users-cog fa-sm fa-fw mr-2 text-info"></i>
+                                            @SharedLocalizer["Nav_UserManagement"]
+                                        </a>
+                                    }
+
+                                    <div class="dropdown-divider my-1"></div>
+
+                                    <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="m-0 p-0">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="dropdown-item px-3 py-2 text-danger d-flex align-items-center" style="border: none; background: transparent; width: 100%; cursor: pointer;">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-danger"></i>
+                                            <span>@SharedLocalizer["Btn_Logout"]</span>
+                                        </button>
+                                    </form>
+
+                                </div>
+                            }
+                            else
+                            {
+                                <a class="nav-link btn btn-sm btn-primary text-white px-3 py-1 my-auto" asp-controller="Account" asp-action="Login">
+                                    <i class="fas fa-sign-in-alt mr-1"></i> @SharedLocalizer["Btn_Login"]
+                                </a>
+                            }
 
                         </li>
 
@@ -954,52 +1189,106 @@
             window.alert = function (message) {
                 window.appAlert(message);
             };
+
+            // Global themed confirmation handler for forms
+            $(document).on('submit', 'form', async function (e) {
+                var $form = $(this);
+                if ($form.data('app-confirmed')) {
+                    $form.removeData('app-confirmed');
+                    return true;
+                }
+
+                var msg = $form.attr('data-confirm-message');
+                var isDestructive = $form.attr('data-confirm-destructive') === 'true';
+                var type = $form.attr('data-confirm-type') || (isDestructive ? 'danger' : 'warning');
+                var title = $form.attr('data-confirm-title') || (window.AppDialogTranslations ? window.AppDialogTranslations.confirm : 'Confirm');
+
+                if (!msg) {
+                    var onsub = $form.attr('onsubmit');
+                    if (onsub && onsub.indexOf('confirm(') !== -1) {
+                        var match = onsub.match(/confirm\s*\(\s*(['"])(.*?)\1\s*\)/);
+                        msg = match ? match[2] : 'Are you sure?';
+                        isDestructive = true;
+                        type = 'danger';
+                    }
+                }
+
+                if (msg) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+
+                    const confirmed = await window.appConfirm(msg, {
+                        title: title,
+                        type: type,
+                        isDestructive: isDestructive
+                    });
+
+                    if (confirmed) {
+                        $form.data('app-confirmed', true);
+                        $form[0].submit();
+                    }
+                }
+            });
         })();
     </script>
     <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="~/js/sb-admin-2.min.js"></script>
 
-    <!-- Markdown Rendering -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
-
-    <!-- HTML Sanitization -->
-    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
-
-    <!-- Theme Switcher Script -->
+    <!-- Theme Switcher Script (Loaded immediately before CDN scripts to ensure immediate responsiveness) -->
     <script>
             (function () {
-                function initThemeSwitcher() {
+                function applyTheme(theme, saveToStorage) {
+                    if (theme !== 'light' && theme !== 'dark') theme = 'dark';
+
+                    // 1. Update DOM attribute
+                    document.documentElement.setAttribute('data-theme', theme);
+
+                    // 2. Persist to storage only when explicitly requested (e.g., user toggle click)
+                    // Passing saveToStorage=false prevents infinite ping-pong storage loops across browser tabs!
+                    if (saveToStorage) {
+                        try {
+                            localStorage.setItem('ims_theme', theme);
+                            document.cookie = 'ims_theme=' + theme + ';path=/;max-age=31536000;SameSite=Lax';
+                        } catch (err) { }
+                    }
+
+                    // 3. Update Toggle Button UI if present
                     var btn = document.getElementById('themeToggleBtn');
                     var statusText = document.getElementById('themeStatusText');
-                    if (!btn) return;
-
-                    var lightLabel = btn.getAttribute('data-light-text') || 'Light Mode';
-                    var darkLabel = btn.getAttribute('data-dark-text') || 'Dark Mode';
-
-                    function updateUI(theme) {
+                    if (btn) {
+                        var lightLabel = btn.getAttribute('data-light-text') || 'Light Mode';
+                        var darkLabel = btn.getAttribute('data-dark-text') || 'Dark Mode';
                         if (statusText) {
                             statusText.textContent = (theme === 'light') ? lightLabel : darkLabel;
                         }
                         btn.setAttribute('data-current-theme', theme);
                     }
+                }
 
-                    var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-                    updateUI(currentTheme);
+                function getSavedTheme() {
+                    try {
+                        var t = localStorage.getItem('ims_theme');
+                        if (t === 'light' || t === 'dark') return t;
+                    } catch (e) { }
+                    var domTheme = document.documentElement.getAttribute('data-theme');
+                    return (domTheme === 'light' || domTheme === 'dark') ? domTheme : 'dark';
+                }
 
-                    btn.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        var active = document.documentElement.getAttribute('data-theme') || 'dark';
-                        var next = (active === 'light') ? 'dark' : 'light';
+                function initThemeSwitcher() {
+                    var currentTheme = getSavedTheme();
+                    applyTheme(currentTheme, false);
 
-                        document.documentElement.setAttribute('data-theme', next);
-                        try {
-                            localStorage.setItem('ims_theme', next);
-                            localStorage.setItem('theme', next);
-                        } catch (err) { }
-
-                        updateUI(next);
-                    });
+                    var btn = document.getElementById('themeToggleBtn');
+                    if (btn && !btn.dataset.wired) {
+                        btn.dataset.wired = 'true';
+                        btn.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            var active = document.documentElement.getAttribute('data-theme') || 'dark';
+                            var next = (active === 'light') ? 'dark' : 'light';
+                            applyTheme(next, true);
+                        });
+                    }
                 }
 
                 if (document.readyState === 'loading') {
@@ -1007,8 +1296,44 @@
                 } else {
                     initThemeSwitcher();
                 }
+
+                // Sync theme when restored from browser cache (BFCache / back-forward navigation)
+                window.addEventListener('pageshow', function () {
+                    var currentTheme = getSavedTheme();
+                    applyTheme(currentTheme, false);
+                });
+
+                // Sync across all browser tabs in real-time WITHOUT triggering echo loops
+                window.addEventListener('storage', function (e) {
+                    if (e.key === 'ims_theme') {
+                        var newTheme = e.newValue;
+                        if (newTheme === 'light' || newTheme === 'dark') {
+                            if (document.documentElement.getAttribute('data-theme') !== newTheme) {
+                                applyTheme(newTheme, false);
+                            }
+                        }
+                    }
+                });
+
+                // Sync when user switches back to this browser tab ONLY if another tab changed the theme
+                document.addEventListener('visibilitychange', function () {
+                    if (document.visibilityState === 'visible') {
+                        try {
+                            var saved = localStorage.getItem('ims_theme');
+                            if ((saved === 'light' || saved === 'dark') && document.documentElement.getAttribute('data-theme') !== saved) {
+                                applyTheme(saved, false);
+                            }
+                        } catch (e) { }
+                    }
+                });
             })();
     </script>
+
+    <!-- Markdown Rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
+
+    <!-- HTML Sanitization -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
 
     <!-- Global Search Script -->
     <script>
@@ -1497,7 +1822,7 @@
                     // Localized Loading & Error Messages
                     const currentLang = $('html').attr('lang') || 'en';
                     const loadingText = currentLang === 'ar' ? 'جارٍ التفكير...' :
-                                        currentLang === 'fr' ? 'Réflexion en cours...' :
+                                        currentLang === 'fr' ? 'Réflexion en course...' :
                                         currentLang === 'es' ? 'Pensando...' :
                                         currentLang === 'it' ? 'Sto pensando...' :
                                         currentLang === 'de' ? 'Ich denke nach...' : 'Thinking...';
@@ -1505,7 +1830,7 @@
                     const errorText = currentLang === 'ar' ? 'عذراً، حدث خطأ ما. يرجى المحاولة مرة أخرى.' :
                                       currentLang === 'fr' ? 'Désolé, une erreur s\'est produite. Veuillez réessayer.' :
                                       currentLang === 'es' ? 'Lo sentimos, algo salió mal. Inténtalo de nuevo.' :
-                                      currentLang === 'it' ? 'Spiacenti, si è verificato un errore. Riprova.' :
+                                      currentLang === 'it' ? 'Spiacenti, si è verification un errore. Riprova.' :
                                       currentLang === 'de' ? 'Entschuldigung, etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.' : 'Sorry, something went wrong. Please try again.';
 
                     // Loading message

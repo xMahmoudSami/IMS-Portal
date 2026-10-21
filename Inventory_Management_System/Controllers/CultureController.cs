@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+
 namespace Inventory_Management_System.Controllers
 {
     /// <summary>
@@ -5,6 +7,7 @@ namespace Inventory_Management_System.Controllers
     /// Persists the selected culture in a long-lived cookie so the choice
     /// survives page refreshes and browser restarts.
     /// </summary>
+    [AllowAnonymous]
     public class CultureController : Controller
     {
         private static readonly HashSet<string> _supportedCultures =

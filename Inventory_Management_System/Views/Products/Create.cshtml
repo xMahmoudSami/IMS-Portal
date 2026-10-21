@@ -1,7 +1,18 @@
 @model Inventory_Management_System.ViewModels.ProductFormViewModel
+@using System.Globalization
 
 @{
     ViewData["Title"] = Loc["AddNewProduct"].Value;
+    var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+    var skuPlaceholder = currentCulture switch
+    {
+        "ar" => "مثال: SKU-001",
+        "fr" => "ex. SKU-001",
+        "es" => "ej. SKU-001",
+        "de" => "z. B. SKU-001",
+        "it" => "es. SKU-001",
+        _    => "e.g. SKU-001"
+    };
 }
 
 <!-- Breadcrumbs -->
@@ -33,7 +44,7 @@
                                 <label asp-for="SKU" class="font-weight-bold">
                                     @Loc["SKU"] <span class="text-danger">*</span>
                                 </label>
-                                <input asp-for="SKU" class="form-control" placeholder="e.g. SKU-001" autofocus />
+                                <input asp-for="SKU" class="form-control" placeholder="@skuPlaceholder" autofocus />
                                 <span asp-validation-for="SKU" class="text-danger small font-weight-bold"></span>
                             </div>
                         </div>

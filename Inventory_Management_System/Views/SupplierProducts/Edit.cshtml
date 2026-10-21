@@ -1,7 +1,18 @@
 @model Inventory_Management_System.ViewModels.SupplierProductFormViewModel
+@using System.Globalization
 
 @{
     ViewData["Title"] = Loc["EditMapping"].Value;
+    var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+    var supplierSkuPlaceholder = currentCulture switch
+    {
+        "ar" => "مثال: VEN-SKU-9921",
+        "fr" => "ex. VEN-SKU-9921",
+        "es" => "ej. VEN-SKU-9921",
+        "de" => "z. B. VEN-SKU-9921",
+        "it" => "es. VEN-SKU-9921",
+        _    => "e.g. VEN-SKU-9921"
+    };
 }
 
 <!-- Breadcrumbs -->
@@ -57,7 +68,7 @@
                         <label asp-for="SupplierSKU" class="font-weight-bold">
                             @Loc["SupplierSKUPartNumber"] <span class="text-danger">*</span>
                         </label>
-                        <input asp-for="SupplierSKU" class="form-control" placeholder="e.g. VEN-SKU-9921" />
+                        <input asp-for="SupplierSKU" class="form-control" placeholder="@supplierSkuPlaceholder" />
                         <small class="form-text text-muted">@Loc["SupplierSKUHelp"]</small>
                         <span asp-validation-for="SupplierSKU" class="text-danger small font-weight-bold"></span>
                     </div>

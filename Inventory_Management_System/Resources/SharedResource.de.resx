@@ -58,331 +58,1366 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Nav_Dashboard" xml:space="preserve"><value>Dashboard</value></data>
-  <data name="Nav_Products" xml:space="preserve"><value>Produkte</value></data>
-  <data name="Nav_AllProducts" xml:space="preserve"><value>Alle Produkte</value></data>
-  <data name="Nav_AddProduct" xml:space="preserve"><value>Produkt hinzufügen</value></data>
-  <data name="Nav_Categories" xml:space="preserve"><value>Kategorien</value></data>
-  <data name="Nav_Suppliers" xml:space="preserve"><value>Lieferanten</value></data>
-  <data name="Nav_SupplierMappings" xml:space="preserve"><value>Lieferantenzuordnungen</value></data>
-  <data name="Nav_Transactions" xml:space="preserve"><value>Transaktionen</value></data>
-  <data name="Nav_Purchases" xml:space="preserve"><value>Einkäufe</value></data>
-  <data name="Nav_PurchasesList" xml:space="preserve"><value>Einkaufsliste</value></data>
-  <data name="Nav_NewPurchaseOrder" xml:space="preserve"><value>Neue Bestellung</value></data>
-  <data name="Nav_Sales" xml:space="preserve"><value>Verkäufe</value></data>
-  <data name="Nav_SalesList" xml:space="preserve"><value>Verkaufsliste</value></data>
-  <data name="Nav_NewSaleOrder" xml:space="preserve"><value>Neuer Verkaufsauftrag</value></data>
-  <data name="Nav_Reports" xml:space="preserve"><value>Berichte</value></data>
-  <data name="Nav_StockValuation" xml:space="preserve"><value>Lagerbewertung</value></data>
-  <data name="Nav_StockHealth" xml:space="preserve"><value>Lagerbestand-Zustand</value></data>
-  <data name="Nav_SalesReport" xml:space="preserve"><value>Verkaufsbericht</value></data>
-  <data name="Nav_SalesPerformance" xml:space="preserve"><value>Verkaufsleistung</value></data>
-  <data name="Nav_InventoryCore" xml:space="preserve"><value>INVENTARKERN</value></data>
-  <data name="Nav_Management" xml:space="preserve"><value>VERWALTUNG</value></data>
-  <data name="App_Title" xml:space="preserve"><value>IMS-Portal</value></data>
-  <data name="App_Subtitle" xml:space="preserve"><value>Inventar- und Kassensystem</value></data>
-  <data name="Search_Placeholder" xml:space="preserve"><value>Produkte, Kategorien suchen...</value></data>
-  <data name="SearchProductsCategories" xml:space="preserve"><value>Produkte, Kategorien suchen...</value></data>
-  <data name="Lbl_Language" xml:space="preserve"><value>Sprache</value></data>
-  <data name="Lbl_SelectLanguage" xml:space="preserve"><value>Sprache wählen</value></data>
-  <data name="Lbl_SystemAdministrator" xml:space="preserve"><value>Systemadministrator</value></data>
-  <data name="Lbl_Copyright" xml:space="preserve"><value>Urheberrecht</value></data>
-  <data name="Lbl_InventoryManagementSystem" xml:space="preserve"><value>Warenwirtschaftssystem</value></data>
-  <data name="Lbl_LowStockAlerts" xml:space="preserve"><value>Niedrige Lagerbestandswarnungen</value></data>
-  <data name="Lbl_AllStocksHealthy" xml:space="preserve"><value>Alle Bestände im optimalen Bereich</value></data>
-  <data name="Lbl_NoProductsBelowThreshold" xml:space="preserve"><value>Derzeit liegen keine Produkte unter dem Schwellenwert.</value></data>
-  <data name="Lbl_ViewAllInAnalytics" xml:space="preserve"><value>Alle in Analysen anzeigen</value></data>
-  <data name="Item" xml:space="preserve"><value>Artikel</value></data>
-  <data name="Items" xml:space="preserve"><value>Artikel</value></data>
-  <data name="SearchByNameOrSku" xml:space="preserve"><value>Suche nach Name oder SKU</value></data>
-  <data name="CustomerNameOrPhone" xml:space="preserve"><value>Kundenname oder Telefon</value></data>
-  <data name="FilterByCustomerOrOrder" xml:space="preserve"><value>Nach Kundenname oder Auftrags-ID filtern...</value></data>
-  <data name="SearchProducts" xml:space="preserve"><value>Produkte suchen...</value></data>
-  <data name="BarcodeOrSku" xml:space="preserve"><value>Barcode / SKU</value></data>
-  <data name="AllCategories" xml:space="preserve"><value>Alle Kategorien</value></data>
-  <data name="AllStatuses" xml:space="preserve"><value>Alle Status</value></data>
-  <data name="AllSuppliers" xml:space="preserve"><value>Alle Lieferanten</value></data>
-  <data name="Filter" xml:space="preserve"><value>Filtern</value></data>
-  <data name="ClearFilters" xml:space="preserve"><value>Filter löschen</value></data>
-  <data name="Reset" xml:space="preserve"><value>Zurücksetzen</value></data>
-  <data name="Apply" xml:space="preserve"><value>Anwenden</value></data>
-  <data name="StockStatus" xml:space="preserve"><value>Lagerbestand-Status</value></data>
-  <data name="QuickRanges" xml:space="preserve"><value>Schnellfilter:</value></data>
-  <data name="Today" xml:space="preserve"><value>Heute</value></data>
-  <data name="ThisWeek" xml:space="preserve"><value>Diese Woche</value></data>
-  <data name="ThisMonth" xml:space="preserve"><value>Diesen Monat</value></data>
-  <data name="FromDate" xml:space="preserve"><value>Von Datum</value></data>
-  <data name="ToDate" xml:space="preserve"><value>Bis Datum</value></data>
-  <data name="AnalyticsDashboard" xml:space="preserve"><value>Analyse-Dashboard</value></data>
-  <data name="TotalProducts" xml:space="preserve"><value>Gesamtprodukte</value></data>
-  <data name="Categories" xml:space="preserve"><value>Kategorien</value></data>
-  <data name="TotalSalesRevenue" xml:space="preserve"><value>Gesamter Verkaufserlös</value></data>
-  <data name="LowStockItems" xml:space="preserve"><value>Niedrige Lagerartikel</value></data>
-  <data name="SalesVsPurchases" xml:space="preserve"><value>Verkäufe vs Einkäufe</value></data>
-  <data name="SalesVsPurchasesYear" xml:space="preserve"><value>Verkäufe vs Einkäufe (Aktuelles Jahr)</value></data>
-  <data name="CategoryShare" xml:space="preserve"><value>Kategorienanteil</value></data>
-  <data name="TopSellingProducts" xml:space="preserve"><value>Meistverkaufte Produkte</value></data>
-  <data name="LowStockAlerts" xml:space="preserve"><value>Niedrige Lagerbestandswarnungen</value></data>
-  <data name="RecentTransactionsLog" xml:space="preserve"><value>Protokoll der letzten Transaktionen</value></data>
-  <data name="UnitsSold" xml:space="preserve"><value>Verkaufte Einheiten</value></data>
-  <data name="TotalRevenue" xml:space="preserve"><value>Gesamterlös</value></data>
-  <data name="NoLowStockItems" xml:space="preserve"><value>Keine Artikel mit geringem Lagerbestand gefunden.</value></data>
-  <data name="NoSalesRecords" xml:space="preserve"><value>Keine Verkaufsunterlagen verfügbar.</value></data>
-  <data name="NoRecentTransactions" xml:space="preserve"><value>Keine aktuellen Transaktionen gefunden.</value></data>
-  <data name="Type" xml:space="preserve"><value>Typ</value></data>
-  <data name="RefID" xml:space="preserve"><value>Ref.-ID</value></data>
-  <data name="EntityOrCustomer" xml:space="preserve"><value>Einheit / Kunde</value></data>
-  <data name="SKU" xml:space="preserve"><value>SKU</value></data>
-  <data name="ProductName" xml:space="preserve"><value>Produktname</value></data>
-  <data name="Category" xml:space="preserve"><value>Kategorie</value></data>
-  <data name="UnitPrice" xml:space="preserve"><value>Einzelpreis</value></data>
-  <data name="Stock" xml:space="preserve"><value>Bestand</value></data>
-  <data name="StockQuantity" xml:space="preserve"><value>Lagerbestand</value></data>
-  <data name="Status" xml:space="preserve"><value>Status</value></data>
-  <data name="Actions" xml:space="preserve"><value>Aktionen</value></data>
-  <data name="Supplier" xml:space="preserve"><value>Lieferant</value></data>
-  <data name="Suppliers" xml:space="preserve"><value>Lieferanten</value></data>
-  <data name="PurchaseDate" xml:space="preserve"><value>Kaufdatum</value></data>
-  <data name="SaleDate" xml:space="preserve"><value>Verkaufsdatum</value></data>
-  <data name="Customer" xml:space="preserve"><value>Kunde</value></data>
-  <data name="Quantity" xml:space="preserve"><value>Menge</value></data>
-  <data name="TotalAmount" xml:space="preserve"><value>Gesamtbetrag</value></data>
-  <data name="CostPrice" xml:space="preserve"><value>Einstandspreis</value></data>
-  <data name="SellingPrice" xml:space="preserve"><value>Verkaufspreis</value></data>
-  <data name="MinStockLevel" xml:space="preserve"><value>Mindestbestand</value></data>
-  <data name="Threshold" xml:space="preserve"><value>Schwellenwert</value></data>
-  <data name="ReorderQuantity" xml:space="preserve"><value>Nachbestellmenge</value></data>
-  <data name="Notes" xml:space="preserve"><value>Notizen</value></data>
-  <data name="ContactPerson" xml:space="preserve"><value>Ansprechpartner</value></data>
-  <data name="Phone" xml:space="preserve"><value>Telefon</value></data>
-  <data name="Email" xml:space="preserve"><value>E-Mail</value></data>
-  <data name="Address" xml:space="preserve"><value>Adresse</value></data>
-  <data name="Description" xml:space="preserve"><value>Beschreibung</value></data>
-  <data name="Date" xml:space="preserve"><value>Datum</value></data>
-  <data name="AddProduct" xml:space="preserve"><value>Produkt hinzufügen</value></data>
-  <data name="NewSaleOrder" xml:space="preserve"><value>Neuer Verkaufsauftrag</value></data>
-  <data name="NewPurchaseOrder" xml:space="preserve"><value>Neue Bestellung</value></data>
-  <data name="Details" xml:space="preserve"><value>Details</value></data>
-  <data name="Edit" xml:space="preserve"><value>Bearbeiten</value></data>
-  <data name="Delete" xml:space="preserve"><value>Löschen</value></data>
-  <data name="Create" xml:space="preserve"><value>Erstellen</value></data>
-  <data name="Save" xml:space="preserve"><value>Speichern</value></data>
-  <data name="Cancel" xml:space="preserve"><value>Abbrechen</value></data>
-  <data name="Back" xml:space="preserve"><value>Zurück</value></data>
-  <data name="BackToList" xml:space="preserve"><value>Zurück zur Liste</value></data>
-  <data name="BackToProducts" xml:space="preserve"><value>Zurück zu Produkten</value></data>
-  <data name="BackToSales" xml:space="preserve"><value>Zurück zu Verkäufen</value></data>
-  <data name="BackToPurchases" xml:space="preserve"><value>Zurück zu Einkäufen</value></data>
-  <data name="BackToCategories" xml:space="preserve"><value>Zurück zu Kategorien</value></data>
-  <data name="BackToSuppliers" xml:space="preserve"><value>Zurück zu Lieferanten</value></data>
-  <data name="ViewAll" xml:space="preserve"><value>Alle anzeigen</value></data>
-  <data name="Print" xml:space="preserve"><value>Drucken</value></data>
-  <data name="Export" xml:space="preserve"><value>Exportieren</value></data>
-  <data name="Confirm" xml:space="preserve"><value>Bestätigen</value></data>
-  <data name="Search" xml:space="preserve"><value>Suchen</value></data>
-  <data name="InStock" xml:space="preserve"><value>Auf Lager</value></data>
-  <data name="LowStock" xml:space="preserve"><value>Geringer Bestand</value></data>
-  <data name="OutOfStock" xml:space="preserve"><value>Nicht auf Lager</value></data>
-  <data name="Paid" xml:space="preserve"><value>Bezahlt</value></data>
-  <data name="Pending" xml:space="preserve"><value>Ausstehend</value></data>
-  <data name="Completed" xml:space="preserve"><value>Abgeschlossen</value></data>
-  <data name="Cancelled" xml:space="preserve"><value>Storniert</value></data>
-  <data name="Received" xml:space="preserve"><value>Erhalten</value></data>
-  <data name="Sale" xml:space="preserve"><value>Verkauf</value></data>
-  <data name="Purchase" xml:space="preserve"><value>Kauf</value></data>
-  <data name="Invoice" xml:space="preserve"><value>Rechnung</value></data>
-  <data name="BilledTo" xml:space="preserve"><value>Rechnungsempfänger (Kunde)</value></data>
-  <data name="TransactionDetails" xml:space="preserve"><value>Transaktionsdetails</value></data>
-  <data name="Subtotal" xml:space="preserve"><value>Zwischensumme</value></data>
-  <data name="GrandTotal" xml:space="preserve"><value>Gesamtsumme</value></data>
-  <data name="Tax" xml:space="preserve"><value>Steuer</value></data>
-  <data name="Discount" xml:space="preserve"><value>Rabatt</value></data>
-  <data name="PaymentMethod" xml:space="preserve"><value>Zahlungsart</value></data>
-  <data name="PaymentStatus" xml:space="preserve"><value>Zahlungsstatus</value></data>
-  <data name="InvoiceNumber" xml:space="preserve"><value>Rechnungsnr.</value></data>
-  <data name="OrderNumber" xml:space="preserve"><value>Bestellnr.</value></data>
-  <data name="PrintInvoice" xml:space="preserve"><value>Rechnung drucken</value></data>
-  <data name="PrintReport" xml:space="preserve"><value>Bericht drucken</value></data>
-  <data name="ExportCSV" xml:space="preserve"><value>CSV exportieren</value></data>
-  <data name="ExportPDF" xml:space="preserve"><value>PDF exportieren</value></data>
-  <data name="SalesPerformanceReport" xml:space="preserve"><value>Verkaufsleistungsbericht</value></data>
-  <data name="StockValuationReport" xml:space="preserve"><value>Bestandsbewertungsbericht</value></data>
-  <data name="StockValuationAndHealth" xml:space="preserve"><value>Lagerbewertung und Bestandssicherheit</value></data>
-  <data name="TotalPeriodRevenue" xml:space="preserve"><value>Gesamterlös des Zeitraums</value></data>
-  <data name="CompletedOrders" xml:space="preserve"><value>Abgeschlossene Aufträge</value></data>
-  <data name="TotalUnitsSold" xml:space="preserve"><value>Gesamte verkaufte Einheiten</value></data>
-  <data name="AverageOrderValue" xml:space="preserve"><value>Durchschnittlicher Bestellwert</value></data>
-  <data name="SalesOrdersBreakdown" xml:space="preserve"><value>Aufschlüsselung der Verkaufsaufträge</value></data>
-  <data name="TotalValuation" xml:space="preserve"><value>Gesamtbewertung</value></data>
-  <data name="TotalItemsInReport" xml:space="preserve"><value>Artikel in diesem Bericht</value></data>
-  <data name="WarehouseValuation" xml:space="preserve"><value>Gesamtlagerwert</value></data>
-  <data name="HealthyStockItems" xml:space="preserve"><value>Optimale Bestandsartikel</value></data>
-  <data name="FastRestockRequired" xml:space="preserve"><value>Schnellnachbestellung erforderlich</value></data>
-  <data name="InternalOrderID" xml:space="preserve"><value>Interne Auftrags-ID:</value></data>
-  <data name="TotalLineItems" xml:space="preserve"><value>Positionen gesamt:</value></data>
-  <data name="TotalQuantitySold" xml:space="preserve"><value>Gesamt verkaufte Menge:</value></data>
-  <data name="TermsAndInventoryNotes" xml:space="preserve"><value>Bedingungen und Bestandsnotizen:</value></data>
-  <data name="InvoiceTermsNote1" xml:space="preserve"><value>Alle Produkte wurden automatisch vom aktuellen Lagerbestand abgezogen.</value></data>
-  <data name="InvoiceTermsNote2" xml:space="preserve"><value>Die angegebenen Preise sind zum Zeitpunkt der Auftragserstellung verbindlich.</value></data>
-  <data name="InvoiceTermsNote3" xml:space="preserve"><value>Für Rückfragen oder Rückgaben legen Sie diese Rechnung bitte innerhalb von 14 Tagen vor.</value></data>
-  <data name="ThankYouForYourBusiness" xml:space="preserve"><value>Vielen Dank für Ihren Einkauf!</value></data>
-  <data name="PoweredByIMS" xml:space="preserve"><value>Unterstützt durch IMS Enterprise Inventory Management System</value></data>
-  <data name="TotalPeriodSum" xml:space="preserve"><value>Gesamtsumme des Zeitraums:</value></data>
-  <data name="DeleteWarningMessage" xml:space="preserve"><value>Warnung: Diese Aktion kann nicht rückgängig gemacht werden. Möchten Sie dieses Element wirklich dauerhaft löschen?</value></data>
-  <data name="CancelAndKeep" xml:space="preserve"><value>Abbrechen und behalten</value></data>
-  <data name="ConfirmDelete" xml:space="preserve"><value>Löschen bestätigen</value></data>
-  <data name="DeleteConfirmationTitle" xml:space="preserve"><value>Löschbestätigung</value></data>
-  <data name="CannotDeleteTitle" xml:space="preserve"><value>Element kann nicht gelöscht werden</value></data>
-  <data name="DeletionBlocked" xml:space="preserve"><value>Löschung blockiert:</value></data>
-  <data name="Showing" xml:space="preserve"><value>Anzeige von</value></data>
-  <data name="Of" xml:space="preserve"><value>von</value></data>
-  <data name="Entries" xml:space="preserve"><value>Einträge</value></data>
-  <data name="Show" xml:space="preserve"><value>Anzeigen:</value></data>
-  <data name="First" xml:space="preserve"><value>Erste</value></data>
-  <data name="Prev" xml:space="preserve"><value>Zurück</value></data>
-  <data name="Next" xml:space="preserve"><value>Weiter</value></data>
-  <data name="Last" xml:space="preserve"><value>Letzte</value></data>
-  <data name="NoProductsFound" xml:space="preserve"><value>Keine Produkte gefunden</value></data>
-  <data name="NoCategoriesFound" xml:space="preserve"><value>Keine Kategorien gefunden</value></data>
-  <data name="NoSuppliersFound" xml:space="preserve"><value>Keine Lieferanten gefunden</value></data>
-  <data name="NoPurchasesFound" xml:space="preserve"><value>Keine Bestellungen gefunden</value></data>
-  <data name="NoSalesFound" xml:space="preserve"><value>Keine Verkaufsaufträge gefunden</value></data>
-  <data name="ManageInventoryProducts" xml:space="preserve"><value>Inventarprodukte, Lagerbestände und Preise verwalten</value></data>
-  <data name="ManageCategories" xml:space="preserve"><value>Inventarprodukte in logische Kategorien einteilen</value></data>
-  <data name="ManageSuppliers" xml:space="preserve"><value>Lieferantenkontakte, Lieferzeiten und Kataloge verwalten</value></data>
-  <data name="ManagePurchases" xml:space="preserve"><value>Lieferantenbestellungen und Wareneingänge erfassen</value></data>
-  <data name="ManageSales" xml:space="preserve"><value>Kassentransaktionen, Kundenrechnungen und Bestandsabbuchung</value></data>
-  <data name="AddNewProduct" xml:space="preserve"><value>Neues Produkt hinzufügen</value></data>
-  <data name="EditProduct" xml:space="preserve"><value>Produkt bearbeiten</value></data>
-  <data name="ProductDetails" xml:space="preserve"><value>Produktdetails</value></data>
-  <data name="DeleteProduct" xml:space="preserve"><value>Produkt löschen</value></data>
-  <data name="AddNewCategory" xml:space="preserve"><value>Neue Kategorie hinzufügen</value></data>
-  <data name="EditCategory" xml:space="preserve"><value>Kategorie bearbeiten</value></data>
-  <data name="CategoryDetails" xml:space="preserve"><value>Kategoriedetails</value></data>
-  <data name="DeleteCategory" xml:space="preserve"><value>Kategorie löschen</value></data>
-  <data name="AddNewSupplier" xml:space="preserve"><value>Neuen Lieferanten hinzufügen</value></data>
-  <data name="EditSupplier" xml:space="preserve"><value>Lieferant bearbeiten</value></data>
-  <data name="SupplierDetails" xml:space="preserve"><value>Lieferantendetails</value></data>
-  <data name="DeleteSupplier" xml:space="preserve"><value>Lieferant löschen</value></data>
-  <data name="Purchases" xml:space="preserve"><value>Einkäufe</value></data>
-  <data name="PurchasesManagement" xml:space="preserve"><value>Einkaufsverwaltung</value></data>
-  <data name="TrackManagePurchases" xml:space="preserve"><value>Bestellungen, Lieferantenkosten und Bestelldaten verfolgen und verwalten</value></data>
-  <data name="AddPurchase" xml:space="preserve"><value>Kauf hinzufügen</value></data>
-  <data name="AllPurchasesList" xml:space="preserve"><value>Liste aller Einkäufe</value></data>
-  <data name="StartRecordingPurchase" xml:space="preserve"><value>Beginnen Sie mit der Erfassung Ihrer ersten Bestellung.</value></data>
-  <data name="AddNewPurchase" xml:space="preserve"><value>Neuen Einkauf hinzufügen</value></data>
-  <data name="ID" xml:space="preserve"><value>ID</value></data>
-  <data name="SelectSupplier" xml:space="preserve"><value>Lieferant auswählen</value></data>
-  <data name="SelectSupplierForOrder" xml:space="preserve"><value>Wählen Sie den Lieferanten für diese Bestellung aus.</value></data>
-  <data name="DateOrderIssued" xml:space="preserve"><value>Datum, an dem die Bestellung ausgestellt wurde.</value></data>
-  <data name="PurchaseOrderItems" xml:space="preserve"><value>Bestellpositionen</value></data>
-  <data name="AddAnotherProduct" xml:space="preserve"><value>Weiteres Produkt hinzufügen</value></data>
-  <data name="Product" xml:space="preserve"><value>Produkt</value></data>
-  <data name="UnitCost" xml:space="preserve"><value>Stückkosten</value></data>
-  <data name="SelectProduct" xml:space="preserve"><value>Produkt auswählen</value></data>
-  <data name="SavePurchaseOrder" xml:space="preserve"><value>Bestellung speichern</value></data>
-  <data name="UpdatePurchaseOrder" xml:space="preserve"><value>Bestellung aktualisieren</value></data>
-  <data name="EditPurchaseOrder" xml:space="preserve"><value>Bestellung bearbeiten</value></data>
-  <data name="PurchaseOrderSummary" xml:space="preserve"><value>Bestellzusammenfassung</value></data>
-  <data name="PurchaseID" xml:space="preserve"><value>Kauf-ID</value></data>
-  <data name="SupplierName" xml:space="preserve"><value>Lieferantenname</value></data>
-  <data name="TotalItemsCount" xml:space="preserve"><value>Gesamtartikelanzahl</value></data>
-  <data name="GrandTotalAmount" xml:space="preserve"><value>Gesamtsummenbetrag</value></data>
-  <data name="TotalCost" xml:space="preserve"><value>Gesamtkosten</value></data>
-  <data name="PurchasedProducts" xml:space="preserve"><value>Gekaufte Produkte</value></data>
-  <data name="PurchasedItemsBreakdown" xml:space="preserve"><value>Aufschlüsselung der gekauften Artikel</value></data>
-  <data name="NoItemsInPurchaseOrder" xml:space="preserve"><value>Für diese Bestellung sind keine Artikel registriert.</value></data>
-  <data name="LineItems" xml:space="preserve"><value>Auftragspositionen</value></data>
-  <data name="DeletePurchaseOrder" xml:space="preserve"><value>Bestellung löschen</value></data>
-  <data name="CannotDeletePurchaseOrder" xml:space="preserve"><value>Bestellung kann nicht gelöscht werden</value></data>
-  <data name="DeletePurchaseWarningRevert" xml:space="preserve"><value>Warnung: Das Löschen dieser Bestellung setzt die Lagerbestände automatisch zurück.</value></data>
-  <data name="DeletePurchase" xml:space="preserve"><value>Kauf löschen</value></data>
-  <data name="SalesManagement" xml:space="preserve"><value>Verkaufsverwaltung</value></data>
-  <data name="SalesOrdersAndPOS" xml:space="preserve"><value>Verkaufsaufträge und Kasse</value></data>
-  <data name="SalesOrdersSubtitle" xml:space="preserve"><value>Verkäufe erfassen, Festpreise erfassen und Bestandsabzüge verfolgen</value></data>
-  <data name="TotalOrders" xml:space="preserve"><value>Gesamtaufträge</value></data>
-  <data name="CustomerOrOrderNumber" xml:space="preserve"><value>Kunde / Auftragsnr.</value></data>
-  <data name="SearchCustomerOrOrder" xml:space="preserve"><value>Kundeninfo oder Auftrags-ID suchen...</value></data>
-  <data name="SalesOrderHistory" xml:space="preserve"><value>Historie der Verkaufsaufträge</value></data>
-  <data name="Page" xml:space="preserve"><value>Seite</value></data>
-  <data name="NoSalesMatchCriteria" xml:space="preserve"><value>Keine abgeschlossenen Verkäufe entsprechen Ihren Kriterien.</value></data>
-  <data name="RecordNewSale" xml:space="preserve"><value>Neuen Verkauf erfassen</value></data>
-  <data name="RecordNewSaleTransaction" xml:space="preserve"><value>Neue Verkaufstransaktion erfassen</value></data>
-  <data name="CustomerInfoOrName" xml:space="preserve"><value>Kundeninfo / Name</value></data>
-  <data name="CustomerInfoHelp" xml:space="preserve"><value>Leer lassen oder Kundendaten, Telefon oder Firmenname angeben.</value></data>
-  <data name="SaleDateHelp" xml:space="preserve"><value>Datum, an dem der Verkauf stattgefunden hat.</value></data>
-  <data name="SaleOrderLineItems" xml:space="preserve"><value>Verkaufsauftragspositionen</value></data>
-  <data name="SnapshotPrice" xml:space="preserve"><value>Erfasster Preis ($)</value></data>
-  <data name="AvailableStock" xml:space="preserve"><value>Verfügbarer Bestand:</value></data>
-  <data name="AutoCapturedSnapshot" xml:space="preserve"><value>Automatisch erfasster Preis</value></data>
-  <data name="CompleteSaleAndDeductStock" xml:space="preserve"><value>Verkauf abschließen &amp; Bestand abbuchen</value></data>
-  <data name="SalesOrderInvoice" xml:space="preserve"><value>Verkaufsauftragsrechnung</value></data>
-  <data name="OfficialPOSReceipt" xml:space="preserve"><value>Offizieller Kassenbeleg und Bestandsabzugsnachweis</value></data>
-  <data name="DeleteSaleOrderAndRevert" xml:space="preserve"><value>Verkaufsauftrag löschen &amp; Bestand zurückbuchen</value></data>
-  <data name="DeleteSaleWarning" xml:space="preserve"><value>Warnung: Durch das Löschen dieses Verkaufsauftrags wird die Transaktion dauerhaft entfernt und der Bestand wieder dem Lager gutgeschrieben.</value></data>
-  <data name="ItemsToRevertToStock" xml:space="preserve"><value>Artikel zur Rückbuchung ins Lager</value></data>
-  <data name="QtyToRestore" xml:space="preserve"><value>Menge zur Rückbuchung</value></data>
-  <data name="CancelAndKeepSale" xml:space="preserve"><value>Abbrechen &amp; Verkauf behalten</value></data>
-  <data name="ConfirmDeleteAndRevert" xml:space="preserve"><value>Löschen &amp; Bestand zurückbuchen</value></data>
-  <data name="Period" xml:space="preserve"><value>Zeitraum:</value></data>
-  <data name="Generated" xml:space="preserve"><value>Erstellt am:</value></data>
-  <data name="OrdersCompleted" xml:space="preserve"><value>Bestellungen abgeschlossen</value></data>
-  <data name="NoSalesRecordsInRange" xml:space="preserve"><value>Keine Verkaufsunterlagen in diesem Datumsbereich</value></data>
-  <data name="AdjustDateFilterHint" xml:space="preserve"><value>Passen Sie den Datumsbereich an oder wählen Sie &apos;Diesen Monat&apos;.</value></data>
-  <data name="ViewThisMonthSales" xml:space="preserve"><value>Verkäufe dieses Monats anzeigen</value></data>
-  <data name="ProductStockValuationAndRestock" xml:space="preserve"><value>Produktbewertung und Nachbestellstatus</value></data>
-  <data name="ItemsDisplayed" xml:space="preserve"><value>angezeigte Artikel</value></data>
-  <data name="FilteredSubtotal" xml:space="preserve"><value>Gefilterte Zwischensumme:</value></data>
-  <data name="NoProductsMatchCriteria" xml:space="preserve"><value>Keine Produkte entsprechen Ihren Kriterien</value></data>
-  <data name="AdjustCriteriaHint" xml:space="preserve"><value>Passen Sie Kategorie-, Status- oder Suchfilter an.</value></data>
-  <data name="ResetAllFilters" xml:space="preserve"><value>Alle Filter zurücksetzen</value></data>
-  <data name="ProductAndSku" xml:space="preserve"><value>PRODUKT &amp; SKU</value></data>
-  <data name="CurrentStockThreshold" xml:space="preserve"><value>AKTUELLER BESTAND / SCHWELLE</value></data>
-  <data name="Valuation" xml:space="preserve"><value>BEWERTUNG ($)</value></data>
-  <data name="Restock" xml:space="preserve"><value>Nachbestellen</value></data>
-  <data name="TotalValuationOfDisplayed" xml:space="preserve"><value>Gesamtwert der angezeigten Artikel:</value></data>
-  <data name="Units" xml:space="preserve"><value>Einheiten</value></data>
-  <data name="Min" xml:space="preserve"><value>Min:</value></data>
-  <data name="SupplierProductMappings" xml:space="preserve"><value>Lieferanten-Produkt-Zuordnungen</value></data>
-  <data name="ManageSupplierRelationships" xml:space="preserve"><value>Beziehungen zwischen Lieferanten, Produkten, Vertragspreisen und Vorlaufzeiten verwalten</value></data>
-  <data name="AddMapping" xml:space="preserve"><value>Zuordnung hinzufügen</value></data>
-  <data name="SearchSkuOrKeyword" xml:space="preserve"><value>Nach SKU oder Stichwort suchen</value></data>
-  <data name="SearchSupplierSkuPlaceholder" xml:space="preserve"><value>Lieferanten-SKU, Produkt, Lieferant suchen...</value></data>
-  <data name="AllMappings" xml:space="preserve"><value>Alle Zuordnungen</value></data>
-  <data name="NoMappingsFound" xml:space="preserve"><value>Keine Zuordnungen gefunden</value></data>
-  <data name="NoMappingsMatchFilters" xml:space="preserve"><value>Keine Zuordnungen entsprechen Ihren Filtern. Versuchen Sie, diese zu löschen.</value></data>
-  <data name="StartAssociatingSupplier" xml:space="preserve"><value>Beginnen Sie mit der Verknüpfung eines Lieferanten mit einem Produkt.</value></data>
-  <data name="SupplierSKU" xml:space="preserve"><value>Lieferanten-SKU</value></data>
-  <data name="ContractPrice" xml:space="preserve"><value>Vertragspreis</value></data>
-  <data name="LeadTimeDays" xml:space="preserve"><value>Vorlaufzeit (Tage)</value></data>
-  <data name="Days" xml:space="preserve"><value>Tage</value></data>
-  <data name="RemoveSupplierProductMapping" xml:space="preserve"><value>Lieferanten-Produkt-Zuordnung entfernen</value></data>
-  <data name="RemoveMapping" xml:space="preserve"><value>Zuordnung entfernen</value></data>
-  <data name="RemoveMappingWarning" xml:space="preserve"><value>Warnung: Möchten Sie diese Zuordnung wirklich entfernen? Die Verknüpfung zwischen diesem Lieferanten und diesem Produkt wird aufgehoben.</value></data>
-  <data name="EditMapping" xml:space="preserve"><value>Zuordnung bearbeiten</value></data>
-  <data name="MapSupplierToProduct" xml:space="preserve"><value>Lieferanten dem Produkt zuordnen</value></data>
-  <data name="SupplierSKUPartNumber" xml:space="preserve"><value>Lieferanten-SKU / Teilenummer</value></data>
-  <data name="SupplierSKUHelp" xml:space="preserve"><value>Die Katalog- oder Artikelnummer des Lieferanten für dieses Produkt.</value></data>
-  <data name="ContractPriceHelp" xml:space="preserve"><value>Vereinbarter Einkaufspreis dieses Lieferanten.</value></data>
-  <data name="LeadTimeHelp" xml:space="preserve"><value>Geschätzte Werktage für die Auftragslieferung.</value></data>
-  <data name="SaveMapping" xml:space="preserve"><value>Zuordnung speichern</value></data>
-  <data name="UpdateMapping" xml:space="preserve"><value>Zuordnung aktualisieren</value></data>
-  <data name="Success" xml:space="preserve"><value>Erfolg!</value></data>
-  <data name="Error" xml:space="preserve"><value>Fehler!</value></data>
-  <data name="Warning" xml:space="preserve"><value>Warnung!</value></data>
-  <data name="RetailPOSCashOrder" xml:space="preserve"><value>Einzelhandels-POS Bar / Bestellung</value></data>
-  <data name="AIChatbotTitle" xml:space="preserve"><value>KI-Inventar-Assistent</value></data>
-  <data name="AskAIPlaceholder" xml:space="preserve"><value>Fragen Sie nach Ihrem Inventar...</value></data>
-  <data name="AIChatGreeting" xml:space="preserve"><value>Hallo! Ich bin Ihr Inventar-Assistent. Wie kann ich Ihnen helfen?</value></data>
-  <data name="DuplicateProductInOrder" xml:space="preserve"><value>Sie können dasselbe Produkt nicht mehr als einmal hinzufügen.</value></data>
-  <data name="AtLeastOneItemRequired" xml:space="preserve"><value>Mindestens ein Produkt ist erforderlich.</value></data>
-  <data name="PleaseSelectSupplierFirst" xml:space="preserve"><value>Bitte wählen Sie zuerst einen Lieferanten aus.</value></data>
-  <data name="Theme" xml:space="preserve"><value>Design</value></data>
-  <data name="Theme_Dark" xml:space="preserve"><value>Dunkler Modus</value></data>
-  <data name="Theme_Light" xml:space="preserve"><value>Heller Modus</value></data>
-  <data name="Theme_Toggle" xml:space="preserve"><value>Design umschalten</value></data>
-  <data name="NoResultsFound" xml:space="preserve"><value>Keine Ergebnisse gefunden</value></data>
-  <data name="ClearChatHistory" xml:space="preserve"><value>Verlauf löschen</value></data>
-  <data name="ClearChatConfirm" xml:space="preserve"><value>Möchten Sie wirklich den gesamten Chat-Verlauf löschen?</value></data>
-  <data name="AIChatEmptyResponse" xml:space="preserve"><value>Entschuldigung, ich konnte keine Antwort generieren. Bitte formulieren Sie Ihre Frage um.</value></data>
+  <data name="Nav_Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Nav_Products" xml:space="preserve">
+    <value>Produkte</value>
+  </data>
+  <data name="Nav_AllProducts" xml:space="preserve">
+    <value>Alle Produkte</value>
+  </data>
+  <data name="Nav_AddProduct" xml:space="preserve">
+    <value>Produkt hinzufügen</value>
+  </data>
+  <data name="Nav_Categories" xml:space="preserve">
+    <value>Kategorien</value>
+  </data>
+  <data name="Nav_Suppliers" xml:space="preserve">
+    <value>Lieferanten</value>
+  </data>
+  <data name="Nav_SupplierMappings" xml:space="preserve">
+    <value>Lieferantenzuordnungen</value>
+  </data>
+  <data name="Nav_Transactions" xml:space="preserve">
+    <value>Transaktionen</value>
+  </data>
+  <data name="Nav_Purchases" xml:space="preserve">
+    <value>Einkäufe</value>
+  </data>
+  <data name="Nav_PurchasesList" xml:space="preserve">
+    <value>Einkaufsliste</value>
+  </data>
+  <data name="Nav_NewPurchaseOrder" xml:space="preserve">
+    <value>Neue Bestellung</value>
+  </data>
+  <data name="Nav_Sales" xml:space="preserve">
+    <value>Verkäufe</value>
+  </data>
+  <data name="Nav_SalesList" xml:space="preserve">
+    <value>Verkaufsliste</value>
+  </data>
+  <data name="Nav_NewSaleOrder" xml:space="preserve">
+    <value>Neuer Verkaufsauftrag</value>
+  </data>
+  <data name="Nav_Reports" xml:space="preserve">
+    <value>Berichte</value>
+  </data>
+  <data name="Nav_StockValuation" xml:space="preserve">
+    <value>Lagerbewertung</value>
+  </data>
+  <data name="Nav_StockHealth" xml:space="preserve">
+    <value>Lagerbestand-Zustand</value>
+  </data>
+  <data name="Nav_SalesReport" xml:space="preserve">
+    <value>Verkaufsbericht</value>
+  </data>
+  <data name="Nav_SalesPerformance" xml:space="preserve">
+    <value>Verkaufsleistung</value>
+  </data>
+  <data name="Nav_InventoryCore" xml:space="preserve">
+    <value>INVENTARKERN</value>
+  </data>
+  <data name="Nav_Management" xml:space="preserve">
+    <value>VERWALTUNG</value>
+  </data>
+  <data name="App_Title" xml:space="preserve">
+    <value>IMS-Portal</value>
+  </data>
+  <data name="App_Subtitle" xml:space="preserve">
+    <value>Inventar- und Kassensystem</value>
+  </data>
+  <data name="Search_Placeholder" xml:space="preserve">
+    <value>Produkte, Kategorien suchen...</value>
+  </data>
+  <data name="SearchProductsCategories" xml:space="preserve">
+    <value>Produkte, Kategorien suchen...</value>
+  </data>
+  <data name="Lbl_Language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="Lbl_SelectLanguage" xml:space="preserve">
+    <value>Sprache wählen</value>
+  </data>
+  <data name="Lbl_SystemAdministrator" xml:space="preserve">
+    <value>Systemadministrator</value>
+  </data>
+  <data name="Lbl_Copyright" xml:space="preserve">
+    <value>Urheberrecht</value>
+  </data>
+  <data name="Lbl_InventoryManagementSystem" xml:space="preserve">
+    <value>Warenwirtschaftssystem</value>
+  </data>
+  <data name="Lbl_LowStockAlerts" xml:space="preserve">
+    <value>Niedrige Lagerbestandswarnungen</value>
+  </data>
+  <data name="Lbl_AllStocksHealthy" xml:space="preserve">
+    <value>Alle Bestände im optimalen Bereich</value>
+  </data>
+  <data name="Lbl_NoProductsBelowThreshold" xml:space="preserve">
+    <value>Derzeit liegen keine Produkte unter dem Schwellenwert.</value>
+  </data>
+  <data name="Lbl_ViewAllInAnalytics" xml:space="preserve">
+    <value>Alle in Analysen anzeigen</value>
+  </data>
+  <data name="Item" xml:space="preserve">
+    <value>Artikel</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Artikel</value>
+  </data>
+  <data name="SearchByNameOrSku" xml:space="preserve">
+    <value>Suche nach Name oder SKU</value>
+  </data>
+  <data name="CustomerNameOrPhone" xml:space="preserve">
+    <value>Kundenname oder Telefon</value>
+  </data>
+  <data name="FilterByCustomerOrOrder" xml:space="preserve">
+    <value>Nach Kundenname oder Auftrags-ID filtern...</value>
+  </data>
+  <data name="SearchProducts" xml:space="preserve">
+    <value>Produkte suchen...</value>
+  </data>
+  <data name="BarcodeOrSku" xml:space="preserve">
+    <value>Barcode / SKU</value>
+  </data>
+  <data name="AllCategories" xml:space="preserve">
+    <value>Alle Kategorien</value>
+  </data>
+  <data name="AllStatuses" xml:space="preserve">
+    <value>Alle Status</value>
+  </data>
+  <data name="AllSuppliers" xml:space="preserve">
+    <value>Alle Lieferanten</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtern</value>
+  </data>
+  <data name="ClearFilters" xml:space="preserve">
+    <value>Filter löschen</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Zurücksetzen</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Anwenden</value>
+  </data>
+  <data name="StockStatus" xml:space="preserve">
+    <value>Lagerbestand-Status</value>
+  </data>
+  <data name="QuickRanges" xml:space="preserve">
+    <value>Schnellfilter:</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Heute</value>
+  </data>
+  <data name="ThisWeek" xml:space="preserve">
+    <value>Diese Woche</value>
+  </data>
+  <data name="ThisMonth" xml:space="preserve">
+    <value>Diesen Monat</value>
+  </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>Von Datum</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>Bis Datum</value>
+  </data>
+  <data name="AnalyticsDashboard" xml:space="preserve">
+    <value>Analyse-Dashboard</value>
+  </data>
+  <data name="TotalProducts" xml:space="preserve">
+    <value>Gesamtprodukte</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Kategorien</value>
+  </data>
+  <data name="TotalSalesRevenue" xml:space="preserve">
+    <value>Gesamter Verkaufserlös</value>
+  </data>
+  <data name="LowStockItems" xml:space="preserve">
+    <value>Niedrige Lagerartikel</value>
+  </data>
+  <data name="SalesVsPurchases" xml:space="preserve">
+    <value>Verkäufe vs Einkäufe</value>
+  </data>
+  <data name="SalesVsPurchasesYear" xml:space="preserve">
+    <value>Verkäufe vs Einkäufe (Aktuelles Jahr)</value>
+  </data>
+  <data name="CategoryShare" xml:space="preserve">
+    <value>Kategorienanteil</value>
+  </data>
+  <data name="TopSellingProducts" xml:space="preserve">
+    <value>Meistverkaufte Produkte</value>
+  </data>
+  <data name="LowStockAlerts" xml:space="preserve">
+    <value>Niedrige Lagerbestandswarnungen</value>
+  </data>
+  <data name="RecentTransactionsLog" xml:space="preserve">
+    <value>Protokoll der letzten Transaktionen</value>
+  </data>
+  <data name="UnitsSold" xml:space="preserve">
+    <value>Verkaufte Einheiten</value>
+  </data>
+  <data name="TotalRevenue" xml:space="preserve">
+    <value>Gesamterlös</value>
+  </data>
+  <data name="NoLowStockItems" xml:space="preserve">
+    <value>Keine Artikel mit geringem Lagerbestand gefunden.</value>
+  </data>
+  <data name="NoSalesRecords" xml:space="preserve">
+    <value>Keine Verkaufsunterlagen verfügbar.</value>
+  </data>
+  <data name="NoRecentTransactions" xml:space="preserve">
+    <value>Keine aktuellen Transaktionen gefunden.</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+  <data name="RefID" xml:space="preserve">
+    <value>Ref.-ID</value>
+  </data>
+  <data name="EntityOrCustomer" xml:space="preserve">
+    <value>Einheit / Kunde</value>
+  </data>
+  <data name="SKU" xml:space="preserve">
+    <value>SKU</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Produktname</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Kategorie</value>
+  </data>
+  <data name="UnitPrice" xml:space="preserve">
+    <value>Einzelpreis</value>
+  </data>
+  <data name="Stock" xml:space="preserve">
+    <value>Bestand</value>
+  </data>
+  <data name="StockQuantity" xml:space="preserve">
+    <value>Lagerbestand</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Aktionen</value>
+  </data>
+  <data name="Supplier" xml:space="preserve">
+    <value>Lieferant</value>
+  </data>
+  <data name="Suppliers" xml:space="preserve">
+    <value>Lieferanten</value>
+  </data>
+  <data name="PurchaseDate" xml:space="preserve">
+    <value>Kaufdatum</value>
+  </data>
+  <data name="SaleDate" xml:space="preserve">
+    <value>Verkaufsdatum</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Kunde</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Menge</value>
+  </data>
+  <data name="TotalAmount" xml:space="preserve">
+    <value>Gesamtbetrag</value>
+  </data>
+  <data name="CostPrice" xml:space="preserve">
+    <value>Einstandspreis</value>
+  </data>
+  <data name="SellingPrice" xml:space="preserve">
+    <value>Verkaufspreis</value>
+  </data>
+  <data name="MinStockLevel" xml:space="preserve">
+    <value>Mindestbestand</value>
+  </data>
+  <data name="Threshold" xml:space="preserve">
+    <value>Schwellenwert</value>
+  </data>
+  <data name="ReorderQuantity" xml:space="preserve">
+    <value>Nachbestellmenge</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notizen</value>
+  </data>
+  <data name="ContactPerson" xml:space="preserve">
+    <value>Ansprechpartner</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Adresse</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Beschreibung</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+  <data name="AddProduct" xml:space="preserve">
+    <value>Produkt hinzufügen</value>
+  </data>
+  <data name="NewSaleOrder" xml:space="preserve">
+    <value>Neuer Verkaufsauftrag</value>
+  </data>
+  <data name="NewPurchaseOrder" xml:space="preserve">
+    <value>Neue Bestellung</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Erstellen</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>Zurück zur Liste</value>
+  </data>
+  <data name="BackToProducts" xml:space="preserve">
+    <value>Zurück zu Produkten</value>
+  </data>
+  <data name="BackToSales" xml:space="preserve">
+    <value>Zurück zu Verkäufen</value>
+  </data>
+  <data name="BackToPurchases" xml:space="preserve">
+    <value>Zurück zu Einkäufen</value>
+  </data>
+  <data name="BackToCategories" xml:space="preserve">
+    <value>Zurück zu Kategorien</value>
+  </data>
+  <data name="BackToSuppliers" xml:space="preserve">
+    <value>Zurück zu Lieferanten</value>
+  </data>
+  <data name="ViewAll" xml:space="preserve">
+    <value>Alle anzeigen</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Drucken</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Exportieren</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Bestätigen</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
+  <data name="InStock" xml:space="preserve">
+    <value>Auf Lager</value>
+  </data>
+  <data name="LowStock" xml:space="preserve">
+    <value>Geringer Bestand</value>
+  </data>
+  <data name="OutOfStock" xml:space="preserve">
+    <value>Nicht auf Lager</value>
+  </data>
+  <data name="Paid" xml:space="preserve">
+    <value>Bezahlt</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Ausstehend</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Abgeschlossen</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Storniert</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Erhalten</value>
+  </data>
+  <data name="Sale" xml:space="preserve">
+    <value>Verkauf</value>
+  </data>
+  <data name="Purchase" xml:space="preserve">
+    <value>Kauf</value>
+  </data>
+  <data name="Invoice" xml:space="preserve">
+    <value>Rechnung</value>
+  </data>
+  <data name="BilledTo" xml:space="preserve">
+    <value>Rechnungsempfänger (Kunde)</value>
+  </data>
+  <data name="TransactionDetails" xml:space="preserve">
+    <value>Transaktionsdetails</value>
+  </data>
+  <data name="Subtotal" xml:space="preserve">
+    <value>Zwischensumme</value>
+  </data>
+  <data name="GrandTotal" xml:space="preserve">
+    <value>Gesamtsumme</value>
+  </data>
+  <data name="Tax" xml:space="preserve">
+    <value>Steuer</value>
+  </data>
+  <data name="Discount" xml:space="preserve">
+    <value>Rabatt</value>
+  </data>
+  <data name="PaymentMethod" xml:space="preserve">
+    <value>Zahlungsart</value>
+  </data>
+  <data name="PaymentStatus" xml:space="preserve">
+    <value>Zahlungsstatus</value>
+  </data>
+  <data name="InvoiceNumber" xml:space="preserve">
+    <value>Rechnungsnr.</value>
+  </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>Bestellnr.</value>
+  </data>
+  <data name="PrintInvoice" xml:space="preserve">
+    <value>Rechnung drucken</value>
+  </data>
+  <data name="PrintReport" xml:space="preserve">
+    <value>Bericht drucken</value>
+  </data>
+  <data name="ExportCSV" xml:space="preserve">
+    <value>CSV exportieren</value>
+  </data>
+  <data name="ExportPDF" xml:space="preserve">
+    <value>PDF exportieren</value>
+  </data>
+  <data name="SalesPerformanceReport" xml:space="preserve">
+    <value>Verkaufsleistungsbericht</value>
+  </data>
+  <data name="StockValuationReport" xml:space="preserve">
+    <value>Bestandsbewertungsbericht</value>
+  </data>
+  <data name="StockValuationAndHealth" xml:space="preserve">
+    <value>Lagerbewertung und Bestandssicherheit</value>
+  </data>
+  <data name="TotalPeriodRevenue" xml:space="preserve">
+    <value>Gesamterlös des Zeitraums</value>
+  </data>
+  <data name="CompletedOrders" xml:space="preserve">
+    <value>Abgeschlossene Aufträge</value>
+  </data>
+  <data name="TotalUnitsSold" xml:space="preserve">
+    <value>Gesamte verkaufte Einheiten</value>
+  </data>
+  <data name="AverageOrderValue" xml:space="preserve">
+    <value>Durchschnittlicher Bestellwert</value>
+  </data>
+  <data name="SalesOrdersBreakdown" xml:space="preserve">
+    <value>Aufschlüsselung der Verkaufsaufträge</value>
+  </data>
+  <data name="TotalValuation" xml:space="preserve">
+    <value>Gesamtbewertung</value>
+  </data>
+  <data name="TotalItemsInReport" xml:space="preserve">
+    <value>Artikel in diesem Bericht</value>
+  </data>
+  <data name="WarehouseValuation" xml:space="preserve">
+    <value>Gesamtlagerwert</value>
+  </data>
+  <data name="HealthyStockItems" xml:space="preserve">
+    <value>Optimale Bestandsartikel</value>
+  </data>
+  <data name="FastRestockRequired" xml:space="preserve">
+    <value>Schnellnachbestellung erforderlich</value>
+  </data>
+  <data name="InternalOrderID" xml:space="preserve">
+    <value>Interne Auftrags-ID:</value>
+  </data>
+  <data name="TotalLineItems" xml:space="preserve">
+    <value>Positionen gesamt:</value>
+  </data>
+  <data name="TotalQuantitySold" xml:space="preserve">
+    <value>Gesamt verkaufte Menge:</value>
+  </data>
+  <data name="TermsAndInventoryNotes" xml:space="preserve">
+    <value>Bedingungen und Bestandsnotizen:</value>
+  </data>
+  <data name="InvoiceTermsNote1" xml:space="preserve">
+    <value>Alle Produkte wurden automatisch vom aktuellen Lagerbestand abgezogen.</value>
+  </data>
+  <data name="InvoiceTermsNote2" xml:space="preserve">
+    <value>Die angegebenen Preise sind zum Zeitpunkt der Auftragserstellung verbindlich.</value>
+  </data>
+  <data name="InvoiceTermsNote3" xml:space="preserve">
+    <value>Für Rückfragen oder Rückgaben legen Sie diese Rechnung bitte innerhalb von 14 Tagen vor.</value>
+  </data>
+  <data name="ThankYouForYourBusiness" xml:space="preserve">
+    <value>Vielen Dank für Ihren Einkauf!</value>
+  </data>
+  <data name="PoweredByIMS" xml:space="preserve">
+    <value>Unterstützt durch IMS Enterprise Inventory Management System</value>
+  </data>
+  <data name="TotalPeriodSum" xml:space="preserve">
+    <value>Gesamtsumme des Zeitraums:</value>
+  </data>
+  <data name="DeleteWarningMessage" xml:space="preserve">
+    <value>Warnung: Diese Aktion kann nicht rückgängig gemacht werden. Möchten Sie dieses Element wirklich dauerhaft löschen?</value>
+  </data>
+  <data name="CancelAndKeep" xml:space="preserve">
+    <value>Abbrechen und behalten</value>
+  </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Löschen bestätigen</value>
+  </data>
+  <data name="DeleteConfirmationTitle" xml:space="preserve">
+    <value>Löschbestätigung</value>
+  </data>
+  <data name="CannotDeleteTitle" xml:space="preserve">
+    <value>Element kann nicht gelöscht werden</value>
+  </data>
+  <data name="DeletionBlocked" xml:space="preserve">
+    <value>Löschung blockiert:</value>
+  </data>
+  <data name="Showing" xml:space="preserve">
+    <value>Anzeige von</value>
+  </data>
+  <data name="Of" xml:space="preserve">
+    <value>von</value>
+  </data>
+  <data name="Entries" xml:space="preserve">
+    <value>Einträge</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Anzeigen:</value>
+  </data>
+  <data name="First" xml:space="preserve">
+    <value>Erste</value>
+  </data>
+  <data name="Prev" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Weiter</value>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>Letzte</value>
+  </data>
+  <data name="NoProductsFound" xml:space="preserve">
+    <value>Keine Produkte gefunden</value>
+  </data>
+  <data name="NoCategoriesFound" xml:space="preserve">
+    <value>Keine Kategorien gefunden</value>
+  </data>
+  <data name="NoSuppliersFound" xml:space="preserve">
+    <value>Keine Lieferanten gefunden</value>
+  </data>
+  <data name="NoPurchasesFound" xml:space="preserve">
+    <value>Keine Bestellungen gefunden</value>
+  </data>
+  <data name="NoSalesFound" xml:space="preserve">
+    <value>Keine Verkaufsaufträge gefunden</value>
+  </data>
+  <data name="ManageInventoryProducts" xml:space="preserve">
+    <value>Inventarprodukte, Lagerbestände und Preise verwalten</value>
+  </data>
+  <data name="ManageCategories" xml:space="preserve">
+    <value>Inventarprodukte in logische Kategorien einteilen</value>
+  </data>
+  <data name="ManageSuppliers" xml:space="preserve">
+    <value>Lieferantenkontakte, Lieferzeiten und Kataloge verwalten</value>
+  </data>
+  <data name="ManagePurchases" xml:space="preserve">
+    <value>Lieferantenbestellungen und Wareneingänge erfassen</value>
+  </data>
+  <data name="ManageSales" xml:space="preserve">
+    <value>Kassentransaktionen, Kundenrechnungen und Bestandsabbuchung</value>
+  </data>
+  <data name="AddNewProduct" xml:space="preserve">
+    <value>Neues Produkt hinzufügen</value>
+  </data>
+  <data name="EditProduct" xml:space="preserve">
+    <value>Produkt bearbeiten</value>
+  </data>
+  <data name="ProductDetails" xml:space="preserve">
+    <value>Produktdetails</value>
+  </data>
+  <data name="DeleteProduct" xml:space="preserve">
+    <value>Produkt löschen</value>
+  </data>
+  <data name="AddNewCategory" xml:space="preserve">
+    <value>Neue Kategorie hinzufügen</value>
+  </data>
+  <data name="EditCategory" xml:space="preserve">
+    <value>Kategorie bearbeiten</value>
+  </data>
+  <data name="CategoryDetails" xml:space="preserve">
+    <value>Kategoriedetails</value>
+  </data>
+  <data name="DeleteCategory" xml:space="preserve">
+    <value>Kategorie löschen</value>
+  </data>
+  <data name="AddNewSupplier" xml:space="preserve">
+    <value>Neuen Lieferanten hinzufügen</value>
+  </data>
+  <data name="EditSupplier" xml:space="preserve">
+    <value>Lieferant bearbeiten</value>
+  </data>
+  <data name="SupplierDetails" xml:space="preserve">
+    <value>Lieferantendetails</value>
+  </data>
+  <data name="DeleteSupplier" xml:space="preserve">
+    <value>Lieferant löschen</value>
+  </data>
+  <data name="Purchases" xml:space="preserve">
+    <value>Einkäufe</value>
+  </data>
+  <data name="PurchasesManagement" xml:space="preserve">
+    <value>Einkaufsverwaltung</value>
+  </data>
+  <data name="TrackManagePurchases" xml:space="preserve">
+    <value>Bestellungen, Lieferantenkosten und Bestelldaten verfolgen und verwalten</value>
+  </data>
+  <data name="AddPurchase" xml:space="preserve">
+    <value>Kauf hinzufügen</value>
+  </data>
+  <data name="AllPurchasesList" xml:space="preserve">
+    <value>Liste aller Einkäufe</value>
+  </data>
+  <data name="StartRecordingPurchase" xml:space="preserve">
+    <value>Beginnen Sie mit der Erfassung Ihrer ersten Bestellung.</value>
+  </data>
+  <data name="AddNewPurchase" xml:space="preserve">
+    <value>Neuen Einkauf hinzufügen</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="SelectSupplier" xml:space="preserve">
+    <value>Lieferant auswählen</value>
+  </data>
+  <data name="SelectSupplierForOrder" xml:space="preserve">
+    <value>Wählen Sie den Lieferanten für diese Bestellung aus.</value>
+  </data>
+  <data name="DateOrderIssued" xml:space="preserve">
+    <value>Datum, an dem die Bestellung ausgestellt wurde.</value>
+  </data>
+  <data name="PurchaseOrderItems" xml:space="preserve">
+    <value>Bestellpositionen</value>
+  </data>
+  <data name="AddAnotherProduct" xml:space="preserve">
+    <value>Weiteres Produkt hinzufügen</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Produkt</value>
+  </data>
+  <data name="UnitCost" xml:space="preserve">
+    <value>Stückkosten</value>
+  </data>
+  <data name="SelectProduct" xml:space="preserve">
+    <value>Produkt auswählen</value>
+  </data>
+  <data name="SavePurchaseOrder" xml:space="preserve">
+    <value>Bestellung speichern</value>
+  </data>
+  <data name="UpdatePurchaseOrder" xml:space="preserve">
+    <value>Bestellung aktualisieren</value>
+  </data>
+  <data name="EditPurchaseOrder" xml:space="preserve">
+    <value>Bestellung bearbeiten</value>
+  </data>
+  <data name="PurchaseOrderSummary" xml:space="preserve">
+    <value>Bestellzusammenfassung</value>
+  </data>
+  <data name="PurchaseID" xml:space="preserve">
+    <value>Kauf-ID</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>Lieferantenname</value>
+  </data>
+  <data name="TotalItemsCount" xml:space="preserve">
+    <value>Gesamtartikelanzahl</value>
+  </data>
+  <data name="GrandTotalAmount" xml:space="preserve">
+    <value>Gesamtsummenbetrag</value>
+  </data>
+  <data name="TotalCost" xml:space="preserve">
+    <value>Gesamtkosten</value>
+  </data>
+  <data name="PurchasedProducts" xml:space="preserve">
+    <value>Gekaufte Produkte</value>
+  </data>
+  <data name="PurchasedItemsBreakdown" xml:space="preserve">
+    <value>Aufschlüsselung der gekauften Artikel</value>
+  </data>
+  <data name="NoItemsInPurchaseOrder" xml:space="preserve">
+    <value>Für diese Bestellung sind keine Artikel registriert.</value>
+  </data>
+  <data name="LineItems" xml:space="preserve">
+    <value>Auftragspositionen</value>
+  </data>
+  <data name="DeletePurchaseOrder" xml:space="preserve">
+    <value>Bestellung löschen</value>
+  </data>
+  <data name="CannotDeletePurchaseOrder" xml:space="preserve">
+    <value>Bestellung kann nicht gelöscht werden</value>
+  </data>
+  <data name="DeletePurchaseWarningRevert" xml:space="preserve">
+    <value>Warnung: Das Löschen dieser Bestellung setzt die Lagerbestände automatisch zurück.</value>
+  </data>
+  <data name="DeletePurchase" xml:space="preserve">
+    <value>Kauf löschen</value>
+  </data>
+  <data name="SalesManagement" xml:space="preserve">
+    <value>Verkaufsverwaltung</value>
+  </data>
+  <data name="SalesOrdersAndPOS" xml:space="preserve">
+    <value>Verkaufsaufträge und Kasse</value>
+  </data>
+  <data name="SalesOrdersSubtitle" xml:space="preserve">
+    <value>Verkäufe erfassen, Festpreise erfassen und Bestandsabzüge verfolgen</value>
+  </data>
+  <data name="TotalOrders" xml:space="preserve">
+    <value>Gesamtaufträge</value>
+  </data>
+  <data name="CustomerOrOrderNumber" xml:space="preserve">
+    <value>Kunde / Auftragsnr.</value>
+  </data>
+  <data name="SearchCustomerOrOrder" xml:space="preserve">
+    <value>Kundeninfo oder Auftrags-ID suchen...</value>
+  </data>
+  <data name="SalesOrderHistory" xml:space="preserve">
+    <value>Historie der Verkaufsaufträge</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Seite</value>
+  </data>
+  <data name="NoSalesMatchCriteria" xml:space="preserve">
+    <value>Keine abgeschlossenen Verkäufe entsprechen Ihren Kriterien.</value>
+  </data>
+  <data name="RecordNewSale" xml:space="preserve">
+    <value>Neuen Verkauf erfassen</value>
+  </data>
+  <data name="RecordNewSaleTransaction" xml:space="preserve">
+    <value>Neue Verkaufstransaktion erfassen</value>
+  </data>
+  <data name="CustomerInfoOrName" xml:space="preserve">
+    <value>Kundeninfo / Name</value>
+  </data>
+  <data name="CustomerInfoHelp" xml:space="preserve">
+    <value>Leer lassen oder Kundendaten, Telefon oder Firmenname angeben.</value>
+  </data>
+  <data name="SaleDateHelp" xml:space="preserve">
+    <value>Datum, an dem der Verkauf stattgefunden hat.</value>
+  </data>
+  <data name="SaleOrderLineItems" xml:space="preserve">
+    <value>Verkaufsauftragspositionen</value>
+  </data>
+  <data name="SnapshotPrice" xml:space="preserve">
+    <value>Erfasster Preis ($)</value>
+  </data>
+  <data name="AvailableStock" xml:space="preserve">
+    <value>Verfügbarer Bestand:</value>
+  </data>
+  <data name="AutoCapturedSnapshot" xml:space="preserve">
+    <value>Automatisch erfasster Preis</value>
+  </data>
+  <data name="CompleteSaleAndDeductStock" xml:space="preserve">
+    <value>Verkauf abschließen &amp; Bestand abbuchen</value>
+  </data>
+  <data name="SalesOrderInvoice" xml:space="preserve">
+    <value>Verkaufsauftragsrechnung</value>
+  </data>
+  <data name="OfficialPOSReceipt" xml:space="preserve">
+    <value>Offizieller Kassenbeleg und Bestandsabzugsnachweis</value>
+  </data>
+  <data name="DeleteSaleOrderAndRevert" xml:space="preserve">
+    <value>Verkaufsauftrag löschen &amp; Bestand zurückbuchen</value>
+  </data>
+  <data name="DeleteSaleWarning" xml:space="preserve">
+    <value>Warnung: Durch das Löschen dieses Verkaufsauftrags wird die Transaktion dauerhaft entfernt und der Bestand wieder dem Lager gutgeschrieben.</value>
+  </data>
+  <data name="ItemsToRevertToStock" xml:space="preserve">
+    <value>Artikel zur Rückbuchung ins Lager</value>
+  </data>
+  <data name="QtyToRestore" xml:space="preserve">
+    <value>Menge zur Rückbuchung</value>
+  </data>
+  <data name="CancelAndKeepSale" xml:space="preserve">
+    <value>Abbrechen &amp; Verkauf behalten</value>
+  </data>
+  <data name="ConfirmDeleteAndRevert" xml:space="preserve">
+    <value>Löschen &amp; Bestand zurückbuchen</value>
+  </data>
+  <data name="Period" xml:space="preserve">
+    <value>Zeitraum:</value>
+  </data>
+  <data name="Generated" xml:space="preserve">
+    <value>Erstellt am:</value>
+  </data>
+  <data name="OrdersCompleted" xml:space="preserve">
+    <value>Bestellungen abgeschlossen</value>
+  </data>
+  <data name="NoSalesRecordsInRange" xml:space="preserve">
+    <value>Keine Verkaufsunterlagen in diesem Datumsbereich</value>
+  </data>
+  <data name="AdjustDateFilterHint" xml:space="preserve">
+    <value>Passen Sie den Datumsbereich an oder wählen Sie 'Diesen Monat'.</value>
+  </data>
+  <data name="ViewThisMonthSales" xml:space="preserve">
+    <value>Verkäufe dieses Monats anzeigen</value>
+  </data>
+  <data name="ProductStockValuationAndRestock" xml:space="preserve">
+    <value>Produktbewertung und Nachbestellstatus</value>
+  </data>
+  <data name="ItemsDisplayed" xml:space="preserve">
+    <value>angezeigte Artikel</value>
+  </data>
+  <data name="FilteredSubtotal" xml:space="preserve">
+    <value>Gefilterte Zwischensumme:</value>
+  </data>
+  <data name="NoProductsMatchCriteria" xml:space="preserve">
+    <value>Keine Produkte entsprechen Ihren Kriterien</value>
+  </data>
+  <data name="AdjustCriteriaHint" xml:space="preserve">
+    <value>Passen Sie Kategorie-, Status- oder Suchfilter an.</value>
+  </data>
+  <data name="ResetAllFilters" xml:space="preserve">
+    <value>Alle Filter zurücksetzen</value>
+  </data>
+  <data name="ProductAndSku" xml:space="preserve">
+    <value>PRODUKT &amp; SKU</value>
+  </data>
+  <data name="CurrentStockThreshold" xml:space="preserve">
+    <value>AKTUELLER BESTAND / SCHWELLE</value>
+  </data>
+  <data name="Valuation" xml:space="preserve">
+    <value>BEWERTUNG ($)</value>
+  </data>
+  <data name="Restock" xml:space="preserve">
+    <value>Nachbestellen</value>
+  </data>
+  <data name="TotalValuationOfDisplayed" xml:space="preserve">
+    <value>Gesamtwert der angezeigten Artikel:</value>
+  </data>
+  <data name="Units" xml:space="preserve">
+    <value>Einheiten</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>Min:</value>
+  </data>
+  <data name="SupplierProductMappings" xml:space="preserve">
+    <value>Lieferanten-Produkt-Zuordnungen</value>
+  </data>
+  <data name="ManageSupplierRelationships" xml:space="preserve">
+    <value>Beziehungen zwischen Lieferanten, Produkten, Vertragspreisen und Vorlaufzeiten verwalten</value>
+  </data>
+  <data name="AddMapping" xml:space="preserve">
+    <value>Zuordnung hinzufügen</value>
+  </data>
+  <data name="SearchSkuOrKeyword" xml:space="preserve">
+    <value>Nach SKU oder Stichwort suchen</value>
+  </data>
+  <data name="SearchSupplierSkuPlaceholder" xml:space="preserve">
+    <value>Lieferanten-SKU, Produkt, Lieferant suchen...</value>
+  </data>
+  <data name="AllMappings" xml:space="preserve">
+    <value>Alle Zuordnungen</value>
+  </data>
+  <data name="NoMappingsFound" xml:space="preserve">
+    <value>Keine Zuordnungen gefunden</value>
+  </data>
+  <data name="NoMappingsMatchFilters" xml:space="preserve">
+    <value>Keine Zuordnungen entsprechen Ihren Filtern. Versuchen Sie, diese zu löschen.</value>
+  </data>
+  <data name="StartAssociatingSupplier" xml:space="preserve">
+    <value>Beginnen Sie mit der Verknüpfung eines Lieferanten mit einem Produkt.</value>
+  </data>
+  <data name="SupplierSKU" xml:space="preserve">
+    <value>Lieferanten-SKU</value>
+  </data>
+  <data name="ContractPrice" xml:space="preserve">
+    <value>Vertragspreis</value>
+  </data>
+  <data name="LeadTimeDays" xml:space="preserve">
+    <value>Vorlaufzeit (Tage)</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Tage</value>
+  </data>
+  <data name="RemoveSupplierProductMapping" xml:space="preserve">
+    <value>Lieferanten-Produkt-Zuordnung entfernen</value>
+  </data>
+  <data name="RemoveMapping" xml:space="preserve">
+    <value>Zuordnung entfernen</value>
+  </data>
+  <data name="RemoveMappingWarning" xml:space="preserve">
+    <value>Warnung: Möchten Sie diese Zuordnung wirklich entfernen? Die Verknüpfung zwischen diesem Lieferanten und diesem Produkt wird aufgehoben.</value>
+  </data>
+  <data name="EditMapping" xml:space="preserve">
+    <value>Zuordnung bearbeiten</value>
+  </data>
+  <data name="MapSupplierToProduct" xml:space="preserve">
+    <value>Lieferanten dem Produkt zuordnen</value>
+  </data>
+  <data name="SupplierSKUPartNumber" xml:space="preserve">
+    <value>Lieferanten-SKU / Teilenummer</value>
+  </data>
+  <data name="SupplierSKUHelp" xml:space="preserve">
+    <value>Die Katalog- oder Artikelnummer des Lieferanten für dieses Produkt.</value>
+  </data>
+  <data name="ContractPriceHelp" xml:space="preserve">
+    <value>Vereinbarter Einkaufspreis dieses Lieferanten.</value>
+  </data>
+  <data name="LeadTimeHelp" xml:space="preserve">
+    <value>Geschätzte Werktage für die Auftragslieferung.</value>
+  </data>
+  <data name="SaveMapping" xml:space="preserve">
+    <value>Zuordnung speichern</value>
+  </data>
+  <data name="UpdateMapping" xml:space="preserve">
+    <value>Zuordnung aktualisieren</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Erfolg!</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Fehler!</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warnung!</value>
+  </data>
+  <data name="RetailPOSCashOrder" xml:space="preserve">
+    <value>Einzelhandels-POS Bar / Bestellung</value>
+  </data>
+  <data name="AIChatbotTitle" xml:space="preserve">
+    <value>KI-Inventar-Assistent</value>
+  </data>
+  <data name="AskAIPlaceholder" xml:space="preserve">
+    <value>Fragen Sie nach Ihrem Inventar...</value>
+  </data>
+  <data name="AIChatGreeting" xml:space="preserve">
+    <value>Hallo! Ich bin Ihr Inventar-Assistent. Wie kann ich Ihnen helfen?</value>
+  </data>
+  <data name="DuplicateProductInOrder" xml:space="preserve">
+    <value>Sie können dasselbe Produkt nicht mehr als einmal hinzufügen.</value>
+  </data>
+  <data name="AtLeastOneItemRequired" xml:space="preserve">
+    <value>Mindestens ein Produkt ist erforderlich.</value>
+  </data>
+  <data name="PleaseSelectSupplierFirst" xml:space="preserve">
+    <value>Bitte wählen Sie zuerst einen Lieferanten aus.</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Design</value>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>Dunkler Modus</value>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>Heller Modus</value>
+  </data>
+  <data name="Theme_Toggle" xml:space="preserve">
+    <value>Design umschalten</value>
+  </data>
+  <data name="NoResultsFound" xml:space="preserve">
+    <value>Keine Ergebnisse gefunden</value>
+  </data>
+  <data name="ClearChatHistory" xml:space="preserve">
+    <value>Verlauf löschen</value>
+  </data>
+  <data name="ClearChatConfirm" xml:space="preserve">
+    <value>Möchten Sie wirklich den gesamten Chat-Verlauf löschen?</value>
+  </data>
+  <data name="AIChatEmptyResponse" xml:space="preserve">
+    <value>Entschuldigung, ich konnte keine Antwort generieren. Bitte formulieren Sie Ihre Frage um.</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Benutzername</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Passwort</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>Vollständiger Name</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Erstellt</value>
+  </data>
+  <data name="LastLogin" xml:space="preserve">
+    <value>Letzte Anmeldung</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="SaveChanges" xml:space="preserve">
+    <value>Änderungen speichern</value>
+  </data>
+  <data name="ClearFilter" xml:space="preserve">
+    <value>Filter löschen</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Aktiv</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Anmelden</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Passwort vergessen</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Angemeldet bleiben</value>
+  </data>
+  <data name="AccessDenied" xml:space="preserve">
+    <value>Zugriff verweigert</value>
+  </data>
+  <data name="SecurityQuestion" xml:space="preserve">
+    <value>Sicherheitsfrage</value>
+  </data>
+  <data name="Nav_UserManagement" xml:space="preserve">
+    <value>Benutzerverwaltung</value>
+  </data>
+  <data name="Btn_Login" xml:space="preserve">
+    <value>Anmelden</value>
+  </data>
+  <data name="Btn_Logout" xml:space="preserve">
+    <value>Abmelden</value>
+  </data>
+  <data name="Btn_ResetPassword" xml:space="preserve">
+    <value>Passwort zurücksetzen</value>
+  </data>
+  <data name="Lbl_LoginTitle" xml:space="preserve">
+    <value>Anmeldung</value>
+  </data>
+  <data name="Lbl_WelcomeBack" xml:space="preserve">
+    <value>Willkommen zurück</value>
+  </data>
+  <data name="Lbl_LoginSubtitle" xml:space="preserve">
+    <value>Melden Sie sich mit Ihren Unternehmensdaten an</value>
+  </data>
+  <data name="EnterUsernameOrEmail" xml:space="preserve">
+    <value>Geben Sie Ihren Benutzernamen oder Ihre E-Mail-Adresse ein</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Passwort eingeben</value>
+  </data>
+  <data name="Lbl_SelfServiceRecovery" xml:space="preserve">
+    <value>Passwort-Selbstwiederherstellung</value>
+  </data>
+  <data name="Lbl_SelfServiceRecoveryDesc" xml:space="preserve">
+    <value>Setzen Sie Ihr Passwort offline mit Ihrem Master-Wiederherstellungsschlüssel oder Notfall-OTP zurück</value>
+  </data>
+  <data name="Lbl_ZeroSmtpNoteTitle" xml:space="preserve">
+    <value>Keine-SMTP-Richtlinie</value>
+  </data>
+  <data name="Lbl_ZeroSmtpNoteDesc" xml:space="preserve">
+    <value>Keine externen E-Mail-Server erforderlich. Ihre Identität wird sofort überprüft.</value>
+  </data>
+  <data name="Lbl_VerifyAccount" xml:space="preserve">
+    <value>Konto überprüfen</value>
+  </data>
+  <data name="Lbl_BackToLogin" xml:space="preserve">
+    <value>Zurück zur Anmeldung</value>
+  </data>
+  <data name="Lbl_AnswerSecurityQuestion" xml:space="preserve">
+    <value>Sicherheitsfrage beantworten</value>
+  </data>
+  <data name="Lbl_SecurityVerification" xml:space="preserve">
+    <value>Sicherheitsüberprüfung</value>
+  </data>
+  <data name="Lbl_SecurityVerificationDesc" xml:space="preserve">
+    <value>Geben Sie Ihren Master-Wiederherstellungsschlüssel oder Notfall-OTP für das Konto ein</value>
+  </data>
+  <data name="Lbl_YourSecurityAnswer" xml:space="preserve">
+    <value>Ihre Sicherheitsantwort</value>
+  </data>
+  <data name="Lbl_EnterSecurityAnswer" xml:space="preserve">
+    <value>Geben Sie Ihre Antwort ein</value>
+  </data>
+  <data name="Lbl_NewPassword" xml:space="preserve">
+    <value>Neues Passwort</value>
+  </data>
+  <data name="Lbl_EnterNewPassword" xml:space="preserve">
+    <value>Neues sicheres Passwort eingeben</value>
+  </data>
+  <data name="Lbl_ConfirmNewPassword" xml:space="preserve">
+    <value>Neues Passwort bestätigen</value>
+  </data>
+  <data name="Lbl_ReEnterNewPassword" xml:space="preserve">
+    <value>Neues Passwort erneut eingeben</value>
+  </data>
+  <data name="Lbl_ResetPasswordAndLogin" xml:space="preserve">
+    <value>Passwort zurücksetzen &amp; anmelden</value>
+  </data>
+  <data name="Lbl_AccessDeniedDesc" xml:space="preserve">
+    <value>Sie haben keine Berechtigung für dieses Modul oder diese Ressource.</value>
+  </data>
+  <data name="Lbl_ProfileSettings" xml:space="preserve">
+    <value>Profil &amp; Sicherheit</value>
+  </data>
+  <data name="Lbl_ProfileDesc" xml:space="preserve">
+    <value>Verwalten Sie Ihre persönlichen Daten, den Wiederherstellungsschlüssel und die Anmeldedaten</value>
+  </data>
+  <data name="Lbl_PleaseCorrectErrors" xml:space="preserve">
+    <value>Bitte korrigieren Sie die folgenden Fehler</value>
+  </data>
+  <data name="Lbl_PersonalInformation" xml:space="preserve">
+    <value>Persönliche Angaben</value>
+  </data>
+  <data name="Lbl_UsernameCannotBeChanged" xml:space="preserve">
+    <value>Der Benutzername kann nach der Erstellung nicht mehr geändert werden.</value>
+  </data>
+  <data name="Lbl_SecuritySettings" xml:space="preserve">
+    <value>Sicherheitseinstellungen</value>
+  </data>
+  <data name="Lbl_RecoveryAnswer" xml:space="preserve">
+    <value>Wiederherstellungsantwort</value>
+  </data>
+  <data name="Lbl_SecurityQuestionExplanation" xml:space="preserve">
+    <value>Wird verwendet, um Ihr Passwort lokal zurückzusetzen, falls Sie Ihre Anmeldedaten vergessen.</value>
+  </data>
+  <data name="Lbl_NewSecurityAnswer" xml:space="preserve">
+    <value>Neue Sicherheitsantwort</value>
+  </data>
+  <data name="Lbl_LeaveBlankToKeepCurrent" xml:space="preserve">
+    <value>Leer lassen, um die aktuelle Antwort beizubehalten</value>
+  </data>
+  <data name="Lbl_SecurityAnswerHint" xml:space="preserve">
+    <value>Groß-/Kleinschreibung wird nicht beachtet. Merken Sie sich diese Antwort.</value>
+  </data>
+  <data name="Lbl_ChangePassword" xml:space="preserve">
+    <value>Passwort ändern</value>
+  </data>
+  <data name="Lbl_LeaveBlankIfNotChangingPassword" xml:space="preserve">
+    <value>Lassen Sie die Passwortfelder leer, wenn Sie Ihr Passwort nicht ändern möchten.</value>
+  </data>
+  <data name="Lbl_CurrentPassword" xml:space="preserve">
+    <value>Aktuelles Passwort</value>
+  </data>
+  <data name="Lbl_CreateNewUser" xml:space="preserve">
+    <value>Neuen Benutzer erstellen</value>
+  </data>
+  <data name="Lbl_CreateUserSubtitle" xml:space="preserve">
+    <value>Richten Sie ein neues Mitarbeiterkonto mit festgelegten Unternehmensrollen ein</value>
+  </data>
+  <data name="Lbl_BackToUsersList" xml:space="preserve">
+    <value>Zurück zu Benutzern</value>
+  </data>
+  <data name="Lbl_AccountCredentialsAndRole" xml:space="preserve">
+    <value>Anmeldedaten &amp; Rolle</value>
+  </data>
+  <data name="Lbl_AssignedRole" xml:space="preserve">
+    <value>Zugewiesene Rolle</value>
+  </data>
+  <data name="Lbl_ConfirmPassword" xml:space="preserve">
+    <value>Passwort bestätigen</value>
+  </data>
+  <data name="Lbl_UserIsActiveAndCanLogin" xml:space="preserve">
+    <value>Benutzer ist aktiv und darf sich anmelden</value>
+  </data>
+  <data name="Lbl_CreateUserButton" xml:space="preserve">
+    <value>Benutzer erstellen</value>
+  </data>
+  <data name="Lbl_DirectPasswordReset" xml:space="preserve">
+    <value>Direktes Passwort-Zurücksetzen</value>
+  </data>
+  <data name="Lbl_DirectPasswordResetSubtitle" xml:space="preserve">
+    <value>Legen Sie direkt ein neues Passwort für Mitarbeiter fest</value>
+  </data>
+  <data name="Lbl_TargetUser" xml:space="preserve">
+    <value>Zielbenutzer</value>
+  </data>
+  <data name="Lbl_AdminPasswordResetNotice" xml:space="preserve">
+    <value>Als SuperAdmin können Sie das Passwort dieses Benutzers direkt überschreiben.</value>
+  </data>
+  <data name="Lbl_EditUser" xml:space="preserve">
+    <value>Benutzer bearbeiten</value>
+  </data>
+  <data name="Lbl_EditUserSubtitle" xml:space="preserve">
+    <value>Benutzerdaten, zugewiesene Rolle und Zugriffsstatus aktualisieren</value>
+  </data>
+  <data name="Lbl_UpdateUserDetails" xml:space="preserve">
+    <value>Benutzerdetails aktualisieren</value>
+  </data>
+  <data name="Lbl_GoBack" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="Lbl_UserManagementSubtitle" xml:space="preserve">
+    <value>Systembenutzer verwalten, Zugriffsrollen zuweisen und Kontosicherheit steuern</value>
+  </data>
+  <data name="Lbl_SearchUsersPlaceholder" xml:space="preserve">
+    <value>Suche nach Benutzername, Name oder E-Mail...</value>
+  </data>
+  <data name="Lbl_AllRoles" xml:space="preserve">
+    <value>Alle Rollen</value>
+  </data>
+  <data name="Lbl_UsersList" xml:space="preserve">
+    <value>Unternehmensbenutzer</value>
+  </data>
+  <data name="Lbl_User" xml:space="preserve">
+    <value>Benutzer</value>
+  </data>
+  <data name="Lbl_Role" xml:space="preserve">
+    <value>Rolle</value>
+  </data>
+  <data name="Lbl_NoUsersFound" xml:space="preserve">
+    <value>Keine Benutzerkonten gefunden, die den Kriterien entsprechen.</value>
+  </data>
+  <data name="Lbl_You" xml:space="preserve">
+    <value>Sie</value>
+  </data>
+  <data name="Lbl_LockedOut" xml:space="preserve">
+    <value>Gesperrt</value>
+  </data>
+  <data name="Lbl_Deactivated" xml:space="preserve">
+    <value>Deaktiviert</value>
+  </data>
+  <data name="Lbl_ConfirmDeactivateUser" xml:space="preserve">
+    <value>Möchten Sie diesen Benutzer wirklich deaktivieren?</value>
+  </data>
+  <data name="Lbl_ConfirmActivateUser" xml:space="preserve">
+    <value>Möchten Sie diesen Benutzer wirklich aktivieren?</value>
+  </data>
+  <data name="Lbl_Deactivate" xml:space="preserve">
+    <value>Deaktivieren</value>
+  </data>
+  <data name="Lbl_Activate" xml:space="preserve">
+    <value>Aktivieren</value>
+  </data>
+  <data name="Lbl_ConfirmDeleteUser" xml:space="preserve">
+    <value>Möchten Sie dieses Benutzerkonto wirklich dauerhaft löschen?</value>
+  </data>
+  <data name="Lbl_MasterRecoveryKeyTitle" xml:space="preserve">
+    <value>Master-Wiederherstellungsschlüssel</value>
+  </data>
+  <data name="Lbl_MasterRecoveryKeyPromptDesc" xml:space="preserve">
+    <value>Geben Sie Ihren vertraulichen Master-Wiederherstellungsschlüssel ein, um Ihre Identität zu bestätigen und Ihr Passwort zurückzusetzen.</value>
+  </data>
+  <data name="Lbl_TelegramOtpDispatched" xml:space="preserve">
+    <value>Ein 6-stelliger Notfall-OTP wurde ebenfalls über Webhook (Telegram) versendet</value>
+  </data>
+  <data name="Lbl_RecoveryKeyOrOtp" xml:space="preserve">
+    <value>Master-Wiederherstellungsschlüssel oder 6-stelliger OTP</value>
+  </data>
+  <data name="Lbl_RecoveryKeyPlaceholder" xml:space="preserve">
+    <value>z.B. IMS-XXXX-XXXX-XXXX-XXXX oder 123456</value>
+  </data>
+  <data name="Lbl_NewRecoveryKeyGeneratedTitle" xml:space="preserve">
+    <value>Neuer Master-Wiederherstellungsschlüssel generiert</value>
+  </data>
+  <data name="Lbl_NewRecoveryKeyGeneratedDesc" xml:space="preserve">
+    <value>Dieser Schlüssel wird genau EINMAL angezeigt. Bewahren Sie ihn sofort sicher auf. Sie benötigen ihn bei Passwortverlust.</value>
+  </data>
+  <data name="Lbl_CopyKey" xml:space="preserve">
+    <value>Schlüssel kopieren</value>
+  </data>
+  <data name="Lbl_RecoveryKeyStatus" xml:space="preserve">
+    <value>Master-Wiederherstellungsschlüssel</value>
+  </data>
+  <data name="Lbl_RecoveryKeyActive" xml:space="preserve">
+    <value>Aktiv &amp; gehasht</value>
+  </data>
+  <data name="Lbl_LastGenerated" xml:space="preserve">
+    <value>Generiert</value>
+  </data>
+  <data name="Lbl_RegenerateRecoveryKey" xml:space="preserve">
+    <value>Schlüssel neu generieren</value>
+  </data>
+  <data name="Lbl_ConfirmRegenerateKey" xml:space="preserve">
+    <value>Durch das Neugenerieren wird der vorherige Schlüssel sofort ungültig. Möchten Sie fortfahren?</value>
+  </data>
+  <data name="Lbl_MasterRecoveryKeyExplanation" xml:space="preserve">
+    <value>Ihr Master-Wiederherstellungsschlüssel wird als sicherer PBKDF2-Hash gespeichert. Verwenden Sie ihn jederzeit zum Zurücksetzen ohne externen E-Mail-Server.</value>
+  </data>
+  <data name="Lbl_MasterRecoveryKeyNotice" xml:space="preserve">
+    <value>Ein kryptografisch zufälliger Master-Wiederherstellungsschlüssel wird bei der Kontoerstellung automatisch generiert und genau einmal angezeigt.</value>
+  </data>
+  <data name="Lbl_NewRecoveryKeyNotice" xml:space="preserve">
+    <value>Ein vertraulicher Master-Wiederherstellungsschlüssel wurde für diesen Benutzer generiert. Kopieren Sie ihn und bewahren Sie ihn sicher auf. Er wird nicht wieder angezeigt.</value>
+  </data>
+  <data name="Lbl_DemoCredentialsAutofill" xml:space="preserve">
+    <value>Demo-Zugangsdaten automatisch ausfüllen:</value>
+  </data>
+  <data name="Lbl_ClickToAutofill" xml:space="preserve">
+    <value>Klicken zum Ausfüllen</value>
+  </data>
+  <data name="Role_SuperAdmin" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="Role_WarehouseManager" xml:space="preserve">
+    <value>Lagermanager</value>
+  </data>
+  <data name="Role_Cashier" xml:space="preserve">
+    <value>Kassierer</value>
+  </data>
+  <data name="Role_ProcurementSpecialist" xml:space="preserve">
+    <value>Beschaffungsspezialist</value>
+  </data>
+  <data name="Role_Auditor" xml:space="preserve">
+    <value>Prüfer</value>
+  </data>
+  <data name="Nav_Administration" xml:space="preserve">
+    <value>Verwaltung</value>
+  </data>
+  <data name="Lbl_SetNewPassword" xml:space="preserve">
+    <value>Neues Passwort festlegen</value>
+  </data>
+  <data name="Lbl_Never" xml:space="preserve">
+    <value>Nie</value>
+  </data>
+  <data name="Lbl_ForgotPasswordTitle" xml:space="preserve">
+    <value>Passwort vergessen</value>
+  </data>
+  <data name="Placeholder_Min8Chars" xml:space="preserve">
+    <value>Mindestens 8 Zeichen</value>
+  </data>
+  <data name="Placeholder_ReenterNewPassword" xml:space="preserve">
+    <value>Neues Passwort erneut eingeben</value>
+  </data>
+  <data name="Placeholder_ReenterPassword" xml:space="preserve">
+    <value>Passwort erneut eingeben</value>
+  </data>
+  <data name="Placeholder_UsernameExample" xml:space="preserve">
+    <value>z.B. john_cashier</value>
+  </data>
+  <data name="Placeholder_FullNameExample" xml:space="preserve">
+    <value>z.B. Max Mustermann</value>
+  </data>
+  <data name="Placeholder_EmailExample" xml:space="preserve">
+    <value>z.B. user@ims.local</value>
+  </data>
+  <data name="Lbl_PasswordRequirements" xml:space="preserve">
+    <value>Muss Groß-, Kleinbuchstaben, Ziffern und Sonderzeichen enthalten.</value>
+  </data>
+  <data name="Lbl_CannotDemoteSelf" xml:space="preserve">
+    <value>Sie können Ihre Administratorrolle nicht selbst herabstufen, während Sie angemeldet sind.</value>
+  </data>
+  <data name="Lbl_Protected" xml:space="preserve">
+    <value>Geschützt</value>
+  </data>
+  <data name="Lbl_AccountAndSecurity" xml:space="preserve">
+    <value>Konto & Sicherheit</value>
+  </data>
+  <data name="Lbl_CannotDeactivateSelf" xml:space="preserve">
+    <value>(Sie können Ihre eigene aktive Sitzung nicht deaktivieren)</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>Produkte</value>
+  </data>
+  <data name="AllProducts" xml:space="preserve">
+    <value>Alle Produkte</value>
+  </data>
+  <data name="Lbl_NotGenerated" xml:space="preserve">
+    <value>Nicht generiert</value>
+  </data>
+  <data name="Lbl_AdministratorOnly" xml:space="preserve">
+    <value>Nur Administrator</value>
+  </data>
 </root>

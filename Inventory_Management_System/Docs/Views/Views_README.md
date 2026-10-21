@@ -86,6 +86,40 @@ An interactive, dynamic transaction register designed for fast cashier operation
 
 ---
 
+### 3.6. Authentication & Password Recovery Views (`Views/Account/`)
+Clean, distraction-free authentication interfaces designed to operate with zero white-flash and instant language switching:
+
+- **Login View (`Views/Account/Login.cshtml`):**
+  - Minimalist glassmorphic card with floating brand icon.
+  - Embedded culture dropdown and theme toggler.
+  - Dynamic flash message display: if an administrator has just reset their password, a prominent alert renders displaying their **New Master Recovery Key**.
+- **Self-Service Forgot Password (`Views/Account/ForgotPassword.cshtml` & `ForgotPasswordStep2.cshtml`):**
+  - **Step 1:** Form for username or email lookup. Triggers background OTP dispatch.
+  - **Step 2:** Dual-mode recovery entry accepting either the operator's **Master Recovery Key** or the 6-digit **Telegram emergency OTP**. Includes masked email verification hint.
+- **Operator Security Profile (`Views/Account/Profile.cshtml`):**
+  - Displays user metadata, assigned enterprise role badge, and creation timestamps.
+  - **Master Recovery Key Status Card:** Shows active/hashed status, generation timestamp, and an authenticated **Regenerate Key** action with confirmation dialog.
+- **Access Denied Notification (`Views/Account/AccessDenied.cshtml`):**
+  - Displays clear permission boundaries when users attempt unauthorized operations.
+
+---
+
+### 3.7. Enterprise User Governance Views (`Views/Users/`)
+Dedicated administrative workspace for SuperAdmin management of system operators:
+
+- **User Directory Grid (`Views/Users/Index.cshtml`):**
+  - Real-time search filter and role dropdown selector.
+  - Color-coded role badges matching enterprise roles (`SuperAdmin`, `WarehouseManager`, `Cashier`, `ProcurementSpecialist`, `Auditor`).
+  - **One-Time Master Recovery Key Banner:** When a new user is created, renders a prominent alert with the 128-bit key (`IMS-XXXX-XXXX-XXXX-XXXX`) and one-click clipboard copying.
+  - Inline action buttons: Edit, Direct Admin Password Reset, Activate/Deactivate Toggle, and Delete.
+- **User Provisioning Form (`Views/Users/Create.cshtml`):**
+  - Role assignment dropdown and active state toggle.
+  - Replaces legacy security questions with the Zero-SMTP **Master Recovery Key Policy Notice**.
+- **Direct Admin Reset (`Views/Users/ResetPassword.cshtml`):**
+  - Allows SuperAdmin to set a new password directly for locked-out employees without requiring knowledge of old credentials.
+
+---
+
 ## 4. Theme Engine: Dark Mode Baseline vs. Light Mode
 
 The design system uses CSS Custom Properties (CSS variables) declared in `wwwroot/css/site.css`:

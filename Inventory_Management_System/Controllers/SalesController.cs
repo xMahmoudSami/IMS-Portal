@@ -1,14 +1,24 @@
+using Microsoft.AspNetCore.Authorization;
+using Inventory_Management_System.Models.Webhooks.Events;
+using Inventory_Management_System.Services.Webhooks;
+
 namespace Inventory_Management_System.Controllers
 {
+    [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.Cashier},{AppRoles.Auditor}")]
     [Route("Sales")]
     public class SalesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebhookDispatcher _webhookDispatcher;
         private readonly ILogger<SalesController> _logger;
 
-        public SalesController(ApplicationDbContext context, ILogger<SalesController> logger)
+        public SalesController(
+            ApplicationDbContext context,
+            IWebhookDispatcher webhookDispatcher,
+            ILogger<SalesController> logger)
         {
             _context = context;
+            _webhookDispatcher = webhookDispatcher;
             _logger = logger;
         }
 
@@ -151,6 +161,7 @@ namespace Inventory_Management_System.Controllers
 
         // GET: /Sales/Create
         [HttpGet("Create")]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.Cashier}")]
         public async Task<IActionResult> Create()
         {
             var model = new SaleFormViewModel
@@ -166,6 +177,7 @@ namespace Inventory_Management_System.Controllers
         // POST: /Sales/Create
         [HttpPost("Create")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.Cashier}")]
         public async Task<IActionResult> Create(SaleFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -257,6 +269,30 @@ namespace Inventory_Management_System.Controllers
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
+                // Evaluate and dispatch low-stock alerts asynchronously
+                foreach (var item in saleItems)
+                {
+                    var prod = await _context.Products
+                        .Include(p => p.Category)
+                        .FirstOrDefaultAsync(p => p.ProductID == item.ProductID);
+
+                    if (prod != null && prod.StockQuantity <= prod.LowStockThreshold)
+                    {
+                        await _webhookDispatcher.DispatchAsync("inventory.low_stock_alert", new LowStockAlertEvent
+                        {
+                            ProductId = prod.ProductID,
+                            Sku = prod.SKU,
+                            ProductName = prod.ProductName,
+                            CurrentStock = prod.StockQuantity,
+                            LowStockThreshold = prod.LowStockThreshold,
+                            UnitPrice = prod.UnitPrice,
+                            CategoryName = prod.Category?.CategoryName,
+                            TriggerSource = $"POS Sale Order #{sale.SaleID}",
+                            TriggeredAt = DateTime.UtcNow
+                        });
+                    }
+                }
+
                 TempData["SuccessMessage"] = $"Sale #{sale.SaleID} completed successfully and inventory stock was deducted.";
                 return RedirectToAction(nameof(Details), new { id = sale.SaleID });
             }
@@ -272,6 +308,7 @@ namespace Inventory_Management_System.Controllers
 
         // GET: /Sales/Delete/{id}
         [HttpGet("Delete/{id}")]
+        [Authorize(Roles = AppRoles.SuperAdmin)]
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return NotFound();
@@ -309,6 +346,7 @@ namespace Inventory_Management_System.Controllers
         [HttpPost("Delete/{id}")]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = AppRoles.SuperAdmin)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (id <= 0) return BadRequest();

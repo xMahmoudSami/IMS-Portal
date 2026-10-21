@@ -183,3 +183,26 @@ Encapsulates command outcomes and referential integrity delete checks without re
 | `StockHealthReportViewModel` | Full catalog inventory valuation summary: Total valuation capital, In-Stock vs Low-Stock vs Out-of-Stock counts, with category and status filter capabilities. |
 | `SalesSummaryItemViewModel` | Individual transaction breakdown within a sales period. |
 | `SalesReportViewModel` | Executive revenue summary: Total Revenue, Total Orders, Total Units Sold, Average Order Value (AOV), and date preset filters (Today, This Week, This Month, This Year, Custom). |
+
+---
+
+### 3.9. Account & Authentication ViewModels (`ViewModels/AccountViewModels.cs`)
+
+| ViewModel Class | Purpose & Data Encapsulation |
+| :--- | :--- |
+| `LoginViewModel` | Encapsulates credentials for portal authentication: `Username`, `Password`, `RememberMe`, and redirect `ReturnUrl`. |
+| `ForgotPasswordStep1ViewModel` | Captures `UsernameOrEmail` to locate the target user and trigger the 6-digit emergency OTP webhook broadcast. |
+| `ForgotPasswordStep2ViewModel` | Handles identity verification and password reset: `UserId`, `Username`, `MaskedEmail`, `OtpDispatchedViaWebhook`, `RecoveryKeyOrOtp` (accepts Master Recovery Key or OTP code), `NewPassword`, and `ConfirmPassword`. |
+| `UserProfileViewModel` | Account security overview: user details, role badge, account creation audit, `HasRecoveryKey`, `RecoveryKeyGeneratedAt`, `NewlyGeneratedRecoveryKey` (strictly shown upon regeneration), and current/new password inputs. |
+
+---
+
+### 3.10. User Administration ViewModels (`ViewModels/UserManagementViewModels.cs`)
+
+| ViewModel Class | Purpose & Data Encapsulation |
+| :--- | :--- |
+| `UserListItemViewModel` | Summary row for administrator user grid: `Id`, `Username`, `FullName`, `Email`, `Role`, `IsActive`, `CreatedAt`, `LastLoginAt`, `IsLockedOut`, and `IsCurrentLoggedInUser`. |
+| `CreateUserViewModel` | Safe provisioning model: `Username` (regex alphanumeric), `FullName`, `Email`, `Password`, `ConfirmPassword`, `Role` (dropdown from `AppRoles.AllRoles`), and initial `IsActive` toggle. Triggers automatic Master Recovery Key generation. |
+| `EditUserViewModel` | Modification model for user profiles: `Id`, `Username` (read-only), `FullName`, `Email`, `Role`, `IsActive`, and self-edit protection flag `IsCurrentLoggedInUser`. |
+| `AdminResetPasswordViewModel` | Direct administrative credential override model: `UserId`, `Username`, `FullName`, `NewPassword`, and `ConfirmPassword`. Used when an administrator forces a password reset on behalf of an operator. |
+

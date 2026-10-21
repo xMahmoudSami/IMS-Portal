@@ -1,0 +1,221 @@
+@model Inventory_Management_System.ViewModels.EditUserViewModel
+@using System.Globalization
+@{
+    ViewData["Title"] = Loc["Lbl_EditUser"].Value;
+    var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+    var isRtl = currentCulture.Equals("ar", StringComparison.OrdinalIgnoreCase);
+    var roles = ViewBag.Roles as IReadOnlyList<string> ?? AppRoles.AllRoles;
+
+    string FormatRole(string r) => currentCulture switch
+    {
+        "ar" => r switch
+        {
+            AppRoles.SuperAdmin => "المشرف العام",
+            AppRoles.WarehouseManager => "مدير المستودع",
+            AppRoles.Cashier => "أمين الصندوق",
+            AppRoles.ProcurementSpecialist => "مسؤول المشتريات",
+            AppRoles.Auditor => "مدقق مالي",
+            _ => r
+        },
+        "fr" => r switch
+        {
+            AppRoles.SuperAdmin => "Administrateur",
+            AppRoles.WarehouseManager => "Gestionnaire d'entrepôt",
+            AppRoles.Cashier => "Caissier",
+            AppRoles.ProcurementSpecialist => "Responsable des achats",
+            AppRoles.Auditor => "Auditeur",
+            _ => r
+        },
+        "es" => r switch
+        {
+            AppRoles.SuperAdmin => "Administrador",
+            AppRoles.WarehouseManager => "Gerente de almacén",
+            AppRoles.Cashier => "Cajero",
+            AppRoles.ProcurementSpecialist => "Especialista en compras",
+            AppRoles.Auditor => "Auditor",
+            _ => r
+        },
+        "de" => r switch
+        {
+            AppRoles.SuperAdmin => "Administrator",
+            AppRoles.WarehouseManager => "Lagermanager",
+            AppRoles.Cashier => "Kassierer",
+            AppRoles.ProcurementSpecialist => "Beschaffungsspezialist",
+            AppRoles.Auditor => "Prüfer",
+            _ => r
+        },
+        "it" => r switch
+        {
+            AppRoles.SuperAdmin => "Amministratore",
+            AppRoles.WarehouseManager => "Responsabile del magazzino",
+            AppRoles.Cashier => "Cassiere",
+            AppRoles.ProcurementSpecialist => "Addetto agli acquisti",
+            AppRoles.Auditor => "Revisore dei conti",
+            _ => r
+        },
+        _ => r switch
+        {
+            AppRoles.SuperAdmin => "Administrator",
+            AppRoles.WarehouseManager => "Warehouse Manager",
+            AppRoles.Cashier => "Cashier",
+            AppRoles.ProcurementSpecialist => "Procurement Specialist",
+            AppRoles.Auditor => "Auditor",
+            _ => r
+        }
+    };
+
+    var cannotDemoteSelfText = (!Loc["Lbl_CannotDemoteSelf"].IsResourceNotFound && Loc["Lbl_CannotDemoteSelf"].Value != "Lbl_CannotDemoteSelf")
+        ? Loc["Lbl_CannotDemoteSelf"].Value
+        : (currentCulture switch
+        {
+            "ar" => "لا يمكنك تخفيض رتبتك من رتبة المشرف العام أثناء تسجيل الدخول.",
+            "fr" => "Vous ne pouvez pas rétrograder votre propre rôle d'administrateur lorsque vous êtes connecté.",
+            "es" => "No puede degradar su propio rol de administrador mientras esté conectado.",
+            "de" => "Sie können Ihre Administratorrolle nicht selbst herabstufen, während Sie angemeldet sind.",
+            "it" => "Non puoi retrocedere il tuo ruolo di amministratore mentre sei connesso.",
+            _    => "You cannot demote yourself from Administrator while logged in."
+        });
+
+    var cannotDeactivateSelfText = (!Loc["Lbl_CannotDeactivateSelf"].IsResourceNotFound && Loc["Lbl_CannotDeactivateSelf"].Value != "Lbl_CannotDeactivateSelf")
+        ? Loc["Lbl_CannotDeactivateSelf"].Value
+        : (currentCulture switch
+        {
+            "ar" => "(لا يمكنك إلغاء تنشيط جلستك النشطة الحالية)",
+            "fr" => "(Vous ne pouvez pas désactiver votre propre session active)",
+            "es" => "(No puede desactivar su propia sesión activa)",
+            "de" => "(Sie können Ihre eigene aktive Sitzung nicht deaktivieren)",
+            "it" => "(Non puoi disattivare la tua sessione attiva)",
+            _    => "(You cannot deactivate your own active session)"
+        });
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h1 class="h3 mb-0" style="font-weight: 800; color: var(--text-heading);">
+            <i class="fas fa-user-edit text-primary mr-2"></i>@Loc["Lbl_EditUser"] - @Model.Username
+        </h1>
+        <p class="text-muted small mb-0 mt-1">@Loc["Lbl_EditUserSubtitle"]</p>
+    </div>
+    <a asp-action="Index" class="btn btn-outline-secondary" style="border-radius: var(--radius-md);">
+        <i class="fas @(isRtl ? "fa-arrow-right ml-1" : "fa-arrow-left mr-1")"></i> @Loc["Lbl_BackToUsersList"]
+    </a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-xl-8 col-lg-9">
+        <div class="card shadow-sm border-0 mb-4" style="background: var(--bg-surface); border-radius: var(--radius-lg); border: 1px solid var(--border-default) !important;">
+            <div class="card-header py-3" style="background: var(--bg-surface-elevated); border-bottom: 1px solid var(--border-default);">
+                <h6 class="m-0 font-weight-bold" style="color: var(--text-heading);">
+                    <i class="fas fa-user-cog text-primary mr-2"></i>@Loc["Lbl_UpdateUserDetails"]
+                </h6>
+            </div>
+
+            <div class="card-body p-4">
+                <form asp-action="Edit" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="Username" />
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger mb-4" role="alert" style="border-radius: var(--radius-md);">
+                            <div class="font-weight-bold mb-1"><i class="fas fa-exclamation-triangle mr-1"></i> @Loc["Lbl_PleaseCorrectErrors"]:</div>
+                            <ul class="mb-0 pl-3">
+                                @foreach (var modelState in ViewData.ModelState.Values)
+                                {
+                                    foreach (var error in modelState.Errors)
+                                    {
+                                        <li>@error.ErrorMessage</li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <label class="form-label" style="font-weight: 600; color: var(--text-main); font-size: 0.88rem;">@Loc["Username"]</label>
+                        <input value="@Model.Username" class="form-control" disabled style="background: var(--bg-input); border-color: var(--border-default); color: var(--text-muted);" />
+                        <small class="text-muted">@Loc["Lbl_UsernameCannotBeChanged"]</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" style="font-weight: 600; color: var(--text-main); font-size: 0.88rem;">
+                            @Loc["FullName"] <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="FullName" class="form-control" required style="background: var(--bg-input); border-color: var(--border-default); color: var(--text-main);" />
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" style="font-weight: 600; color: var(--text-main); font-size: 0.88rem;">
+                            @Loc["Email"] <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="Email" class="form-control" required style="background: var(--bg-input); border-color: var(--border-default); color: var(--text-main);" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" style="font-weight: 600; color: var(--text-main); font-size: 0.88rem;">
+                            @Loc["Lbl_AssignedRole"] <span class="text-danger">*</span>
+                        </label>
+                        @if (Model.IsCurrentLoggedInUser && Model.Role == AppRoles.SuperAdmin)
+                        {
+                            <input value="@FormatRole(Model.Role)" class="form-control" disabled style="background: var(--bg-input); border-color: var(--border-default); color: var(--text-muted);" />
+                            <input type="hidden" asp-for="Role" value="@Model.Role" />
+                            <small class="text-muted">@cannotDemoteSelfText</small>
+                        }
+                        else
+                        {
+                            <select asp-for="Role" class="form-control" required style="background: var(--bg-input); border-color: var(--border-default); color: var(--text-main);">
+                                @foreach (var r in roles)
+                                {
+                                    <option value="@r">@FormatRole(r)</option>
+                                }
+                            </select>
+                        }
+                        <span asp-validation-for="Role" class="text-danger small font-weight-bold mt-1 d-block"></span>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <div class="custom-control custom-switch">
+                            @if (Model.IsCurrentLoggedInUser)
+                            {
+                                <input asp-for="IsActive" type="checkbox" class="custom-control-input" id="editIsActive" disabled checked />
+                                <input type="hidden" asp-for="IsActive" value="true" />
+                                <label class="custom-control-label text-muted" for="editIsActive">
+                                    @Loc["Active"] @cannotDeactivateSelfText
+                                </label>
+                            }
+                            else
+                            {
+                                <input asp-for="IsActive" type="checkbox" class="custom-control-input" id="editIsActive" />
+                                <label class="custom-control-label" for="editIsActive" style="color: var(--text-main); font-weight: 600; cursor: pointer;">
+                                    @Loc["Lbl_UserIsActiveAndCanLogin"]
+                                </label>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <a asp-action="ResetPassword" asp-route-id="@Model.Id" class="btn btn-outline-warning" style="border-radius: var(--radius-md);">
+                            <i class="fas fa-key mr-1"></i> @Loc["Lbl_DirectPasswordReset"]
+                        </a>
+
+                        <div class="d-flex" style="gap: 0.75rem;">
+                            <a asp-action="Index" class="btn btn-secondary px-4 py-2" style="border-radius: var(--radius-md);">
+                                @Loc["Cancel"]
+                            </a>
+                            <button type="submit" class="btn btn-primary px-4 py-2 font-weight-bold" style="border-radius: var(--radius-md); box-shadow: var(--primary-glow);">
+                                <i class="fas fa-save mr-2"></i> @Loc["SaveChanges"]
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

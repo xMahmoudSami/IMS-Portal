@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IMS Defense Cheat Sheet</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+<style>
+:root{--bg:#f4f6f8;--sf:#fff;--tx:#17212b;--mu:#5b6b7a;--bd:#d9e0e6;--ac:#0b6e6e;--tip:#fff4d6;--tipb:#e0a800;--cd:#eef1f4;--ok:#0a7d3e;--po:#b4410f;--ps:#6b3fc4;--a1:#0b6e6e;--rd:#b3261e}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1720;--sf:#17222e;--tx:#e8eef3;--mu:#93a4b3;--bd:#2a3a49;--ac:#4cc9c0;--tip:#2b2410;--tipb:#d9a520;--cd:#0f1720;--ok:#4cd68a;--po:#ff9b66;--ps:#b79cff;--rd:#ff8a80}}
+:root[data-theme="dark"]{--bg:#0f1720;--sf:#17222e;--tx:#e8eef3;--mu:#93a4b3;--bd:#2a3a49;--ac:#4cc9c0;--tip:#2b2410;--tipb:#d9a520;--cd:#0f1720;--ok:#4cd68a;--po:#ff9b66;--ps:#b79cff;--rd:#ff8a80}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:150px}
+*{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--bd);padding:10px 16px}
+.top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+h1{font-size:17px;margin:0;font-weight:700;white-space:nowrap}
+#q{flex:1;min-width:200px;padding:10px 12px;font:inherit;border:2px solid var(--bd);border-radius:8px;background:var(--sf);color:var(--tx)}
+#q:focus,button:focus-visible{outline:3px solid var(--ac);outline-offset:1px}
+button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--sf);color:var(--tx);border-radius:8px;padding:7px 11px}
+.tabs{display:flex;gap:6px;margin-top:8px;overflow-x:auto;padding-bottom:2px}
+.tabs button[aria-pressed=true]{background:var(--ac);color:var(--bg);border-color:var(--ac);font-weight:600}
+#cnt{color:var(--mu);font-size:13px;white-space:nowrap}
+main{padding:14px 16px 40px;max-width:1500px;margin:0 auto}
+section{margin-bottom:26px}
+section>h2{font-size:18px;margin:0 0 4px;padding-left:10px;border-left:5px solid var(--ac)}
+section>p{margin:0 0 10px 15px;color:var(--mu);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:7px}
+.card.trap{border:2px solid var(--rd)}
+.card h3{margin:0;font-size:16px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.b{font-size:11px;font-weight:700;padding:1px 7px;border-radius:10px;color:#fff;letter-spacing:.2px}
+.GET{background:var(--ok)}.POST{background:var(--po)}.DEL{background:#a1232b}.REL{background:var(--ps)}.ATTR{background:#35618f}.SEC{background:var(--rd)}.AJAX{background:#7a6a00}
+.pu{margin:0}.ar{margin:0;direction:rtl;text-align:right;color:var(--mu);font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;font-size:14px}
+ul{margin:0;padding-left:18px}li{margin:1px 0}
+code{background:var(--cd);border:1px solid var(--bd);border-radius:4px;padding:0 4px;font:12.5px ui-monospace,Consolas,monospace}
+.why{background:var(--tip);border-left:4px solid var(--tipb);padding:6px 9px;border-radius:4px;font-size:14px}
+.why b{display:block;font-size:12px;color:var(--mu)}
+.hide{display:none!important}
+#empty{text-align:center;color:var(--mu);padding:40px}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+ <div class="top">
+  <h1>IMS Defense Cheat Sheet</h1>
+  <input id="q" type="search" placeholder="Search: SKU, ForeignKey, Restrict, AIService, CSRF…  (press / )" aria-label="Search cards" autocomplete="off">
+  <span id="cnt"></span>
+  <button id="th" aria-label="Toggle light or dark theme">Theme</button>
+ </div>
+ <div class="tabs" id="tabs"></div>
+</header>
+<main id="m"></main>
+<div id="empty" class="hide">No card matches. Try a shorter word, such as "stock" or "FK".</div>
+<script>
+var L=[
+['trap','Exam traps: questions instructors ask','Read these first. Each one is a classic follow-up question.'],
+['ent','Entities & database schema','9 models, EF Core 10 Code-First, SQL Server. Fluent API lives in ApplicationDbContext.'],
+['ctl','Controllers & endpoints','10 controllers. They coordinate; business rules live in services.'],
+['svc','Service layer & interfaces','Controllers depend on interfaces, never on DbContext for domain workflows.'],
+['vm','ViewModels & UI binding','Entities stay clean; ViewModels carry screen-specific data and rules.'],
+['attr','Advanced attributes & critical tags','One line each: what it is, why it exists.']
+];
+// [layer,name,badges,en,ar,bullets,why]
+var C=[
+['trap','[ForeignKey], [Key] and navigation properties',['ATTR','REL'],'EF needs a key to identify rows and a FK to link tables.','المفتاح الأساسي يعرّف السجل، والمفتاح الأجنبي يربط الجداول.',['`[Key]` marks the PK (`ProductID`).','FK property `CategoryID` + navigation `Category` = one relationship.','Collection side: `Category.Products` (1:N).','Docs show FKs by naming convention (`<Nav>ID`); `[ForeignKey("CategoryID")]` is the explicit form of the same thing.'],'Say: "EF finds the relationship from the FK property and navigation pair. The attribute only makes it explicit when names do not match convention."'],
+['trap','CSRF: [ValidateAntiForgeryToken]',['SEC','POST'],'Blocks forged cross-site form posts.','يمنع الطلبات المزورة من مواقع أخرى.',['Form carries a hidden `__RequestVerificationToken`.','Server compares it with the token cookie; mismatch means 400.','Put it on every state-changing `[HttpPost]` (Create, Edit, DeleteConfirmed, SetLanguage).','GET must never change data.'],'A malicious site can make the browser send your cookies, but it cannot read the token, so the forged POST fails.'],
+['trap','Restrict vs Cascade',['REL','DEL'],'Restrict protects history; Cascade cleans up owned rows.','Restrict يحمي السجلات المالية، وCascade يحذف التابع.',['Restrict: `Category→Product`, `Supplier→Purchase`, `Product→PurchaseItem`, `Product→SaleItem`.','Cascade: `Supplier→SupplierProduct`, `Product→SupplierProduct`, `Purchase→PurchaseItem`, `Sale→SaleItem`.','Rule of thumb: junction or line item = Cascade; master data with financial history = Restrict.'],'Deleting a sold product would orphan invoices and corrupt revenue reports. The UI also pre-checks via `DeleteCheckResult`.'],
+['trap','AIService: RAG before the LLM',['REL'],'Compute facts in C#/SQL first, then let the LLM only explain them.','نحسب الأرقام من قاعدة البيانات ثم نمررها للنموذج.',['Metrics: total/out/low stock, valuation, supplier lead times and prices.','Sales velocity over 30-90 days; dead stock = stock > 0 and units sold = 0.','System prompt: answer ONLY from the injected data; never invent.','`temperature=0.2`, `max_tokens=1500`; rule-based fallback if Groq fails.'],'The model never queries or guesses numbers, so it cannot hallucinate stock. Output is rendered with marked.js and sanitized by DOMPurify (XSS).'],
+['trap','Culture-aware numbers (fr/de/es/it vs en)',['ATTR'],'Show with the user culture; calculate with InvariantCulture.','العرض حسب اللغة، والحساب بصيغة ثابتة.',['en: `1,234.56`. fr/de/es/it: `1234,56`.','Display: `ToString("N2")` / `"C"`.','Machine: `data-price="@p.UnitPrice.ToString(CultureInfo.InvariantCulture)"`.','JS: `parseFloat($(opt).data("price"))`.','In scripts use `Loc["Key"].Value` + `JavaScriptEncoder`, not `Html.Raw(Loc[...])`.'],'A comma decimal in `parseFloat` gives wrong totals or NaN. `LocalizedHtmlString.ToString()` prints the class name, hence `.Value`.'],
+
+['ent','ApplicationDbContext',['ATTR'],'Fluent API rules: indexes, precision, delete behavior.','إعدادات قاعدة البيانات في OnModelCreating.',['`HasIndex(p=>p.SKU).IsUnique()`.','Composite unique `(SupplierID, ProductID)`.','`HasPrecision(18,2)` on all 6 money columns.','`OnDelete(DeleteBehavior.Restrict/Cascade)`.'],'A unique index is enforced by the database, so it holds under concurrent writes where an app-level check can race.'],
+['ent','Product',['REL'],'Central entity: merchandise with live stock.','المنتج: الكيان الرئيسي مع المخزون الحالي.',['PK `ProductID`; unique `SKU` (≤50); `ProductName` (≤100).','FK `CategoryID` → Category (N:1).','`UnitPrice` Range 0.01-100000, decimal(18,2).','`StockQuantity` 0-10000; `LowStockThreshold` 0-1000.','Navs: SupplierProducts, PurchaseItems, SaleItems.'],'Low stock rule: `StockQuantity <= LowStockThreshold`. Stock is changed only by purchases (+) and sales (-).'],
+['ent','Category',['REL'],'Classification group for products.','تصنيف المنتجات.',['PK `CategoryID`; `CategoryName` 2-100; `Description` ≤500, nullable.','1:N → Products (Restrict).'],'Restrict forces reassigning products before a category can vanish.'],
+['ent','Supplier',['REL'],'External vendor profile.','بيانات المورّد.',['PK `SupplierID`; Name, ContactName, Phone, Email, Address (all required).','`[Phone]`, `[EmailAddress]` validation.','1:N → Purchases (Restrict); 1:N → SupplierProducts (Cascade).'],'Vendors with purchase orders cannot be deleted, to keep expenditure audits intact.'],
+['ent','SupplierProduct',['REL'],'Junction entity: Supplier ↔ Product (M:N) with contract data.','جدول وسيط لعلاقة متعدد-لمتعدد مع بيانات العقد.',['FKs `SupplierID`, `ProductID`; `SupplierSKU` ≤50.','`ContractPrice` decimal(18,2); `LeadTimeDays` 1-365.','Unique composite index `(SupplierID, ProductID)`.','Both FKs Cascade.'],'Explicit junction (not skip-navigation) because the link itself carries data: price and lead time.'],
+['ent','Purchase',['REL'],'Procurement order header.','رأس أمر الشراء.',['PK `PurchaseID`; FK `SupplierID`; `PurchaseDate`.','`TotalAmount` = Sum(Quantity × UnitCost), decimal(18,2).','1:N → PurchaseItems (Cascade).'],'Header-detail design: items cannot exist without the header, hence Cascade.'],
+['ent','PurchaseItem',['REL'],'One product line inside a purchase.','سطر منتج داخل أمر الشراء.',['FKs `PurchaseID`, `ProductID`.','`Quantity` 1-10000; `UnitCost` decimal(18,2).','Product link is Restrict.'],'`UnitCost` is stored per line because supplier prices change; history must keep what was actually paid.'],
+['ent','Sale',['REL'],'POS sale header (invoice).','رأس فاتورة البيع.',['PK `SaleID` (invoice INV-000123); `SaleDate`.','`TotalAmount` decimal(18,2); `CustomerInfo` ≤200, nullable (walk-in).','1:N → SaleItems (Cascade).'],'No FK to a customer table: walk-in sales stay simple.'],
+['ent','SaleItem',['REL'],'One product line inside a sale.','سطر منتج داخل الفاتورة.',['FKs `SaleID`, `ProductID`.','`Quantity` 1-10000; `UnitPrice` decimal(18,2).'],'`UnitPrice` is a snapshot at sale time, so later price edits do not rewrite past revenue.'],
+['ent','AIChatLog',[],'Stores chat history with the AI assistant.','سجل محادثات المساعد الذكي.',['`LogID`, `UserQuery` ≤1000, `AIResponse`, `CreatedAt`.','No FKs; standalone table.'],'Lets the widget reload history via `GET api/AI/history`.'],
+
+['ctl','AIController',['GET','POST','DEL'],'REST API for the AI assistant and chat logs.','واجهة REST للمساعد الذكي.',['`[ApiController]`, `[Route("api/[controller]")]`.','`POST api/AI/chat` `[FromBody]` → `IAIService.AskAsync`, saves to AIChatLogs.','`GET api/AI/history?limit=50`.','`POST/DELETE api/AI/clear`.'],'Deps: `IAIService`, `ApplicationDbContext`. `[ApiController]` gives automatic 400 on bad model.'],
+['ctl','DashboardController',['GET','AJAX'],'KPIs, Chart.js data and global search.','لوحة المؤشرات والبحث.',['Default route: `Dashboard/Analytics`.','`GetSalesVsPurchasesChartData`, `GetCategoryDistributionChartData` return JSON.','`GlobalSearch(term)` searches name, SKU, category.','`Error` page.'],'AJAX endpoints return small DTOs so the page loads fast and charts update without reload.'],
+['ctl','ProductsController',['GET','POST'],'Catalog CRUD with filter and paging.','إدارة المنتجات.',['`Index(ProductFilterViewModel)` → `PagedResult`.','Create/Edit GET + POST; Details; Delete GET; `DeleteConfirmed` POST.','Edit checks `id == model.ProductID`.','Create validates SKU uniqueness.'],'Delete is two-step (GET confirm, POST execute) and blocked when sales or purchases exist.'],
+['ctl','PurchasesController',['GET','POST','AJAX'],'Purchase orders that increase stock.','أوامر الشراء وزيادة المخزون.',['`GetSupplierProducts(supplierId)` AJAX, pre-fills contract price.','`Create` POST: saves Purchase + items and **adds** stock in one DB transaction.','`DeleteConfirmed`: **subtracts** the stock back.'],'One transaction means header, items and stock all commit or all roll back.'],
+['ctl','SalesController',['GET','POST'],'POS checkout that decreases stock.','نقطة البيع وخصم المخزون.',['`Create` GET loads catalog with live stock.','`Create` POST validates qty ≤ `StockQuantity`, deducts, saves atomically.','`Details` printable invoice.','`DeleteConfirmed` restores stock.'],'Server re-validates stock even though JS did too; client checks can be bypassed.'],
+['ctl','ReportsController',['GET'],'Stock valuation and sales reports with CSV export.','تقارير المخزون والمبيعات.',['`StockValuation` = Sum(StockQuantity × UnitPrice).','`SalesReport`: revenue, orders, units, AOV, top products.','`ExportStockValuationCsv`, `ExportSalesReportCsv` (RFC 4180).'],'Read-only: only GET, only `ApplicationDbContext` queries.'],
+['ctl','CategoriesController',['GET','POST'],'Category CRUD.','إدارة التصنيفات.',['Index with product count.','Delete uses `DeleteCheckResult`; blocks non-empty category.'],'Uses `ICategoryService` only.'],
+['ctl','SuppliersController',['GET','POST'],'Vendor CRUD and history.','إدارة الموردين.',['Search + paging; Details shows contracts and purchases.','Delete blocked if purchases exist.'],'Uses `ISupplierService` only.'],
+['ctl','SupplierProductsController',['GET','POST'],'Supplier-product contracts.','عقود المورد والمنتج.',['Unique `(SupplierID, ProductID)`.','Captures contract price and lead time.'],'Uniqueness checked in service and enforced again by the DB index.'],
+['ctl','CultureController',['POST','SEC'],'Switches language and stores it in a cookie.','تبديل اللغة.',['`SetLanguage(culture, returnUrl)`; whitelist en, ar, fr, es, it, de.','Cookie lasts 1 year, `IsEssential`, `SameSite=Lax`.','`Url.IsLocalUrl(returnUrl)` stops open redirect.'],'Without the local-URL check an attacker could bounce users to a phishing site.'],
+
+['svc','Why interfaces? (SOLID: DIP)',['REL'],'Controllers depend on abstractions, not EF Core.','الاعتماد على الواجهات لا على التنفيذ.',['Registered in `Program.cs`; injected by constructor.','Swap in Moq/NSubstitute for unit tests (no SQL Server).','Controller = HTTP; Service = rules (SRP).'],'Loose coupling: change the data access or LLM provider without touching controllers.'],
+['svc','IProductService / ProductService',[],'Catalog lifecycle, filtering, paging, delete guard.','خدمة المنتجات.',['`GetProductsPagedAsync`, `CreateProductAsync`, `UpdateProductAsync`.','`IsSkuUniqueAsync(sku, excludeId)`.','`CheckCanDeleteProductAsync` → `DeleteCheckResult`.','Dynamic LINQ predicate; `Skip/Take` paging.'],'Delete guard: `PurchaseItems.AnyAsync` or `SaleItems.AnyAsync` → block with a reason.'],
+['svc','ICategoryService / CategoryService',[],'Category rules and dropdown data.','خدمة التصنيفات.',['`GetCategoriesSelectListAsync` for dropdowns.','`CheckCanDeleteCategoryAsync` lists child count.'],'Non-empty categories are never deleted.'],
+['svc','ISupplierService / SupplierService',[],'Vendor data and history protection.','خدمة الموردين.',['`GetSuppliersSelectListAsync`.','`CheckCanDeleteSupplierAsync` blocks if purchases exist.'],'Protects purchase-expense audit trail.'],
+['svc','ISupplierProductService / SupplierProductService',[],'Contract mappings.','خدمة عقود الموردين.',['`IsMappingUniqueAsync(supplierId, productId, excludeId)`.','Create / Update / Delete mapping.'],'One contract per supplier-product pair.'],
+['svc','IAIService / AIService (Groq RAG)',['REL'],'Builds data context, calls Llama 3.3 70B, returns Markdown.','يبني السياق من قاعدة البيانات ثم يستدعي النموذج.',['Typed `HttpClient` service.','Model `llama-3.3-70b-versatile`, temp 0.2, 1500 tokens.','Rule 4: out of stock = 0; low = >0 and ≤ threshold; dead = >0 and sold 0.','Fallback: deterministic LINQ analysis.'],'Grounding + strict prompt = no invented products, prices or dates.'],
+
+['vm','Why ViewModels, not entities?',['SEC'],'Expose only what a screen needs.','نموذج العرض يمنع الإرسال الزائد.',['Stops over-posting (mass assignment).','Holds UI-only fields: `StockStatus`, `BadgeClass`, `CanDelete`.','Screen rules: date from < to, ≥1 order row.'],'Binding straight to `Product` lets a client post fields like `ProductID` or counters.'],
+['vm','PagedResult<T> / IPaginationInfo',[],'Generic server-side paging.','ترقيم الصفحات من الخادم.',['`Items`, `PageNumber`, `PageSize`, `TotalItems`.','Computed `TotalPages`, `HasNextPage`, `StartItemIndex`.'],'One class serves every index page; only one page of rows leaves SQL.'],
+['vm','OperationResult / DeleteCheckResult',[],'Return outcomes without exceptions.','نتيجة العملية بدون استثناءات.',['`OperationResult.Ok(msg)` / `Fail(error)`.','`CanDelete`, `BlockingReason`, related counts.'],'Exceptions are costly and not "exceptional" for validation failures.'],
+['vm','ProductFormViewModel (+ list, filter, details, delete)',[],'One DTO for Create and Edit.','نموذج إنشاء وتعديل المنتج.',['Price 0.01-100000; stock 0-10000.','`ProductListItemViewModel`: category name, `StockBadgeClass`.','`StockStatusFilter`: All, InStock, LowStock, OutOfStock.','`ProductDeleteViewModel.CanDelete`.'],'Form model has no navigation properties, so nothing extra can be posted.'],
+['vm','Category / Supplier / SupplierProduct ViewModels',[],'List, Filter, Form, Details, Delete for each.','نماذج العرض للتصنيف والمورد والعقد.',['Supplier form: `[Phone]`, `[EmailAddress]`.','Mapping form: `LeadTimeDays` 1-365.','Delete VMs carry blocking info.'],'Same five-class pattern per module keeps code predictable.'],
+['vm','PurchaseFormViewModel & SaleFormViewModel',[],'Master-detail forms with `List<ItemFormViewModel>`.','نموذج رئيسي وتفصيلي.',['Rows bound as `Items[0].ProductID`, `Items[1].ProductID`.','JS re-indexes rows on add/remove.','`SaleProductOptionViewModel` carries stock for client checks.','`SupplierProductOptionViewModel` carries contract price.'],'Index-based names are required for ASP.NET model binding of lists.'],
+['vm','Dashboard & Report ViewModels',[],'KPI, chart and report DTOs.','نماذج اللوحة والتقارير.',['`SalesVsPurchasesChartViewModel`, `CategoryDistributionChartViewModel`.','`StockHealthReportViewModel`, `SalesReportViewModel` (AOV, presets).','`RecentActivityViewModel` merges sales and purchases.'],'Chart DTOs match what Chart.js wants: labels + arrays.'],
+['vm','_Layout & theming',[],'Shell: sidebar, search, theme, language, AI widget.','القالب الرئيسي.',['Head script sets `data-theme` before paint (no flicker).','CSS variables in `site.css`; dark is default.','Arabic: `dir="rtl"` + `rtl.css`.','`appAlert` / `appConfirm` replace native popups.'],'Synchronous script in `<head>` runs before the stylesheet paints.'],
+['vm','Sales/Create POS view',['AJAX'],'Dynamic cart with live totals.','واجهة البيع الديناميكية.',['Catalog preloaded as JSON.','Blocks duplicate product and qty > stock.','Totals recalculated on every change.'],'Fast cashier UX, but the server is still the authority.'],
+
+['attr','[Required] / [StringLength] / [Range]',['ATTR'],'Declarative validation.','التحقق بالخصائص.',['Checked by `ModelState.IsValid`.','Messages localized via DataAnnotations localization.'],'Same rules feed the browser (unobtrusive validation) and server.'],
+['attr','[Phone] / [EmailAddress] / [DataType]',['ATTR'],'Format validation and UI hints.','التحقق من الصيغة.',['`[DataType(Date)]` only changes rendering.'],'`[DataType]` is not validation.'],
+['attr','[HttpGet] / [HttpPost]',['GET','POST'],'Bind an action to a verb.','تحديد نوع الطلب.',['GET reads; POST changes state.','Same action name can exist as GET and POST pair.'],'Safe methods must not mutate data (CSRF and prefetch).'],
+['attr','[FromBody] / [FromQuery]',['ATTR'],'Choose where a parameter is bound from.','مصدر ربط البيانات.',['AI chat uses `[FromBody]` JSON; history uses `[FromQuery] limit`.'],'Required for JSON in `[ApiController]` APIs.'],
+['attr','HasIndex().IsUnique() (the "[Unique]" in the docs)',['ATTR'],'Database unique constraint.','قيد التفرد في قاعدة البيانات.',['SKU; `(SupplierID, ProductID)`.','.NET has no built-in `[Unique]` attribute: it is Fluent API.'],'If asked, answer "Fluent API `HasIndex(...).IsUnique()`", not an attribute.'],
+['attr','HasPrecision(18,2) / decimal',['ATTR'],'Exact money storage.','دقة العملات.',['Avoids `0.1 + 0.2 = 0.30000000000000004`.','Default would be `decimal(18,0)` or warning.'],'Float/double use binary fractions, causing penny errors.'],
+['attr','ModelState.IsValid / Url.IsLocalUrl',['SEC'],'Server-side guards.','حماية من جهة الخادم.',['Never trust client validation.','Local URL check blocks open redirect.'],'Defense in depth.']
+];
+var m=document.getElementById('m'),q=document.getElementById('q'),tabs=document.getElementById('tabs'),cnt=document.getElementById('cnt'),cur='all';
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function f(s){return esc(s).replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>')}
+function bd(t){var c=t==='1:N'?'REL':t;return '<span class="b '+c+'">'+({REL:'Relation',DEL:'Delete rule',SEC:'Security',ATTR:'Attribute',AJAX:'AJAX'}[t]||t)+'</span>'}
+L.forEach(function(l){
+ var s=document.createElement('section');s.dataset.l=l[0];s.id=l[0];
+ s.innerHTML='<h2>'+l[1]+'</h2><p>'+l[2]+'</p><div class="grid"></div>';
+ var g=s.querySelector('.grid');
+ C.filter(function(c){return c[0]===l[0]}).forEach(function(c){
+  var d=document.createElement('article');d.className='card'+(c[0]==='trap'?' trap':'');
+  d.dataset.t=(c[1]+' '+c[3]+' '+c[4]+' '+c[5].join(' ')+' '+c[6]+' '+c[2].join(' ')).toLowerCase().replace(/`/g,'');
+  d.innerHTML='<h3>'+f(c[1])+c[2].map(bd).join('')+'</h3><p class="pu">'+f(c[3])+'</p><p class="ar" lang="ar">'+c[4]+'</p><ul>'+c[5].map(function(x){return '<li>'+f(x)+'</li>'}).join('')+'</ul><div class="why"><b>Why we did it this way</b>'+f(c[6])+'</div>';
+  g.appendChild(d)});
+ m.appendChild(s)});
+[['all','All']].concat(L.map(function(l){return [l[0],{trap:'Exam traps',ent:'Entities',ctl:'Controllers',svc:'Services',vm:'ViewModels & UI',attr:'Attributes'}[l[0]]]})).forEach(function(t){
+ var b=document.createElement('button');b.textContent=t[1];b.setAttribute('aria-pressed',t[0]==='all');b.onclick=function(){cur=t[0];tabs.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});run()};tabs.appendChild(b)});
+function run(){
+ var k=q.value.trim().toLowerCase().split(/\s+/).filter(Boolean),n=0;
+ m.querySelectorAll('section').forEach(function(s){
+  var v=0,on=cur==='all'||cur===s.dataset.l;
+  s.querySelectorAll('.card').forEach(function(c){
+   var ok=on&&k.every(function(w){return c.dataset.t.indexOf(w)>-1});
+   c.classList.toggle('hide',!ok);if(ok)v++});
+  s.classList.toggle('hide',!v);n+=v});
+ cnt.textContent=n+' cards';
+ document.getElementById('empty').classList.toggle('hide',n>0)}
+q.addEventListener('input',run);
+document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement!==q){e.preventDefault();q.focus()}if(e.key==='Escape'){q.value='';run();q.blur()}});
+document.getElementById('th').onclick=function(){
+ var r=document.documentElement,d=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+ r.dataset.theme=d?'light':'dark';try{localStorage.setItem('ims_cs_theme',r.dataset.theme)}catch(e){}};
+try{var t=localStorage.getItem('ims_cs_theme');if(t)document.documentElement.dataset.theme=t}catch(e){}
+run();
+</script>
+</body>
+</html>

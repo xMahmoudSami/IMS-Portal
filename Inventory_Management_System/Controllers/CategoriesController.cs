@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
+
 namespace Inventory_Management_System.Controllers
 {
+    [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager},{AppRoles.Auditor}")]
     public class CategoriesController : Controller
     {
         private readonly ICategoryService _categoryService;
@@ -32,6 +35,7 @@ namespace Inventory_Management_System.Controllers
 
         // GET: /Categories/Create
         [HttpGet]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager}")]
         public IActionResult Create()
         {
             return View(new CategoryFormViewModel());
@@ -40,6 +44,7 @@ namespace Inventory_Management_System.Controllers
         // POST: /Categories/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager}")]
         public async Task<IActionResult> Create(CategoryFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -60,6 +65,7 @@ namespace Inventory_Management_System.Controllers
 
         // GET: /Categories/Edit/{id}
         [HttpGet]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager}")]
         public async Task<IActionResult> Edit(int id)
         {
             if (id <= 0) return NotFound();
@@ -73,6 +79,7 @@ namespace Inventory_Management_System.Controllers
         // POST: /Categories/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager}")]
         public async Task<IActionResult> Edit(int id, CategoryFormViewModel model)
         {
             if (id != model.CategoryID)
@@ -98,6 +105,7 @@ namespace Inventory_Management_System.Controllers
 
         // GET: /Categories/Delete/{id}
         [HttpGet]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager}")]
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return NotFound();
@@ -111,6 +119,7 @@ namespace Inventory_Management_System.Controllers
         // POST: /Categories/Delete/{id}
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager}")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (id <= 0) return BadRequest();
@@ -128,6 +137,7 @@ namespace Inventory_Management_System.Controllers
 
         // Remote validation: /Categories/CheckNameUnique
         [HttpGet]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager}")]
         public async Task<IActionResult> CheckNameUnique(string categoryName, int? categoryId)
         {
             var isUnique = await _categoryService.IsCategoryNameUniqueAsync(categoryName, categoryId);

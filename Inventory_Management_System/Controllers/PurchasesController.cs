@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
+
 namespace Inventory_Management_System.Controllers
 {
+    [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager},{AppRoles.ProcurementSpecialist},{AppRoles.Auditor}")]
     public class PurchasesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -62,6 +65,8 @@ namespace Inventory_Management_System.Controllers
         }
 
         // GET: /Purchases/Create
+        [HttpGet]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager},{AppRoles.ProcurementSpecialist}")]
         public async Task<IActionResult> Create()
         {
             var model = new PurchaseFormViewModel
@@ -77,6 +82,7 @@ namespace Inventory_Management_System.Controllers
         // POST: /Purchases/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager},{AppRoles.ProcurementSpecialist}")]
         public async Task<IActionResult> Create(PurchaseFormViewModel model)
         {
             if (model.SupplierID <= 0)
@@ -184,6 +190,8 @@ namespace Inventory_Management_System.Controllers
         }
 
         // GET: /Purchases/Edit/{id}
+        [HttpGet]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager},{AppRoles.ProcurementSpecialist}")]
         public async Task<IActionResult> Edit(int id)
         {
             var purchase = await _context.Purchases
@@ -215,6 +223,7 @@ namespace Inventory_Management_System.Controllers
         // POST: /Purchases/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager},{AppRoles.ProcurementSpecialist}")]
         public async Task<IActionResult> Edit(int id, PurchaseFormViewModel model)
         {
             if (model.SupplierID <= 0)
@@ -337,6 +346,7 @@ namespace Inventory_Management_System.Controllers
 
         // GET: /Purchases/Delete/{id}
         [HttpGet]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager},{AppRoles.ProcurementSpecialist}")]
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return NotFound();
@@ -383,6 +393,7 @@ namespace Inventory_Management_System.Controllers
         // POST: /Purchases/Delete/{id}
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.WarehouseManager},{AppRoles.ProcurementSpecialist}")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (id <= 0) return BadRequest();

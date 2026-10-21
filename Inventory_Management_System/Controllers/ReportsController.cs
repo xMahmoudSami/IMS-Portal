@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
+
 namespace Inventory_Management_System.Controllers
 {
+    [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.Auditor},{AppRoles.WarehouseManager}")]
     [Route("Reports")]
     public class ReportsController : Controller
     {
@@ -160,6 +163,7 @@ namespace Inventory_Management_System.Controllers
 
         // GET: /Reports/Sales (Sales Performance Report)
         [HttpGet("Sales")]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.Auditor}")]
         public async Task<IActionResult> Sales(string? preset = "ThisMonth", DateTime? fromDate = null, DateTime? toDate = null, string? search = null)
         {
             DateTime now = DateTime.Now;
@@ -247,6 +251,7 @@ namespace Inventory_Management_System.Controllers
 
         // GET: /Reports/ExportSalesCsv
         [HttpGet("ExportSalesCsv")]
+        [Authorize(Roles = $"{AppRoles.SuperAdmin},{AppRoles.Auditor}")]
         public async Task<IActionResult> ExportSalesCsv(string? preset = "ThisMonth", DateTime? fromDate = null, DateTime? toDate = null, string? search = null)
         {
             DateTime now = DateTime.Now;

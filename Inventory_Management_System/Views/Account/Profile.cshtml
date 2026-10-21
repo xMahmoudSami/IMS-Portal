@@ -1,0 +1,492 @@
+@model Inventory_Management_System.ViewModels.UserProfileViewModel
+@{
+    ViewData["Title"] = Loc["Profile"].Value;
+    var currentCulture = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+    var profileDesc = currentCulture switch
+    {
+        "ar" => "إدارة معلوماتك الشخصية ومفتاح الاستعادة وبيانات تسجيل الدخول",
+        "fr" => "Gérez vos informations personnelles, votre clé de récupération et vos identifiants",
+        "es" => "Administre su información personal, clave de recuperación y credenciales de acceso",
+        "de" => "Verwalten Sie Ihre persönlichen Daten, den Wiederherstellungsschlüssel und die Anmeldedaten",
+        "it" => "Gestisci le tue informazioni personali, la chiave di recupero e le credenziali di accesso",
+        _    => "Manage your personal information, recovery key, and login credentials"
+    };
+
+    var accountStatusLabel = currentCulture switch
+    {
+        "ar" => "حالة الحساب",
+        "fr" => "Statut du compte",
+        "es" => "Estado de la cuenta",
+        "it" => "Stato dell'account",
+        "de" => "Kontostatus",
+        _    => "Account Status"
+    };
+
+    var activeLabel = currentCulture switch
+    {
+        "ar" => "نشط ومؤمّن",
+        "fr" => "Actif & Sécurisé",
+        "es" => "Activo y Seguro",
+        "it" => "Attivo e Protetto",
+        "de" => "Aktiv & Gesichert",
+        _    => "Active & Verified"
+    };
+
+    var authTypeLabel = currentCulture switch
+    {
+        "ar" => "نوع المصادقة",
+        "fr" => "Type d'authentification",
+        "es" => "Tipo de autenticación",
+        "it" => "Tipo di autenticazione",
+        "de" => "Authentifizierungstyp",
+        _    => "Authentication Type"
+    };
+
+    var recoveryProtectionLabel = currentCulture switch
+    {
+        "ar" => "حماية الاستعادة",
+        "fr" => "Protection de récupération",
+        "es" => "Protección de recuperación",
+        "it" => "Protezione di recupero",
+        "de" => "Wiederherstellungsschutz",
+        _    => "Recovery Protection"
+    };
+
+    string FormatRole(string r)
+    {
+        var key = "Role_" + r;
+        var localized = Loc[key];
+        if (!localized.IsResourceNotFound && !string.IsNullOrWhiteSpace(localized.Value) && localized.Value != key)
+        {
+            return localized.Value;
+        }
+
+        return currentCulture switch
+        {
+            "ar" => r switch
+            {
+                AppRoles.SuperAdmin => "المشرف العام",
+                AppRoles.WarehouseManager => "مدير المستودع",
+                AppRoles.Cashier => "أمين الصندوق",
+                AppRoles.ProcurementSpecialist => "مسؤول المشتريات",
+                AppRoles.Auditor => "مدقق مالي",
+                _ => r
+            },
+            "fr" => r switch
+            {
+                AppRoles.SuperAdmin => "Administrateur",
+                AppRoles.WarehouseManager => "Gestionnaire d'entrepôt",
+                AppRoles.Cashier => "Caissier",
+                AppRoles.ProcurementSpecialist => "Responsable des achats",
+                AppRoles.Auditor => "Auditeur",
+                _ => r
+            },
+            "es" => r switch
+            {
+                AppRoles.SuperAdmin => "Administrador",
+                AppRoles.WarehouseManager => "Gerente de almacén",
+                AppRoles.Cashier => "Cajero",
+                AppRoles.ProcurementSpecialist => "Especialista en compras",
+                AppRoles.Auditor => "Auditor",
+                _ => r
+            },
+            "de" => r switch
+            {
+                AppRoles.SuperAdmin => "Administrator",
+                AppRoles.WarehouseManager => "Lagermanager",
+                AppRoles.Cashier => "Kassierer",
+                AppRoles.ProcurementSpecialist => "Beschaffungsspezialist",
+                AppRoles.Auditor => "Prüfer",
+                _ => r
+            },
+            "it" => r switch
+            {
+                AppRoles.SuperAdmin => "Amministratore",
+                AppRoles.WarehouseManager => "Responsabile del magazzino",
+                AppRoles.Cashier => "Cassiere",
+                AppRoles.ProcurementSpecialist => "Addetto agli acquisti",
+                AppRoles.Auditor => "Revisore dei conti",
+                _ => r
+            },
+            _ => r switch
+            {
+                AppRoles.SuperAdmin => "Administrator",
+                AppRoles.WarehouseManager => "Warehouse Manager",
+                AppRoles.Cashier => "Cashier",
+                AppRoles.ProcurementSpecialist => "Procurement Specialist",
+                AppRoles.Auditor => "Auditor",
+                _ => r
+            }
+        };
+    }
+
+    var min8CharsPlaceholder = (!Loc["Placeholder_Min8Chars"].IsResourceNotFound && Loc["Placeholder_Min8Chars"].Value != "Placeholder_Min8Chars")
+        ? Loc["Placeholder_Min8Chars"].Value
+        : (currentCulture switch
+        {
+            "ar" => "8 أحرف على الأقل",
+            "fr" => "Minimum 8 caractères",
+            "es" => "Mínimo 8 caracteres",
+            "de" => "Mindestens 8 Zeichen",
+            "it" => "Minimo 8 caratteri",
+            _    => "Minimum 8 characters"
+        });
+
+    var reenterNewPasswordPlaceholder = (!Loc["Placeholder_ReenterNewPassword"].IsResourceNotFound && Loc["Placeholder_ReenterNewPassword"].Value != "Placeholder_ReenterNewPassword")
+        ? Loc["Placeholder_ReenterNewPassword"].Value
+        : (currentCulture switch
+        {
+            "ar" => "أعد إدخال كلمة المرور الجديدة",
+            "fr" => "Ressaisissez le nouveau mot de passe",
+            "es" => "Vuelva a introducir la nueva contraseña",
+            "de" => "Neues Passwort erneut eingeben",
+            "it" => "Reinserisci la nuova password",
+            _    => "Re-enter new password"
+        });
+
+    var protectedBadgeLabel = (!Loc["Lbl_Protected"].IsResourceNotFound && Loc["Lbl_Protected"].Value != "Lbl_Protected")
+        ? Loc["Lbl_Protected"].Value
+        : (currentCulture switch
+        {
+            "ar" => "محمي",
+            "fr" => "Protégé",
+            "es" => "Protegido",
+            "it" => "Protetto",
+            "de" => "Geschützt",
+            _    => "Protected"
+        });
+
+    var accountSecurityBadge = (!Loc["Lbl_AccountAndSecurity"].IsResourceNotFound && Loc["Lbl_AccountAndSecurity"].Value != "Lbl_AccountAndSecurity")
+        ? Loc["Lbl_AccountAndSecurity"].Value
+        : (currentCulture switch
+        {
+            "ar" => "الحساب والأمان",
+            "fr" => "Compte & Sécurité",
+            "es" => "Cuenta y Seguridad",
+            "it" => "Account e Sicurezza",
+            "de" => "Konto & Sicherheit",
+            _    => "Account & Security"
+        });
+
+    var notGeneratedLabel = (!Loc["Lbl_NotGenerated"].IsResourceNotFound && Loc["Lbl_NotGenerated"].Value != "Lbl_NotGenerated")
+        ? Loc["Lbl_NotGenerated"].Value
+        : (currentCulture switch
+        {
+            "ar" => "غير مُنشأ بعد",
+            "fr" => "Non généré",
+            "es" => "No generado",
+            "it" => "Non generato",
+            "de" => "Nicht generiert",
+            _    => "Not Generated"
+        });
+
+    var recoveryKeyActiveLabel = (!Loc["Lbl_RecoveryKeyActive"].IsResourceNotFound && Loc["Lbl_RecoveryKeyActive"].Value != "Lbl_RecoveryKeyActive")
+        ? Loc["Lbl_RecoveryKeyActive"].Value
+        : (currentCulture switch
+        {
+            "ar" => "مفعل ومشفّر",
+            _    => "Active & Hashed"
+        });
+}
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h1 class="h3 mb-0" style="font-weight: 800; color: var(--text-heading);">
+            <i class="fas fa-user-shield text-primary mr-2"></i>@Loc["Profile"] &amp; @Loc["Lbl_SecuritySettings"]
+        </h1>
+        <p class="text-muted small mb-0 mt-1">@profileDesc</p>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success d-flex align-items-center mb-4" id="profileSuccessAlert" role="alert" style="border-radius: var(--radius-md); transition: opacity 0.6s ease, max-height 0.5s ease, margin 0.5s ease, padding 0.5s ease; overflow: hidden;">
+        <i class="fas fa-check-circle fa-lg mr-2"></i>
+        <div>@TempData["SuccessMessage"]</div>
+    </div>
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger mb-4" role="alert" style="border-radius: var(--radius-md);">
+        <div class="font-weight-bold mb-1"><i class="fas fa-exclamation-triangle mr-1"></i> @Loc["Lbl_PleaseCorrectErrors"]:</div>
+        <ul class="mb-0 pl-3">
+            @foreach (var modelState in ViewData.ModelState.Values)
+            {
+                foreach (var error in modelState.Errors)
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            }
+        </ul>
+    </div>
+}
+
+<div class="row align-items-stretch">
+    <!-- Left Column: User Profile Summary Card -->
+    <div class="col-xl-4 col-lg-5 mb-4 d-flex flex-column">
+        <div class="card shadow-sm border-0 h-100 d-flex flex-column" style="background: var(--bg-surface); border-radius: var(--radius-lg); border: 1px solid var(--border-default) !important;">
+            <div class="card-body text-center p-4 d-flex flex-column">
+                <div class="avatar-wrapper mb-3 mx-auto"
+                     style="width: 100px; height: 100px; border-radius: 50%; background: var(--primary-gradient); display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 2.5rem; font-weight: 800; box-shadow: var(--primary-glow);">
+                    @(string.IsNullOrEmpty(Model.FullName) ? "U" : Model.FullName.Substring(0, 1).ToUpper())
+                </div>
+
+                <h4 style="font-weight: 700; color: var(--text-heading); margin-bottom: 0.25rem;">@Model.FullName</h4>
+                <div class="text-muted small mb-3"><span dir="ltr" style="unicode-bidi: isolate;">@@@Model.Username</span></div>
+
+                <div class="mb-4">
+                    <span class="badge badge-pill badge-primary px-3 py-2" style="font-size: 0.85rem; font-weight: 600;">
+                        <i class="fas fa-user-tag mr-1"></i> @FormatRole(Model.RoleName)
+                    </span>
+                </div>
+
+                <hr style="border-color: var(--border-subtle);" />
+
+                <div class="text-left" style="font-size: 0.88rem;">
+                    <div class="d-flex justify-content-between py-2 border-bottom" style="border-color: var(--border-subtle) !important;">
+                        <span class="text-muted"><i class="fas fa-envelope mr-2"></i>@Loc["Email"]:</span>
+                        <span style="color: var(--text-main); font-weight: 500;">@Model.Email</span>
+                    </div>
+                    <div class="d-flex justify-content-between py-2 border-bottom" style="border-color: var(--border-subtle) !important;">
+                        <span class="text-muted"><i class="fas fa-calendar-alt mr-2"></i>@Loc["Created"]:</span>
+                        <span style="color: var(--text-main);">@Model.CreatedAt.ToString("yyyy-MM-dd")</span>
+                    </div>
+                    <div class="d-flex justify-content-between py-2">
+                        <span class="text-muted"><i class="fas fa-clock mr-2"></i>@Loc["LastLogin"]:</span>
+                        <span style="color: var(--text-main);">@(Model.LastLoginAt.HasValue ? Model.LastLoginAt.Value.ToString("yyyy-MM-dd HH:mm") : "—")</span>
+                    </div>
+                </div>
+
+                <!-- Account Security & Health Status (Aligns Left Column Height with Right Column) -->
+                <div class="mt-auto pt-4">
+                    <div class="p-3 rounded text-left" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); font-size: 0.85rem;">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <span class="text-muted"><i class="fas fa-user-check mr-2 text-success"></i>@accountStatusLabel:</span>
+                            <span class="badge badge-success px-2 py-1">@activeLabel</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <span class="text-muted"><i class="fas fa-network-wired mr-2 text-info"></i>@authTypeLabel:</span>
+                            <span style="color: var(--text-heading); font-weight: 600;">Zero-SMTP Local</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span class="text-muted"><i class="fas fa-key mr-2 text-warning"></i>@recoveryProtectionLabel:</span>
+                            <span class="badge badge-warning text-dark font-weight-bold px-2 py-1">@protectedBadgeLabel</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Unified Personal Information & Security Settings Card (Layout 2) -->
+    <div class="col-xl-8 col-lg-7 mb-4 d-flex flex-column">
+        <div class="card shadow-sm border-0 h-100 d-flex flex-column" style="background: var(--bg-surface); border-radius: var(--radius-lg); border: 1px solid var(--border-default) !important;">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background: var(--bg-surface-elevated); border-bottom: 1px solid var(--border-default);">
+                <h6 class="m-0 font-weight-bold" style="color: var(--text-heading);">
+                    <i class="fas fa-id-card text-primary mr-2"></i>@Loc["Lbl_PersonalInformation"]
+                </h6>
+                <span class="badge badge-primary px-2 py-1 small">@accountSecurityBadge</span>
+            </div>
+
+            <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                <form asp-action="Profile" method="post" id="formUserProfile" class="d-flex flex-column flex-grow-1">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="Username" />
+                    <input type="hidden" asp-for="RoleName" />
+                    <input type="hidden" asp-for="CreatedAt" />
+                    <input type="hidden" asp-for="LastLoginAt" />
+
+                    <!-- Section 1: Personal Information -->
+                    <div class="row mb-2">
+                        <div class="col-md-6 form-group">
+                            <label class="form-label" style="font-weight: 600; color: var(--text-main); font-size: 0.88rem;">@Loc["Username"]</label>
+                            <input value="@Model.Username" class="form-control" disabled style="background: var(--bg-input); border-color: var(--border-default); color: var(--text-muted);" />
+                            <small class="text-muted">@Loc["Lbl_UsernameCannotBeChanged"]</small>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="form-label" style="font-weight: 600; color: var(--text-main); font-size: 0.88rem;">@Loc["Email"] <span class="text-danger">*</span></label>
+                            <input asp-for="Email" class="form-control" required style="background: var(--bg-input); border-color: var(--border-default); color: var(--text-main);" />
+                            <span asp-validation-for="Email" class="text-danger small font-weight-bold mt-1 d-block"></span>
+                        </div>
+                        <div class="col-md-12 form-group mb-0">
+                            <label class="form-label" style="font-weight: 600; color: var(--text-main); font-size: 0.88rem;">@Loc["FullName"] <span class="text-danger">*</span></label>
+                            <input asp-for="FullName" class="form-control" required style="background: var(--bg-input); border-color: var(--border-default); color: var(--text-main);" />
+                            <span asp-validation-for="FullName" class="text-danger small font-weight-bold mt-1 d-block"></span>
+                        </div>
+                    </div>
+
+                    <hr style="border-color: var(--border-subtle); margin: 1.5rem 0 1.25rem;" />
+
+                    <!-- Section 2: Master Recovery Key Infrastructure -->
+                    <div class="mb-2">
+                        <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap">
+                            <div class="d-flex align-items-center">
+                                <span class="font-weight-bold mr-2" style="color: var(--text-heading); font-size: 0.92rem;">
+                                    <i class="fas fa-shield-alt text-warning mr-1"></i> @Loc["Lbl_MasterRecoveryKeyTitle"]:
+                                </span>
+                                @if (Model.HasRecoveryKey)
+                                {
+                                    <span class="badge badge-success px-2 py-1"><i class="fas fa-check-circle mr-1"></i> @recoveryKeyActiveLabel</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-secondary px-2 py-1"><i class="fas fa-times-circle mr-1"></i> @notGeneratedLabel</span>
+                                }
+                            </div>
+                            <small class="text-muted">
+                                @Loc["Lbl_LastGenerated"]: @(Model.RecoveryKeyGeneratedAt?.ToString("yyyy-MM-dd HH:mm UTC") ?? "Initial Setup")
+                            </small>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(Model.NewlyGeneratedRecoveryKey))
+                        {
+                            <div class="alert alert-warning border shadow-sm mb-3 d-flex align-items-center" role="alert" style="border-radius: var(--radius-md); background: rgba(246, 194, 62, 0.12); border-color: #f6c23e !important; gap: 0.75rem;">
+                                <i class="fas fa-exclamation-triangle fa-lg text-warning flex-shrink-0"></i>
+                                <div style="font-size: 0.88rem;">
+                                    <strong class="text-warning font-weight-bold d-block">@Loc["Lbl_NewRecoveryKeyGeneratedTitle"]</strong>
+                                    <span>@Loc["Lbl_NewRecoveryKeyGeneratedDesc"]</span>
+                                </div>
+                            </div>
+                        }
+
+                        <!-- Key Display Box (Dots by default / Plain-text when freshly regenerated + Copy Button) -->
+                        <div class="d-flex align-items-center justify-content-between p-3 rounded mb-2" style="background: var(--bg-input); border: 1px solid var(--border-default); gap: 0.75rem;">
+                            <div class="d-flex align-items-center flex-grow-1 overflow-hidden" style="gap: 0.65rem;">
+                                <i class="fas fa-key text-warning fa-lg flex-shrink-0"></i>
+                                @if (!string.IsNullOrEmpty(Model.NewlyGeneratedRecoveryKey))
+                                {
+                                    <code id="masterRecoveryKeyCode" class="text-warning font-weight-bold" style="font-size: 1.1rem; letter-spacing: 1.5px; font-family: monospace; word-break: break-all;">@Model.NewlyGeneratedRecoveryKey</code>
+                                }
+                                else
+                                {
+                                    <span class="text-muted font-weight-bold" style="font-size: 1.25rem; letter-spacing: 4px; font-family: monospace; user-select: none;">••••••••••••••••••••••••••••••••</span>
+                                }
+                            </div>
+                            <div class="d-flex align-items-center flex-shrink-0" style="gap: 0.5rem;">
+                                @if (!string.IsNullOrEmpty(Model.NewlyGeneratedRecoveryKey))
+                                {
+                                    <button type="button" class="btn btn-sm btn-outline-warning font-weight-bold" onclick="copyRecoveryKey()" id="btnCopyRecoveryKey" title="@Loc["Lbl_CopyKey"]" style="border: 1px solid var(--warning) !important;">
+                                        <i class="fas fa-copy mr-1"></i> <span id="copyBtnText">@Loc["Lbl_CopyKey"]</span>
+                                    </button>
+                                }
+                                <button type="button" class="btn btn-sm btn-warning font-weight-bold text-dark" id="btnTriggerRegenerateKey" style="box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);">
+                                    <i class="fas fa-sync-alt mr-1"></i> @Loc["Lbl_RegenerateRecoveryKey"]
+                                </button>
+                            </div>
+                        </div>
+
+                        <p class="text-muted small mb-0">
+                            <i class="fas fa-info-circle mr-1 text-info"></i>
+                            @Loc["Lbl_MasterRecoveryKeyExplanation"]
+                        </p>
+                    </div>
+
+                    <hr style="border-color: var(--border-subtle); margin: 1.5rem 0 1.25rem;" />
+
+                    <!-- Section 3: Change Password -->
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="font-weight-bold" style="color: var(--text-heading); font-size: 0.92rem;">
+                                <i class="fas fa-key text-warning mr-1"></i> @Loc["Lbl_ChangePassword"]
+                            </span>
+                            <span class="text-muted small ml-2">(@Loc["Lbl_LeaveBlankIfNotChangingPassword"])</span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label class="form-label" style="font-weight: 600; color: var(--text-main); font-size: 0.88rem;">@Loc["Lbl_CurrentPassword"]</label>
+                                <input asp-for="CurrentPassword" type="password" class="form-control" placeholder="••••••••" style="background: var(--bg-input); border-color: var(--border-default); color: var(--text-main);" />
+                                <span asp-validation-for="CurrentPassword" class="text-danger small font-weight-bold mt-1 d-block"></span>
+                            </div>
+                            <div class="col-md-6 form-group mb-md-0">
+                                <label class="form-label" style="font-weight: 600; color: var(--text-main); font-size: 0.88rem;">@Loc["Lbl_NewPassword"]</label>
+                                <input asp-for="NewPassword" type="password" class="form-control" placeholder="@min8CharsPlaceholder" style="background: var(--bg-input); border-color: var(--border-default); color: var(--text-main);" />
+                                <span asp-validation-for="NewPassword" class="text-danger small font-weight-bold mt-1 d-block"></span>
+                            </div>
+                            <div class="col-md-6 form-group mb-0">
+                                <label class="form-label" style="font-weight: 600; color: var(--text-main); font-size: 0.88rem;">@Loc["Lbl_ConfirmNewPassword"]</label>
+                                <input asp-for="ConfirmNewPassword" type="password" class="form-control" placeholder="@reenterNewPasswordPlaceholder" style="background: var(--bg-input); border-color: var(--border-default); color: var(--text-main);" />
+                                <span asp-validation-for="ConfirmNewPassword" class="text-danger small font-weight-bold mt-1 d-block"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Save Changes Button located at bottom right inside the right layout itself -->
+                    <div class="d-flex justify-content-end mt-auto pt-4 border-top" style="border-color: var(--border-subtle) !important;">
+                        <button type="submit" class="btn btn-primary font-weight-bold px-4 py-2" style="border-radius: var(--radius-md); box-shadow: var(--primary-glow);">
+                            <i class="fas fa-save mr-2"></i> @Loc["SaveChanges"]
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Hidden form for RegenerateRecoveryKey action -->
+                <form asp-action="RegenerateRecoveryKey" method="post" id="formRegenerateKey" style="display: none;"
+                      data-confirm-message="@Loc["Lbl_ConfirmRegenerateKey"]"
+                      data-confirm-title="@Loc["Lbl_RegenerateRecoveryKey"]"
+                      data-confirm-type="warning"
+                      data-confirm-destructive="true">
+                    @Html.AntiForgeryToken()
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Smoothly auto-dismiss the success alert after 3 seconds
+        document.addEventListener('DOMContentLoaded', function () {
+            var alertBox = document.getElementById('profileSuccessAlert');
+            if (alertBox) {
+                setTimeout(function () {
+                    alertBox.style.opacity = '0';
+                    alertBox.style.maxHeight = '0';
+                    alertBox.style.paddingTop = '0';
+                    alertBox.style.paddingBottom = '0';
+                    alertBox.style.marginTop = '0';
+                    alertBox.style.marginBottom = '0';
+                    setTimeout(function () {
+                        if (alertBox.parentNode) {
+                            alertBox.parentNode.removeChild(alertBox);
+                        }
+                    }, 650);
+                }, 3000);
+            }
+        });
+
+        function copyRecoveryKey() {
+            var codeElement = document.getElementById('masterRecoveryKeyCode');
+            if (!codeElement) return;
+            var text = codeElement.innerText.trim();
+            navigator.clipboard.writeText(text).then(function () {
+                var btnText = document.getElementById('copyBtnText');
+                if (btnText) {
+                    var original = btnText.innerText;
+                    btnText.innerText = 'Copied!';
+                    setTimeout(function () {
+                        btnText.innerText = original;
+                    }, 2500);
+                }
+            }).catch(function (err) {
+                console.error('Could not copy key: ', err);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var btnRegen = document.getElementById('btnTriggerRegenerateKey');
+            if (btnRegen) {
+                btnRegen.addEventListener('click', function () {
+                    var form = document.getElementById('formRegenerateKey');
+                    if (form) {
+                        $(form).trigger('submit');
+                    }
+                });
+            }
+        });
+    </script>
+}

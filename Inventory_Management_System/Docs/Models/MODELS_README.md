@@ -2,18 +2,19 @@
 
 ## 1. Architectural Overview
 
-The Data Access Layer of the Inventory Management System is built on **Entity Framework Core 9.0 (Code-First approach)** backed by Microsoft SQL Server. The domain schema is intentionally structured to preserve referential integrity, historical financial auditability, inventory balance tracking, and AI conversational intelligence.
+The Data Access Layer of the Inventory Management System is built on **Entity Framework Core 10.0 (Code-First approach)** backed by Microsoft SQL Server. The database context inherits from `IdentityDbContext<ApplicationUser>` to seamlessly combine enterprise identity and role-based access control with domain inventory management.
 
-The domain model contains **9 primary entities**:
-1. `Product`
-2. `Category`
-3. `Supplier`
-4. `SupplierProduct`
-5. `Purchase`
-6. `PurchaseItem`
-7. `Sale`
-8. `SaleItem`
-9. `AIChatLog`
+The domain model contains **10 primary entities and core identity structures**:
+1. `ApplicationUser` (ASP.NET Core Identity & Master Recovery Key)
+2. `Product`
+3. `Category`
+4. `Supplier`
+5. `SupplierProduct`
+6. `Purchase`
+7. `PurchaseItem`
+8. `Sale`
+9. `SaleItem`
+10. `AIChatLog`
 
 ---
 
@@ -173,6 +174,35 @@ Represents conversation history records exchanged between warehouse operators an
 
 ---
 
+### 3.10. `ApplicationUser` (`Models/ApplicationUser.cs`) & `AppRoles` (`Models/AppRoles.cs`)
+The identity and security domain model extending ASP.NET Core Identity's `IdentityUser` with enterprise profile data and cryptographic Master Recovery Key fields.
+
+| Property | Data Type | Nullability | Constraints & Annotations | Business & Technical Relevance |
+| :--- | :--- | :--- | :--- | :--- |
+| `Id` | `string` | Non-Null | `[Key]` (Inherited) | Unique GUID primary key for the identity user. |
+| `UserName` | `string` | Non-Null | `[Required]` (Inherited) | Unique username used for system authentication. |
+| `Email` | `string` | Non-Null | `[EmailAddress]` (Inherited) | User email used for identity mapping and masked presentation. |
+| `FullName` | `string` | Non-Null | `[Required]`, `[MaxLength(100)]` | Official display name of the operator/administrator. |
+| `RecoveryKeyHash` | `string?` | Nullable | `[MaxLength(500)]` | Salted PBKDF2 hash of the 128-bit Master Recovery Key. Plain-text key is never persisted. |
+| `RecoveryKeyGeneratedAt` | `DateTime?` | Nullable | DateTime | UTC timestamp when the current recovery key was generated/rotated. |
+| `RecoveryOtpCode` | `string?` | Nullable | `[MaxLength(20)]` | Single-use 6-digit emergency OTP code dispatched via Webhook (e.g. n8n -> Telegram). |
+| `RecoveryOtpExpiresAt` | `DateTime?` | Nullable | DateTime | Expiration timestamp (typically 15 minutes) for the emergency OTP. |
+| `IsActive` | `bool` | Non-Null | Default `true` | Account status flag. Deactivated users are blocked from logging in. |
+| `CreatedAt` | `DateTime` | Non-Null | Default `DateTime.UtcNow` | Account provisioning audit timestamp. |
+| `LastLoginAt` | `DateTime?` | Nullable | DateTime | Audit timestamp of most recent successful sign-in. |
+
+#### Role Definitions (`Models/AppRoles.cs`)
+The system defines 5 standardized enterprise operational roles:
+- `AppRoles.SuperAdmin = "SuperAdmin"`: Full system administration, user management, and security keys.
+- `AppRoles.WarehouseManager = "WarehouseManager"`: Full inventory catalog, stock-in purchases, and vendor management.
+- `AppRoles.Cashier = "Cashier"`: Storefront Point-of-Sale checkout and customer order fulfillment.
+- `AppRoles.ProcurementSpecialist = "ProcurementSpecialist"`: Supplier catalog management and procurement order drafting.
+- `AppRoles.Auditor = "Auditor"`: Read-only access across valuation reports, sales performance, and audit trails.
+
+---
+
+---
+
 ## 4. `ApplicationDbContext.cs` Deep-Dive & Architectural Rationale
 
 The database context (`Models/ApplicationDbContext.cs`) implements critical enterprise database rules via the Fluent API in `OnModelCreating`.
@@ -228,3 +258,30 @@ A critical design requirement in enterprise inventory systems is **preventing ac
 | `Product` -> `PurchaseItems` | **`DeleteBehavior.Restrict`** | **Strict audit trail defense.** A product that has appeared on any historical purchase order cannot be hard-deleted from the database, preventing orphaned financial records. |
 | `Sale` -> `SaleItems` | **`DeleteBehavior.Cascade`** | **Parent-Child lifecycle ownership.** A `SaleItem` exists purely as a line item on a `Sale` receipt. |
 | `Product` -> `SaleItems` | **`DeleteBehavior.Restrict`** | **Strict sales revenue defense.** A product that has been sold cannot be deleted, ensuring past sales summaries, profit margins, and revenue analytics remain 100% accurate. |
+
+---
+
+## 5. Webhook & Event Domain Models (`Models/Webhooks/`)
+
+The platform integrates an asynchronous event broadcasting framework to communicate real-time inventory and authentication events to external automation systems (e.g. n8n):
+
+### 5.1. `WebhookOptions` (`Models/Webhooks/WebhookOptions.cs`)
+Strongly-typed configuration model bound to the `WebhookSettings` section in `appsettings.json`:
+- `Enabled` (`bool`): Global feature toggle for outbound webhook dispatching.
+- `PayloadUrl` (`string`): Target HTTP POST endpoint (e.g., n8n webhook listener).
+- `Secret` (`string`): Cryptographic shared secret utilized to generate HMAC-SHA256 payload signatures.
+- `TimeoutSeconds` (`int`): Maximum HTTP client request timeout (default 10s).
+
+### 5.2. `WebhookPayload<T>` (`Models/Webhooks/WebhookPayload.cs`)
+Standardized enterprise event envelope:
+- `EventId` (`string`): Unique GUID identifying the broadcast instance for idempotency tracking.
+- `EventType` (`string`): Dot-notated domain event type (e.g., `inventory.low_stock_alert`, `auth.password_reset_requested`).
+- `Timestamp` (`DateTime`): UTC creation time of the event.
+- `Data` (`T`): Strongly-typed domain payload.
+
+### 5.3. Domain Event Payloads
+- **`LowStockAlertEvent` (`Models/Webhooks/Events/LowStockAlertEvent.cs`)**:
+  Dispatched when transactions reduce stock $\le$ `LowStockThreshold`. Contains `ProductID`, `SKU`, `ProductName`, `CategoryName`, `CurrentStock`, `LowStockThreshold`, and `TriggeredAt`.
+- **`PasswordResetOtpEvent` (`Models/Webhooks/Events/PasswordResetOtpEvent.cs`)**:
+  Dispatched during password recovery. Contains `UserId`, `Username`, `FullName`, `Email`, `OtpCode` (6-digit numeric), `ExpiresAt`, `IpAddress`, `RequestedAt`, and `DeliveryTarget` ("Telegram").
+

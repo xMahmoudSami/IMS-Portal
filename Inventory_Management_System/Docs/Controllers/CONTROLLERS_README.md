@@ -31,20 +31,23 @@ sequenceDiagram
 
 ## 2. Controllers Directory Breakdown
 
-The application implements **10 distinct controllers**:
+The application implements **13 distinct controllers**:
 
 ```
 Controllers/
+├── AccountController.cs          # Web portal authentication, Master Recovery Key pipeline & Profile
 ├── AIController.cs               # RESTful API for Groq LLM Assistant & Chat Logs
+├── AuthController.cs             # RESTful API for JWT Bearer token issuance & validation
 ├── CategoriesController.cs       # Category taxonomy management
 ├── CultureController.cs          # Multi-language cookie persistence & switching
 ├── DashboardController.cs        # Executive KPI metrics, Chart.js AJAX, Global Search
 ├── ProductsController.cs         # Product catalog management, filtering, & pagination
 ├── PurchasesController.cs        # Procurement orders & incoming inventory updates
 ├── ReportsController.cs          # Financial stock valuation & sales revenue analytics
-├── SalesController.cs            # POS checkout, stock deductions, & invoice generation
+├── SalesController.cs            # POS checkout, stock deductions, low-stock webhook & invoices
 ├── SupplierProductsController.cs # Supplier-product contract pricing & lead times
-└── SuppliersController.cs        # Vendor profile management & purchase history
+├── SuppliersController.cs        # Vendor profile management & purchase history
+└── UsersController.cs            # SuperAdmin user governance, role matrix & key generation
 ```
 
 ---
@@ -182,3 +185,53 @@ Controllers/
 | Endpoint | Verb | Parameters | Security & Localization Details |
 | :--- | :--- | :--- | :--- |
 | `Culture/SetLanguage` | `[HttpPost]` | `string culture, string returnUrl` | `[ValidateAntiForgeryToken]`. Validates that requested culture is in supported whitelist (`en`, `ar`, `fr`, `es`, `it`, `de`). Sets persistent `CookieRequestCultureProvider` cookie with 1-year lifespan. Uses `Url.IsLocalUrl(returnUrl)` to **prevent Open Redirect Phishing attacks** before performing local redirect. |
+
+---
+
+### 3.11. `AccountController` (`Controllers/AccountController.cs`)
+- **Type:** MVC Controller (Authentication & Self-Service Credential Lifecycle)
+- **Injected Dependencies:** `SignInManager<ApplicationUser>`, `UserManager<ApplicationUser>`, `IMasterRecoveryKeyService`, `IWebhookDispatcher`, `ILogger<AccountController>`
+- **Endpoints & Operations:**
+
+| Endpoint | Verb | Parameters | Security & Domain Details |
+| :--- | :--- | :--- | :--- |
+| `Account/Login` | `[HttpGet]` | `string? returnUrl` | `[AllowAnonymous]`. Renders the login portal with theme and language support. Displays rotated Master Recovery Key banner if redirected from reset. |
+| `Account/Login` | `[HttpPost]` | `LoginViewModel model` | `[AllowAnonymous]`, `[ValidateAntiForgeryToken]`. Verifies credentials via `SignInManager.PasswordSignInAsync`, checks `user.IsActive`, updates `user.LastLoginAt`, and enforces lockout counter. |
+| `Account/Logout` | `[HttpPost]` | None | `[Authorize]`, `[ValidateAntiForgeryToken]`. Terminates authentication session via `SignInManager.SignOutAsync` and clears cookies. |
+| `Account/ForgotPassword` | `[HttpGet]` | None | `[AllowAnonymous]`. Renders Step 1 username/email prompt. |
+| `Account/ForgotPassword` | `[HttpPost]` | `ForgotPasswordStep1ViewModel model` | `[AllowAnonymous]`, `[ValidateAntiForgeryToken]`. Generates 6-digit emergency OTP (`GenerateAndStoreOtpAsync`), dispatches `auth.password_reset_requested` event via `IWebhookDispatcher` to n8n/Telegram, and renders Step 2. |
+| `Account/ResetPasswordWithRecoveryKey` | `[HttpPost]` | `ForgotPasswordStep2ViewModel model` | `[AllowAnonymous]`, `[ValidateAntiForgeryToken]`. Verifies either Master Recovery Key or emergency OTP. Resets password, invalidates OTP, regenerates a fresh Master Recovery Key (single-use rotation policy), and redirects to Login. |
+| `Account/Profile` | `[HttpGet]` | None | `[Authorize]`. Renders security profile, account role, Master Recovery Key status, and regeneration UI. |
+| `Account/Profile` | `[HttpPost]` | `UserProfileViewModel model` | `[Authorize]`, `[ValidateAntiForgeryToken]`. Updates operator full name and email, validates current password, and sets new password. |
+| `Account/RegenerateRecoveryKey` | `[HttpPost]` | None | `[Authorize]`, `[ValidateAntiForgeryToken]`. Invalidates previous recovery key, generates fresh 128-bit key via `IMasterRecoveryKeyService.RegenerateAndStoreKeyAsync`, and presents the new key strictly once. |
+| `Account/AccessDenied` | `[HttpGet]` | None | `[AllowAnonymous]`. Custom error view when an authenticated user attempts to access endpoints unauthorized for their role. |
+
+---
+
+### 3.12. `AuthController` (`Controllers/AuthController.cs`)
+- **Type:** RESTful API Controller (`[ApiController]`, `[Route("api/[controller]")]`)
+- **Injected Dependencies:** `UserManager<ApplicationUser>`, `ITokenService`, `ILogger<AuthController>`
+- **Endpoints & Operations:**
+
+| Endpoint | Verb | Parameters | Security & Output Details |
+| :--- | :--- | :--- | :--- |
+| `api/Auth/login` | `[HttpPost]` | `[FromBody] ApiLoginRequest request` | `[AllowAnonymous]`. Validates user credentials and account active status. Upon success, generates a signed HMAC-SHA256 JWT Bearer token via `ITokenService.GenerateJwtTokenAsync` containing user ID, username, email, full name, and role claims. |
+| `api/Auth/profile` | `[HttpGet]` | None | `[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]`. Returns authenticated user profile, claims, and role assignments in JSON format. |
+
+---
+
+### 3.13. `UsersController` (`Controllers/UsersController.cs`)
+- **Type:** MVC Controller (Restricted to `[Authorize(Roles = AppRoles.SuperAdmin)]`)
+- **Injected Dependencies:** `UserManager<ApplicationUser>`, `RoleManager<IdentityRole>`, `IMasterRecoveryKeyService`, `ILogger<UsersController>`
+- **Endpoints & Operations:**
+
+| Endpoint | Verb | Parameters | Security & Governance Details |
+| :--- | :--- | :--- | :--- |
+| `Users/Index` | `[HttpGet]` | `string? search, string? role` | Displays searchable, role-filtered grid of all system users. If a new user was just created, renders a prominent alert with the one-time Master Recovery Key and clipboard copy button. |
+| `Users/Create` | `[HttpGet]` | None | Renders user provisioning form with enterprise role selection and Master Recovery Key notice. |
+| `Users/Create` | `[HttpPost]` | `CreateUserViewModel model` | `[ValidateAntiForgeryToken]`. Creates user, generates and hashes 128-bit Master Recovery Key via `_recoveryKeyService.RegenerateAndStoreKeyAsync`, assigns enterprise role, and stores the plain-text key in `TempData["NewUserRecoveryKey"]`. |
+| `Users/Edit/{id}` | `[HttpGet]` / `[HttpPost]` | `string id, EditUserViewModel model` | `[ValidateAntiForgeryToken]`. Updates full name, email, role assignment, and active status. Protects against removing the last active SuperAdmin. |
+| `Users/ResetPassword/{id}` | `[HttpGet]` / `[HttpPost]` | `string id, AdminResetPasswordViewModel model` | `[ValidateAntiForgeryToken]`. Allows SuperAdmin to execute direct credential reset using Identity token reset without requiring user's old password. |
+| `Users/ToggleStatus/{id}` | `[HttpPost]` | `string id` | `[ValidateAntiForgeryToken]`. Flips `IsActive` state, immediately preventing or permitting authentication. Blocks self-deactivation. |
+| `Users/Delete/{id}` | `[HttpPost]` | `string id` | `[ValidateAntiForgeryToken]`. Permanently deletes user account. Blocks self-deletion. |
+
