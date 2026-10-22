@@ -1403,7 +1403,7 @@
     <value>Protégé</value>
   </data>
   <data name="Lbl_AccountAndSecurity" xml:space="preserve">
-    <value>Compte & Sécurité</value>
+    <value>Compte &amp; Sécurité</value>
   </data>
   <data name="Lbl_CannotDeactivateSelf" xml:space="preserve">
     <value>(Vous ne pouvez pas désactiver votre propre session active)</value>

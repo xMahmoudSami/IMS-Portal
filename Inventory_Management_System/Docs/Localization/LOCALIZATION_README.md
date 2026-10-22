@@ -21,7 +21,7 @@ graph TD
     Providers -->|2. QueryStringProvider| MatchFound
     Providers -->|3. AcceptLanguageHeader| MatchFound
     MatchFound -->|Injects| Views[Views & Controllers<br/>IHtmlLocalizer / IStringLocalizer]
-    Views -->|Pulls String| Resx[(Resources/SharedResource.{culture}.resx)]
+    Views -->|Pulls String| Resx[("Resources/SharedResource.{culture}.resx")]
 ```
 
 ---

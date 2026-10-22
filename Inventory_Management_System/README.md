@@ -65,20 +65,20 @@ The solution follows clean architectural principles, strictly separating concern
 
 ```mermaid
 graph TD
-    Client[Web Browser / POS Handhelds / External APIs] -->|HTTP / HTTPS| Gate[Dual Authentication Gateway<br/>Cookie Auth + JWT Bearer Auth]
-    Gate --> Presentation[Presentation Layer<br/>Razor Views + SB Admin 2 + Dynamic Theme Engine]
-    Presentation --> Controllers[Controller Layer<br/>MVC Controllers + RESTful APIs + Anti-CSRF]
-    Controllers --> ViewModels[Presentation Models Layer<br/>Strict DTOs + PagedResult + Custom Validation]
-    Controllers --> Services[Domain Services / Business Logic Layer<br/>IProductService, ICategoryService, ISupplierService, IAIService]
-    Controllers --> Recovery[Master Recovery Key Service<br/>IMasterRecoveryKeyService]
-    Controllers --> Dispatcher[Event-Driven Webhook Dispatcher<br/>IWebhookDispatcher + IWebhookSigner]
+    Client["Web Browser / POS Handhelds / External APIs"] -->|HTTP / HTTPS| Gate["Dual Authentication Gateway<br/>Cookie Auth + JWT Bearer Auth"]
+    Gate --> Presentation["Presentation Layer<br/>Razor Views + SB Admin 2 + Dynamic Theme Engine"]
+    Presentation --> Controllers["Controller Layer<br/>MVC Controllers + RESTful APIs + Anti-CSRF"]
+    Controllers --> ViewModels["Presentation Models Layer<br/>Strict DTOs + PagedResult + Custom Validation"]
+    Controllers --> Services["Domain Services / Business Logic Layer<br/>IProductService, ICategoryService, ISupplierService, IAIService"]
+    Controllers --> Recovery["Master Recovery Key Service<br/>IMasterRecoveryKeyService"]
+    Controllers --> Dispatcher["Event-Driven Webhook Dispatcher<br/>IWebhookDispatcher + IWebhookSigner"]
 
-    Services -->|RAG Context & LLM Prompting| Groq[Groq Cloud LLM API<br/>Llama 3.3 70B Versatile]
-    Dispatcher -->|HMAC-SHA256 Signed HTTP POST| n8n[n8n Workflow Automation Engine<br/>Telegram / WhatsApp / Discord]
-    Services --> EF[Data Access Layer<br/>Entity Framework Core 10.0]
+    Services -->|RAG Context & LLM Prompting| Groq["Groq Cloud LLM API<br/>Llama 3.3 70B Versatile"]
+    Dispatcher -->|HMAC-SHA256 Signed HTTP POST| n8n["n8n Workflow Automation Engine<br/>Telegram / WhatsApp / Discord"]
+    Services --> EF["Data Access Layer<br/>Entity Framework Core 10.0"]
     Recovery --> EF
-    EF --> Database[(Relational Database<br/>Microsoft SQL Server)]
-    Presentation --> Localization[Localization Engine<br/>SharedResource .resx (EN, AR, FR, ES, IT, DE)]
+    EF --> Database[("Relational Database<br/>Microsoft SQL Server")]
+    Presentation --> Localization["Localization Engine<br/>SharedResource .resx (EN, AR, FR, ES, IT, DE)"]
 ```
 
 ---

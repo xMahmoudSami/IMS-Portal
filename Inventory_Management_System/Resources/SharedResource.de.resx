@@ -353,7 +353,7 @@
     <value>E-Mail</value>
   </data>
   <data name="Address" xml:space="preserve">
-    <value>Adresse</value>
+    <value>Address</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Beschreibung</value>
@@ -569,7 +569,7 @@
     <value>Gesamtsumme des Zeitraums:</value>
   </data>
   <data name="DeleteWarningMessage" xml:space="preserve">
-    <value>Warnung: Diese Aktion kann nicht rückgängig gemacht werden. Möchten Sie dieses Element wirklich dauerhaft löschen?</value>
+    <value>Warnung: Diese Action kann nicht rückgängig gemacht werden. Möchten Sie dieses Element wirklich dauerhaft löschen?</value>
   </data>
   <data name="CancelAndKeep" xml:space="preserve">
     <value>Abbrechen und behalten</value>
@@ -1403,7 +1403,7 @@
     <value>Geschützt</value>
   </data>
   <data name="Lbl_AccountAndSecurity" xml:space="preserve">
-    <value>Konto & Sicherheit</value>
+    <value>Konto &amp; Sicherheit</value>
   </data>
   <data name="Lbl_CannotDeactivateSelf" xml:space="preserve">
     <value>(Sie können Ihre eigene aktive Sitzung nicht deaktivieren)</value>
