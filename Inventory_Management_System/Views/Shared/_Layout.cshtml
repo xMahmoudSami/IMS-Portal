@@ -750,7 +750,7 @@
                                     @if (lowStockCount > 0)
                                     {
                                         <span class="alerts-count-pill">
-                                            @lowStockCount @(lowStockCount == 1 ? "Item" : "Items")
+                                            @lowStockCount @(lowStockCount == 1 ? SharedLocalizer["Item"].Value : SharedLocalizer["Items"].Value)
                                         </span>
                                     }
                                 </div>
@@ -759,6 +759,24 @@
                                 <div class="alerts-dropdown-body">
                                     @if (lowStockProducts.Any())
                                     {
+                                        string getRemainingText(int count)
+                                        {
+                                            var res = SharedLocalizer["Remaining"];
+                                            if (!res.IsResourceNotFound && !string.Equals(res.Value, "Remaining", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                return $"{count} {res.Value}";
+                                            }
+                                            return currentCulture switch
+                                            {
+                                                "ar" => $"{count} متبقي",
+                                                "fr" => count > 1 ? $"{count} restants" : $"{count} restant",
+                                                "es" => count > 1 ? $"{count} restantes" : $"{count} restante",
+                                                "it" => count > 1 ? $"{count} rimasti" : $"{count} rimasto",
+                                                "de" => $"{count} übrig",
+                                                _    => $"{count} Left"
+                                            };
+                                        }
+
                                         foreach (var item in lowStockProducts)
                                         {
                                             bool isCritical = item.StockQuantity == 0 || item.StockQuantity <= Math.Max(1, item.LowStockThreshold / 3);
@@ -777,24 +795,26 @@
 
                                                 <div class="alert-content-box flex-grow-1 min-w-0">
                                                     <div class="d-flex align-items-center justify-content-between mb-1">
-                                                        <span class="alert-sku-code text-truncate">@item.SKU</span>
-                                                        <span class="alert-status-badge @(item.StockQuantity == 0 ? "badge-out-of-stock" : isCritical ? "badge-critical" : "badge-low")">
-                                                            @(item.StockQuantity == 0 ? "OUT OF STOCK" : $"{item.StockQuantity} LEFT")
+                                                        <span class="alert-product-title text-truncate" title="@item.ProductName">
+                                                            @item.ProductName
                                                         </span>
-                                                    </div>
-
-                                                    <div class="alert-product-title text-truncate mb-1" title="@item.ProductName">
-                                                        @item.ProductName
+                                                        <span class="alert-status-badge @(item.StockQuantity == 0 ? "badge-out-of-stock" : isCritical ? "badge-critical" : "badge-low") ml-2">
+                                                            @(item.StockQuantity == 0 ? SharedLocalizer["OutOfStock"].Value : getRemainingText(item.StockQuantity))
+                                                        </span>
                                                     </div>
 
                                                     <div class="d-flex align-items-center justify-content-between alert-meta-row">
-                                                        <div class="alert-progress-wrap flex-grow-1 mr-2">
+                                                        <div class="d-flex align-items-center text-truncate">
+                                                            <span class="alert-sku-code">@item.SKU</span>
+                                                            <span class="alert-dot-sep mx-1 text-muted">&bull;</span>
+                                                            <span class="alert-threshold-label">
+                                                                @SharedLocalizer["Threshold"]: @item.LowStockThreshold
+                                                            </span>
+                                                        </div>
+                                                        <div class="alert-progress-wrap ml-2">
                                                             <div class="alert-progress-bar @(isCritical ? "progress-critical" : "progress-warning")"
                                                                  style="width: @(stockPercent)%;"></div>
                                                         </div>
-                                                        <span class="alert-threshold-label">
-                                                            Thresh: @item.LowStockThreshold
-                                                        </span>
                                                     </div>
                                                 </div>
 

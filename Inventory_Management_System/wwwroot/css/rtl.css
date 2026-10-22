@@ -427,7 +427,7 @@ html[dir="rtl"] #ai-chat-input {
 
 html[dir="rtl"] #ai-chat-send {
     margin-left: 0 !important;
-    margin-right: 0.5rem !important;
+    margin-right: 0.85rem !important;
 }
 
 /* Align message bubbles naturally in RTL:
@@ -615,14 +615,20 @@ html[dir="rtl"] body.sidebar-toggled .sidebar .sidebar-theme-toggle {
 /* Light mode sidebar borders in RTL */
 html[dir="rtl"][data-theme="light"] .sidebar,
 html[dir="rtl"][data-theme="light"] .bg-gradient-primary {
-    border-left: 1px solid #e2e8f0 !important;
+    border-left: 1px solid rgba(231, 228, 220, 0.9) !important;
     border-right: none !important;
 }
 
 html[dir="rtl"][data-theme="light"] .sidebar .nav-item.active-page > .nav-link:not([data-toggle="collapse"]),
 html[dir="rtl"][data-theme="light"] .sidebar .nav-item > .nav-link.active-page:not([data-toggle="collapse"]) {
-    border-right: 4px solid #6366f1 !important;
-    border-left: 4px solid transparent !important;
+    border-right: 4px solid #d97706 !important;
+    border-left: none !important;
+}
+
+html[dir="rtl"][data-theme="light"] .sidebar .collapse .nav-link.active-page {
+    border-right: none !important;
+    border-left: none !important;
+    box-shadow: inset -4px 0 0 #d97706 !important;
 }
 
 html[dir="rtl"][data-theme="light"] .sidebar.toggled .collapse,
@@ -631,7 +637,8 @@ html[dir="rtl"][data-theme="light"] body.sidebar-toggled .sidebar .collapse {
     left: auto !important;
     margin-right: 0.5rem !important;
     margin-left: 0 !important;
-    border-color: #e2e8f0 !important;
+    border-color: rgba(231, 228, 220, 0.9) !important;
 }
+
 
 

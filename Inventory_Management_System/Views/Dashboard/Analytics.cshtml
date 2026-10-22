@@ -1,7 +1,18 @@
 @model Inventory_Management_System.ViewModels.DashboardViewModels
+@using System.Globalization
 
 @{
     ViewData["Title"] = Loc["AnalyticsDashboard"].Value;
+    var currentCulture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+    string[] localizedMonths = currentCulture switch
+    {
+        "ar" => new[] { "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر" },
+        "fr" => new[] { "Janv", "Févr", "Mars", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc" },
+        "es" => new[] { "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" },
+        "it" => new[] { "Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic" },
+        "de" => new[] { "Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" },
+        _    => new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }
+    };
 }
 
 <div class="container-fluid_analytics">
@@ -277,11 +288,13 @@
                 url: '/Dashboard/GetSalesVsPurchasesChartData',
                 type: 'GET',
                 success: function (data) {
+                    var localizedMonths = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(localizedMonths));
+                    var chartLabels = (localizedMonths && localizedMonths.length === 12) ? localizedMonths : data.labels;
                     var ctx = document.getElementById("salesVsPurchasesChart").getContext('2d');
                     new Chart(ctx, {
                         type: 'line',
                         data: {
-                            labels: data.labels,
+                            labels: chartLabels,
                             datasets: [
                                 {
                                     label: "@Loc["Nav_Sales"] ($)",

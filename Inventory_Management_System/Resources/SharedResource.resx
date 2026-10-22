@@ -1420,4 +1420,7 @@
   <data name="Lbl_AdministratorOnly" xml:space="preserve">
     <value>Administrator Only</value>
   </data>
+  <data name="Remaining" xml:space="preserve">
+    <value>Left</value>
+  </data>
 </root>
