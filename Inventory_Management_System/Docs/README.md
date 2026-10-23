@@ -10,20 +10,20 @@ The application is engineered using **ASP.NET Core (.NET 10 / C#)** following cl
 
 ```mermaid
 graph TD
-    Client[Web Browser / POS Handhelds / External APIs] -->|HTTP / HTTPS| Gate[Dual Authentication Gateway<br/>Cookie Auth + JWT Bearer Auth]
-    Gate --> Presentation[Presentation Layer<br/>Razor Views + SB Admin 2 + Dynamic Theme Engine]
-    Presentation --> Controllers[Controller Layer<br/>MVC Controllers + RESTful API Controllers]
-    Controllers --> ViewModels[Presentation Models Layer<br/>ViewModels + PagedResult + Validation Attributes]
-    Controllers --> Services[Service Layer / Business Logic<br/>ICategoryService, IProductService, ISupplierService, IAIService]
-    Controllers --> Recovery[Master Recovery Key Pipeline<br/>IMasterRecoveryKeyService]
-    Controllers --> Dispatcher[Event-Driven Webhook Dispatcher<br/>IWebhookDispatcher + IWebhookSigner]
+    Client["Web Browser / POS Handhelds / External APIs"] -->|"HTTP / HTTPS"| Gate["Dual Authentication Gateway<br/>Cookie Auth + JWT Bearer Auth"]
+    Gate --> Presentation["Presentation Layer<br/>Razor Views + SB Admin 2 + Dynamic Theme Engine"]
+    Presentation --> Controllers["Controller Layer<br/>MVC Controllers + RESTful API Controllers"]
+    Controllers --> ViewModels["Presentation Models Layer<br/>ViewModels + PagedResult + Validation Attributes"]
+    Controllers --> Services["Service Layer / Business Logic<br/>ICategoryService, IProductService, ISupplierService, IAIService"]
+    Controllers --> Recovery["Master Recovery Key Pipeline<br/>IMasterRecoveryKeyService"]
+    Controllers --> Dispatcher["Event-Driven Webhook Dispatcher<br/>IWebhookDispatcher + IWebhookSigner"]
 
-    Services -->|RAG Analytics & LLM Completion| Groq[Groq Cloud API<br/>Llama 3.3 70B Versatile]
-    Dispatcher -->|HMAC-SHA256 Signed HTTP POST| n8n[n8n Workflow Automation Engine<br/>Telegram / External Webhooks]
-    Services --> DataAccess[Data Access Layer<br/>EF Core 10 + ApplicationDbContext]
+    Services -->|"RAG Analytics & LLM Completion"| Groq["Groq Cloud API<br/>Llama 3.3 70B Versatile"]
+    Dispatcher -->|"HMAC-SHA256 Signed HTTP POST"| n8n["n8n Workflow Automation Engine<br/>Telegram / External Webhooks"]
+    Services --> DataAccess["Data Access Layer<br/>EF Core 10 + ApplicationDbContext"]
     Recovery --> DataAccess
-    DataAccess -->|SQL Server Protocol| Database[(Relational Database<br/>Microsoft SQL Server)]
-    Presentation -->|Culture Selection| Localization[Localization Engine<br/>SharedResource .resx (EN, AR, FR, ES, IT, DE)]
+    DataAccess -->|"SQL Server Protocol"| Database[("Relational Database<br/>Microsoft SQL Server")]
+    Presentation -->|"Culture Selection"| Localization["Localization Engine<br/>SharedResource .resx (EN, AR, FR, ES, IT, DE)"]
 ```
 
 ---

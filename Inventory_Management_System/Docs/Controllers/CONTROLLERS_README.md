@@ -12,19 +12,19 @@ In ASP.NET Core MVC, Controllers serve as **coordinators and orchestrators**. Th
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Client as User / Browser
-    participant Controller as MVC / API Controller
-    participant Service as Service Layer (Business Logic)
-    participant DbContext as ApplicationDbContext (EF Core)
-    participant View as Razor View (.cshtml)
+    actor Client as "User / Browser"
+    participant Controller as "MVC / API Controller"
+    participant Service as "Service Layer (Business Logic)"
+    participant DbContext as "ApplicationDbContext (EF Core)"
+    participant View as "Razor View (.cshtml)"
 
-    Client->>Controller: HTTP POST /Sales/Create (FormData + __RequestVerificationToken)
-    Note over Controller: [ValidateAntiForgeryToken] validated<br/>ModelState.IsValid verified
+    Client->>Controller: HTTP POST /Sales/Create (FormData + AntiForgeryToken)
+    Note over Controller: ValidateAntiForgeryToken validated<br/>ModelState.IsValid verified
     Controller->>Service: CreateSaleAsync(model)
     Service->>DbContext: Check on-hand stock & decrement
     DbContext-->>Service: Committed Transaction
     Service-->>Controller: OperationResult.Ok()
-    Controller-->>Client: RedirectToAction("Details", new { id = saleID })
+    Controller-->>Client: RedirectToAction('Details', id = saleID)
 ```
 
 ---

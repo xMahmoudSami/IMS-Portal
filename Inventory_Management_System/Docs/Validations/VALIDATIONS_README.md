@@ -6,10 +6,10 @@ The Inventory Management System employs a **defense-in-depth validation strategy
 
 ```mermaid
 graph TD
-    Tier1[Tier 1: Client-Side Interactive Validation<br/>HTML5 + jQuery Validate + Unobtrusive] --> Tier2[Tier 2: Model Binder & Data Annotations<br/>[Required], [Range], [StringLength], [Unique]]
-    Tier2 --> Tier3[Tier 3: Controller State Inspection<br/>ModelState.IsValid + [ValidateAntiForgeryToken]]
-    Tier3 --> Tier4[Tier 4: Service Layer Business Invariants<br/>Zero Negative Stock, Duplicate SKU checks, Delete Guards]
-    Tier4 --> Tier5[Tier 5: Relational Database Constraints<br/>Unique Indexes, Foreign Keys, DeleteBehavior.Restrict]
+    Tier1["Tier 1: Client-Side Interactive Validation<br/>HTML5 + jQuery Validate + Unobtrusive"] --> Tier2["Tier 2: Model Binder & Data Annotations<br/>[Required], [Range], [StringLength], [Unique]"]
+    Tier2 --> Tier3["Tier 3: Controller State Inspection<br/>ModelState.IsValid + [ValidateAntiForgeryToken]"]
+    Tier3 --> Tier4["Tier 4: Service Layer Business Invariants<br/>Zero Negative Stock, Duplicate SKU checks, Delete Guards"]
+    Tier4 --> Tier5["Tier 5: Relational Database Constraints<br/>Unique Indexes, Foreign Keys, DeleteBehavior.Restrict"]
 ```
 
 ---

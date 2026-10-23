@@ -15,13 +15,13 @@ The application features an enterprise-grade internationalization and localizati
 
 ```mermaid
 graph TD
-    Client[Browser Request] -->|Cookie: .AspNetCore.Culture| Pipeline[ASP.NET Core Localization Middleware]
-    Pipeline -->|Matches Culture| Providers{RequestCultureProviders}
-    Providers -->|1. CookieProvider (Priority)| MatchFound[Set CurrentCulture & CurrentUICulture]
-    Providers -->|2. QueryStringProvider| MatchFound
-    Providers -->|3. AcceptLanguageHeader| MatchFound
-    MatchFound -->|Injects| Views[Views & Controllers<br/>IHtmlLocalizer / IStringLocalizer]
-    Views -->|Pulls String| Resx[("Resources/SharedResource.{culture}.resx")]
+    Client["Browser Request"] -->|"Cookie: .AspNetCore.Culture"| Pipeline["ASP.NET Core Localization Middleware"]
+    Pipeline -->|"Matches Culture"| Providers{"RequestCultureProviders"}
+    Providers -->|"1. CookieProvider (Priority)"| MatchFound["Set CurrentCulture & CurrentUICulture"]
+    Providers -->|"2. QueryStringProvider"| MatchFound
+    Providers -->|"3. AcceptLanguageHeader"| MatchFound
+    MatchFound -->|"Injects"| Views["Views & Controllers<br/>IHtmlLocalizer / IStringLocalizer"]
+    Views -->|"Pulls String"| Resx[("Resources/SharedResource.{culture}.resx")]
 ```
 
 ---

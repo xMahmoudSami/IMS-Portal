@@ -14,18 +14,18 @@ The Service Layer encapsulates all **core business rules, database queries, tran
 
 ```mermaid
 graph TD
-    subgraph Dependency Injection Container (Program.cs)
-        ICat[ICategoryService] -.-> CatImpl[CategoryService]
-        IProd[IProductService] -.-> ProdImpl[ProductService]
-        ISup[ISupplierService] -.-> SupImpl[SupplierService]
-        ISupProd[ISupplierProductService] -.-> SupProdImpl[SupplierProductService]
-        IAI[IAIService] -.-> AIImpl[AIService]
+    subgraph DI ["Dependency Injection Container (Program.cs)"]
+        ICat["ICategoryService"] -.-> CatImpl["CategoryService"]
+        IProd["IProductService"] -.-> ProdImpl["ProductService"]
+        ISup["ISupplierService"] -.-> SupImpl["SupplierService"]
+        ISupProd["ISupplierProductService"] -.-> SupProdImpl["SupplierProductService"]
+        IAI["IAIService"] -.-> AIImpl["AIService"]
     end
 
-    Controller[ProductsController / AIController] -->|Injected via Constructor| IProd
-    Controller -->|Injected via Constructor| IAI
-    ProdImpl -->|DbContext| SQL[(SQL Server)]
-    AIImpl -->|HttpClient| Groq[Groq Cloud LLM API]
+    Controller["ProductsController / AIController"] -->|"Injected via Constructor"| IProd
+    Controller -->|"Injected via Constructor"| IAI
+    ProdImpl -->|"DbContext"| SQL[("SQL Server")]
+    AIImpl -->|"HttpClient"| Groq["Groq Cloud LLM API"]
 ```
 
 ---
